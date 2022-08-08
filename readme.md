@@ -8,7 +8,7 @@ Clone the repository to Visual Studio Code
   - Paste url: https://github.com/OrganizedIsolatedInsect/ProjectNemo.git
   - Select the destination folder
 
-## installation and setting up
+## Installation and Setting up Dev environment
 After cloning repository
   - Open a new terminal
   - Run `npm install` in order to download all the modules
