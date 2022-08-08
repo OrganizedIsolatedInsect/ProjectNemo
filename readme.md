@@ -5,7 +5,7 @@ Clone the repository to Visual Studio Code
   - Open a new Visual Studio Code window
   - On the left side bar, click Source Control
   - Clone Repository
-  - Paste url: https://github.com/OrganizedIsolatedInsect/ProjectNemo.git
+  - Paste url: ``https://github.com/OrganizedIsolatedInsect/ProjectNemo.git``
   - Select the destination folder
 
 ## Installation and Setting up Dev environment
