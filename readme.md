@@ -25,8 +25,12 @@ Once you have named your branch, it should say the branch name in the bottom lef
 
 For more information on working with Branches in Visual Studio Code, review the video here:
 
-```https://code.visualstudio.com/docs/introvideos/versioncontrol```
+```
+https://code.visualstudio.com/docs/introvideos/versioncontrol
+```
 
 How to use Github in VS Code in general (of importance, **Pull requests**):
 
-```https://code.visualstudio.com/docs/editor/github```
+```
+https://code.visualstudio.com/docs/editor/github
+```
