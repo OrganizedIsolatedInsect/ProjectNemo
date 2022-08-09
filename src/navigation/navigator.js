@@ -58,8 +58,8 @@ export const AppNavigator = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}>
-      <BottomTab.Screen name="Legislation" component={LegislationStack} />
-      <BottomTab.Screen name="Bookmarks" component={BookmarkScreen} />
+      <BottomTab.Screen name='Legislation' component={LegislationStack} />
+      <BottomTab.Screen name='Bookmarks' component={BookmarkScreen} />
     </BottomTab.Navigator>
   );
 };
