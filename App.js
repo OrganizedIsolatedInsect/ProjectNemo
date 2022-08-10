@@ -17,7 +17,7 @@ console.log('[Apps] - Last Compile/Run -' + now.toUTCString());
   return (
     <NavigationContainer>
       <AppNavigator />
-      </NavigationContainer>
+    </NavigationContainer>
  
   );
 };
