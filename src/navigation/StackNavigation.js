@@ -1,99 +1,51 @@
-// import React from 'react';
-// import {createStackNavigator} from '@react-navigation/stack';
+//PACKAGE Imports
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
 
-// import BookmarkScreen from '../screens/BookmarkScreen';
-// import LegislationScreen from '../screens/LegislationScreen';
-// import LegisSpecialScreen from '../screens/ExceptionScreen';
-// import LegisTOCScreen from '../screens/MVABrowse';
-// import LegisViewScreen from '../screens/MVAContent';
-// import SearchResultScreen from '../screens/SearchScreen';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+//USER Imports
+import BookmarkScreen from '../screens/BookmarkScreen';
+import LandingScreen from '../screens/LandingScreen';
+import MVABrowse from '../screens/MVABrowse';
+import MVAContent from '../screens/MVAContent';
+import ExceptionScreen from '../screens/ExceptionScreen';
+import SearchScreen from '../screens/SearchScreen';
 
-// const SearchNavigator = createStackNavigator();
-// const LegislationNavigator = createStackNavigator();
-// const BookMarkNavigator = createStackNavigator();
-// const BottomTab = createBottomTabNavigator();
+const BookMarkNavigator = createStackNavigator();
 
+const ContentNavigator = createStackNavigator();
 
-//   const BottomTabsStack = () => {
-//     return (
-//       <BottomTab.Navigator
-//         screenOptions={({route}) => ({
-//           tabBarIcon: ({focused, color, size}) => {
-//             let iconName;
+const ContentStack = () => {
+  console.log('ContentStack');
+  return (
+    <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
+      <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
+      <ContentNavigator.Screen name="MVABrowse" component={MVABrowse} />
+      <ContentNavigator.Screen name="MVAContent" component={MVAContent} />
+      <ContentNavigator.Screen
+        name="ExceptionScreen"
+        component={ExceptionScreen}
+      />
+      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
+    </ContentNavigator.Navigator>
+  );
+};
 
-//             if (route.name === 'Legislation') {
-//               iconName = focused ? 'book' : 'book-outline';
-//             } else if (route.name === 'Bookmarks') {
-//               iconName = focused ? 'bookmark' : 'bookmark-outline';
-//             }
+const BookMarkStack = () => {
+  console.log('BookMarkStack');
+  return (
+    <BookMarkNavigator.Navigator screenOptions={screenOptionStyle}>
+      <BookMarkNavigator.Screen
+        name="BookmarkList"
+        component={BookmarkScreen}
+      />
+    </BookMarkNavigator.Navigator>
+  );
+};
 
-//             // You can return any component that you like here!
-//             return <Ionicons name={iconName} size={size} color={color} />;
-//           },
-//           headerShown: false,
-//         })}>
-//         <BottomTab.Screen name="Legislation" component={LegislationStack} />
-//         <BottomTab.Screen name="Bookmarks" component={BookMarkStack} />
-//       </BottomTab.Navigator>
-//     );
-//   };
+//STYLING
+const screenOptionStyle = {
+  //Navigation Headers turned off as Headers to be created within Screens.
+  headerShown: false,
+};
 
-//   const SearchStack = () => {
-//     console.log('SearchStack');
-//     return (
-//       <SearchNavigator.Navigator>
-//         <SearchNavigator.Screen
-//           name="SearchResultScreen"
-//           component={SearchResultScreen}
-//         />
-//       </SearchNavigator.Navigator>
-//     );
-//   };
-
-//   const LegislationStack = () => {
-//     console.log('LegislationStack');
-//     return (
-//       <LegislationNavigator.Navigator screenOptions={screenOptionStyle}>
-//         <LegislationNavigator.Screen
-//           name="LegislationList"
-//           component={LegislationScreen}
-//         />
-//         <LegislationNavigator.Screen
-//           name="TableOfContents"
-//           component={LegisTOCScreen}
-//         />
-//         <LegislationNavigator.Screen
-//           name="ViewLegislation"
-//           component={LegisViewScreen}
-//         />
-//         <LegislationNavigator.Screen
-//           name="SpecialLegislation"
-//           component={LegisSpecialScreen}
-//         />
-//       </LegislationNavigator.Navigator>
-//     );
-//   };
-
-//   const BookMarkStack = () => {
-//     console.log('BookMarkStack');
-//     return (
-//       <BookMarkNavigator.Navigator screenOptions={screenOptionStyle}>
-//         <BookMarkNavigator.Screen
-//           name="BookmarkList"
-//           component={BookmarkScreen}
-//         />
-//       </BookMarkNavigator.Navigator>
-//     );
-//   };
-
-//   //STYLING
-//   const screenOptionStyle = {
-//     //Navigation Headers turned off as Headers to be created within Screens.
-//     headerShown: false,
-//   };
-
-
-
-// export {BottomTabsStack, SearchStack, LegislationStack, BookMarkStack } ;
+export {ContentStack, BookMarkStack};

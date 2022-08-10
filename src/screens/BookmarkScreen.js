@@ -3,7 +3,7 @@ import styles from '../assets/styles';
 
 import {SafeAreaView, Text, View, Button, FlatList, Pressable} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SearchStack } from '../navigation/StackNavigation';
+import SearchScreen from './SearchScreen';
 import { useNavigation } from '@react-navigation/native';
 
 const BookmarkScreen = props => {
@@ -28,7 +28,7 @@ const BookmarkScreen = props => {
       <View>
 
         <Pressable
-         onPress={() =>navAid.navigate('SearchStack', {screen:'SearchResultScreen'})}
+         onPress={() =>navAid.navigate('SearchScreen')}
           >
 
           <View>

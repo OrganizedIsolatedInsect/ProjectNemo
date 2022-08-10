@@ -1,9 +1,13 @@
+
+//PACKAGE Imports
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+//USER Imports
 import LandingScreen from '../screens/LandingScreen';
 import BookmarkScreen from '../screens/BookmarkScreen';
-
+import { BookMarkStack, ContentStack } from './StackNavigation';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -27,8 +31,8 @@ export const AppNavigator = () => {
           },
           headerShown: false,
         })}>
-        <BottomTab.Screen name="Legislation" component={LandingScreen} />
-        <BottomTab.Screen name="Bookmarks" component={BookmarkScreen} />
+        <BottomTab.Screen name="Legislation" component={ContentStack} />
+        <BottomTab.Screen name="Bookmarks" component={BookMarkStack} />
       </BottomTab.Navigator>
   );
 };
