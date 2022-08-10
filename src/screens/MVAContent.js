@@ -5,8 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Text, View} from 'react-native';
 
 
-//PAGE 2
-const LegisViewScreen = () => {
+
+const MVAContent = props => {
   return (
     <View style={styles.background}>
       <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>
@@ -22,4 +22,4 @@ const LegisViewScreen = () => {
   );
 };
 
-export default LegisViewScreen;
+export default MVAContent;

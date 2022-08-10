@@ -2,9 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
-//import {AppNavigator} from './src/navigation/TabNavigation';
-
-import { BottomTabsStack } from './src/navigation/StackNavigation';
+import {AppNavigator} from './src/navigation/TabNavigation';
 
 
 const App = () => {
@@ -15,7 +13,7 @@ console.log(now.toUTCString());
 
   return (
     <NavigationContainer>
-      <BottomTabsStack />
+      <AppNavigator />
       </NavigationContainer>
 
   );
