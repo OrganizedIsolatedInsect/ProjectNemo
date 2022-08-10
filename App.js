@@ -12,6 +12,8 @@ let date = new Date();
 console.log(date);
 
 
+import SearchBar from './src/components/SearchBar';
+
 const App = () => {
   return (
     <SafeAreaProvider>

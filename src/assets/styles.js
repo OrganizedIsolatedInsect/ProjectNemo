@@ -30,6 +30,47 @@ export default StyleSheet.create({
     fontFamily: 'NotoSans-Regular',
     fontSize: 14,
   },
+
+  //Styling specifically for the Searchbar component.
+  searchView_Styling: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  SearchBar_Styling: {
+    position: 'relative',
+    zIndex: 1,
+    // marginTop: 10,
+    flex: 1,
+    width: '80%',
+    borderColor: '#e6e6e6',
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingLeft: 45,
+    backgroundColor: '#e6e6e6',
+    marginLeft: 15,
+  },
+  searchIcon_styling: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 25,
+    bottom: 10,
+  },
+  closeIcon_styling: {
+    // marginTop: 18,
+    marginLeft: 7,
+    marginRight: 15,
+    // height: 50
+  },
+  closeIcon_pressable_styling: {
+    paddingLeft: 5,
+    paddingTop: 10,
+    height: '100%',
+  },
+  closeIcon_ripple_styling: {
+    // color: 'blue',
+    // borderless: 'true',
+    radius: 25,
+  },
   sectionDivider: {
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
