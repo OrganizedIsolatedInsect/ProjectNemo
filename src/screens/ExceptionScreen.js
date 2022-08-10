@@ -11,18 +11,12 @@ import {Text, View, Pressable} from 'react-native';
 
 const ExceptionScreen = props => {
   return (
+    <SafeAreaView>
     <View style={styles.background}>
 
-<View>
-
-<View>
-  <Ionicons name={'search-outline'} size={30} />
-</View>
-
-</View>
 
       <View style={styles.sectionDivider} />
-      <Text style={[styles.heading_1, styles.neutral]}>EXCEPTION SCREEN</Text>
+      <Text style={[styles.heading_1, styles.neutral]}>Dev screen name: EXCEPTION SCREEN</Text>
       <Text style={styles.heading_2}>Heading 2</Text>
       <Text style={[styles.body, styles.accent_1]}>Body</Text>
       <Text style={[styles.body, styles.accent_2]}>Body 2</Text>
@@ -31,6 +25,7 @@ const ExceptionScreen = props => {
       <Ionicons name={'book'} size={30} />
       <Ionicons name={'book-outline'} size={30} />
     </View>
+    </SafeAreaView>
   );
 };
 

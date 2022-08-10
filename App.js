@@ -24,6 +24,8 @@ console.log('[Apps] - Last Compile/Run -' + now.toUTCString());
 
 export default App;
 
+//TO DO
 
-//Project Nemo title presses to HOME landing page on all pages
-//Fix Header title styles to      <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>
+//remove consolelogs 
+//Remove flatlist dummy data on screens.  Or create dummy data component
+

@@ -2,7 +2,7 @@
 //PACKAGE Imports
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //USER Imports
 import LandingScreen from '../screens/LandingScreen';
@@ -20,13 +20,13 @@ export const AppNavigator = () => {
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
 
-            if (route.name === 'Legislation') {iconName = focused ? 'book' : 'book-outline';
+            if (route.name === 'Legislation') {iconName = focused ? 'import-contacts' : 'import-contacts';
             } else if (route.name === 'Bookmarks') {
-              iconName = focused ? 'bookmark' : 'bookmark-outline';
+              iconName = focused ? 'bookmarks' : 'bookmarks';
             }
 
             // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Icon name={iconName} size={size} color={color} />;
           },
           headerShown: false,
         })}>

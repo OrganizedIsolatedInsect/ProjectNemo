@@ -44,16 +44,9 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
   return (
     <SafeAreaView>
       <View style={styles.background}>
-      <View>
-
-<View>
-  <Ionicons name={'search-outline'} size={30} />
-</View>
-
-</View>
 
         <View style={styles.sectionDivider} />
-        <Text style={[styles.heading_1, styles.neutral]}>MVA BROWSE</Text>
+        <Text style={[styles.heading_1, styles.neutral]}>Dev screen name: MVA BROWSE</Text>
         <Text style={styles.heading_2}>Heading 2</Text>
         <Text style={[styles.body, styles.accent_1]}>Body</Text>
         <Text style={[styles.body, styles.accent_2]}>Body 2</Text>

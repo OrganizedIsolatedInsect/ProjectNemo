@@ -9,8 +9,7 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-//import SearchScreen from './SearchScreen';
+
 import {useNavigation} from '@react-navigation/native';
 import Bookmark from '../components/Bookmark';
 
@@ -40,7 +39,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
   const renderBookmarkList = ({item}) => {
     return (
       <View style={{flexDirection: 'row'}}>
-        <Text>{item.title}</Text>
+        <Pressable onPress={() => navAid.navigate('MVABrowse')}><Text>{item.title}</Text></Pressable>
         <Bookmark />
       </View>
     );
@@ -53,17 +52,11 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
 
       <View style={styles.background}>
 
-        <View>
-
-            <View>
-              <Ionicons name={'search-outline'} size={30} />
-            </View>
-
-        </View>
 
 
 
-        <Text style={[styles.heading_1, styles.neutral]}>BOOKMARK SCREEN</Text>
+
+        <Text style={[styles.heading_1, styles.neutral]}>Dev Screen name: BOOKMARK SCREEN</Text>
         <View style={styles.sectionDivider} />
         <View>
           <Text>Insert Filters Here</Text>
@@ -80,7 +73,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
             data={DATA}
             renderItem={renderBookmarkList}
             keyExtractor={item => item.id}
-            onPress={() => navAid.navigate('MVABrowse')}
+
           />
         </View>
       </View>

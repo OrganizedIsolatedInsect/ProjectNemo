@@ -8,12 +8,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerContainer: {
-    flex: 1,
-
-    height: 50,
-    textAlign: 'left',
-  },
   row: {
     flexDirection: 'row',
   },
@@ -34,7 +28,7 @@ export default StyleSheet.create({
     color: '#053C5E',
   },
   neutral: {
-    color: '#616362', //'#E6E6E6' orig
+    color: '#E6E6E6', //'#E6E6E6' orig
   },
   accent_1: {
     color: '#1F7ABC',
