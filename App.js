@@ -4,11 +4,17 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {AppNavigator} from './src/navigation/navigator';
 
+import SearchBar from './src/components/SearchBar';
+
 const App = () => {
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <AppNavigator />
+    //   {/* <SearchBar /> */}
+    // </NavigationContainer>
+    <View>
+      <SearchBar />
+    </View>
   );
 };
 
