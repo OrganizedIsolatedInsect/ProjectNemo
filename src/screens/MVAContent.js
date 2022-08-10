@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from '../assets/styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {Text, View, Pressable} from 'react-native';
+import {Text, View, Pressable, SafeAreaView} from 'react-native';
+//USER Imports
+import Bookmark from '../components/Bookmark';
 
 const MVAContent = props => {
   return (

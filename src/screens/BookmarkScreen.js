@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
+//USER Imports
 import Bookmark from '../components/Bookmark';
 
 const BookmarkScreen = props => {
@@ -39,7 +40,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
   const renderBookmarkList = ({item}) => {
     return (
       <View style={{flexDirection: 'row'}}>
-        <Pressable onPress={() => navAid.navigate('MVABrowse')}><Text>{item.title}</Text></Pressable>
+        <Pressable onPress={() => navAid.navigate('MVAContent')}><Text>{item.title}</Text></Pressable>
         <Bookmark />
       </View>
     );
@@ -51,10 +52,6 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
 
 
       <View style={styles.background}>
-
-
-
-
 
         <Text style={[styles.heading_1, styles.neutral]}>Dev Screen name: BOOKMARK SCREEN</Text>
         <View style={styles.sectionDivider} />

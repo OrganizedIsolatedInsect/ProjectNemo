@@ -1,7 +1,6 @@
 //PACKAGE IMPORTS
 import React from 'react';
 import styles from '../assets/styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, SafeAreaView, FlatList} from 'react-native';
 
@@ -32,10 +31,10 @@ const MVABrowse = props => {
   /*
 Preps texts for output to Flatlist;  also calls the Bookmark button state change.  Change Bookmark.js to send data to add/delete from bookmark array
 */
-  const renderBrowseList = ({title}) => {
+  const renderBrowseList = ({item}) => {
     return (
-      <View>
-        <Text>{title}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <Pressable onPress={() => navAid.navigate('MVAContent')}><Text>{item.title}</Text></Pressable>
         <Bookmark />
       </View>
     );
@@ -57,7 +56,6 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
             data={DATA}
             renderItem={renderBrowseList}
             keyExtractor={item => item.id}
-            onPress={() => navAid.navigate('MVABrowse')}
           />
         </View>
       </View>
