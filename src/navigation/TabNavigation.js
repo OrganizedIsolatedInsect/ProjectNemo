@@ -14,7 +14,6 @@ const BottomTab = createBottomTabNavigator();
 
 //NEW BLOCK
 export const AppNavigator = () => {
-  console.log('AppNavigator');
   return (
       <BottomTab.Navigator
         screenOptions={({route}) => ({

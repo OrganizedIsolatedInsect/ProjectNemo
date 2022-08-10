@@ -15,7 +15,7 @@ const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
 
 const ContentStack = () => {
-  console.log('ContentStack');
+
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
@@ -31,7 +31,7 @@ const ContentStack = () => {
 };
 
 const BookMarkStack = () => {
-  console.log('BookMarkStack');
+
   return (
     <BookMarkNavigator.Navigator screenOptions={screenOptionStyle}>
       <BookMarkNavigator.Screen

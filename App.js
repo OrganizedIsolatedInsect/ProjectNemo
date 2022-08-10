@@ -12,13 +12,13 @@ const App = () => {
 
   let now = new Date();
 // convert date to a string in UTC timezone format:
-console.log(now.toUTCString());
+console.log('[Apps] - Last Compile/Run -' + now.toUTCString());
 
   return (
     <NavigationContainer>
       <AppNavigator />
       </NavigationContainer>
-
+ 
   );
 };
 

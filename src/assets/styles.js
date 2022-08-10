@@ -8,6 +8,12 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerContainer: {
+    flex: 1,
+    
+    height: 50,
+    textAlign: 'left'
+  },
   row: {
     flexDirection: 'row',
   },
