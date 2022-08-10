@@ -5,19 +5,25 @@
 import React from 'react';
 import styles from '../assets/styles';
 import {Text, View, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SearchScreen = props => {
+  //VARIABLE SETUP
+  const navAid = useNavigation();
+  //
+
   return (
     <View style={styles.background}>
-      <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>
-      <View>
-        <Pressable onPress={() => navAid.navigate('SearchScreen')}>
-          <View>
-            <Ionicons name={'search-outline'} size={30} />
-          </View>
-        </Pressable>
-      </View>
+        <View>
+
+<View>
+  <Ionicons name={'search-outline'} size={30} />
+</View>
+
+</View>
+
+      <View style={styles.sectionDivider} />
       <Text style={[styles.heading_1, styles.neutral]}>
         SEARCH SCREEN - ALL CONTENT
       </Text>

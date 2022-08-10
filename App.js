@@ -23,3 +23,7 @@ console.log('[Apps] - Last Compile/Run -' + now.toUTCString());
 };
 
 export default App;
+
+
+//Project Nemo title presses to HOME landing page on all pages
+//Fix Header title styles to      <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>

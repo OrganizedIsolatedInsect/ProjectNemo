@@ -18,14 +18,14 @@ const ContentStack = () => {
 
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
-      <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
-      <ContentNavigator.Screen name="MVABrowse" component={MVABrowse} />
-      <ContentNavigator.Screen name="MVAContent" component={MVAContent} />
+      <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} options={{ title: 'FINDING NEMO' }} />
+      <ContentNavigator.Screen name="MVABrowse" component={MVABrowse} options={{ title: 'FINDING NEMO' }} />
+      <ContentNavigator.Screen name="MVAContent" component={MVAContent} options={{ title: 'FINDING NEMO' }} />
       <ContentNavigator.Screen
         name="ExceptionScreen"
         component={ExceptionScreen}
-      />
-      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
+       options={{ title: 'FINDING NEMO' }} />
+      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} options={{ title: 'FINDING NEMO' }} />
     </ContentNavigator.Navigator>
   );
 };
@@ -37,7 +37,7 @@ const BookMarkStack = () => {
       <BookMarkNavigator.Screen
         name="BookmarkList"
         component={BookmarkScreen}
-      />
+        options={{ title: 'FINDING NEMO' }} />
     </BookMarkNavigator.Navigator>
   );
 };
@@ -45,7 +45,10 @@ const BookMarkStack = () => {
 //STYLING
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
-  headerShown: false,
+  headerShown: true,
+
+
+  
 };
 
 export {ContentStack, BookMarkStack};

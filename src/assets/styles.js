@@ -10,9 +10,9 @@ export default StyleSheet.create({
   },
   headerContainer: {
     flex: 1,
-    
+
     height: 50,
-    textAlign: 'left'
+    textAlign: 'left',
   },
   row: {
     flexDirection: 'row',
@@ -34,8 +34,7 @@ export default StyleSheet.create({
     color: '#053C5E',
   },
   neutral: {
-    color: '#616362',     //'#E6E6E6' orig
-
+    color: '#616362', //'#E6E6E6' orig
   },
   accent_1: {
     color: '#1F7ABC',
@@ -60,16 +59,25 @@ export default StyleSheet.create({
     fontFamily: 'NotoSans-Regular',
     fontSize: 14,
   },
+  sectionDivider: {
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 15
+  },
   filterBox: {
     borderColor: '#dff0e3',
     borderWidth: 1,
-  
   },
   filterButton: {
-    width: '50px',
+    flex: 0.25,
+    width: '30%',
+    fontFamily: 'Lato-Regular',
+    fontWeight: 'Bold',
+    color: '#E6E6E6',
+    tintColor: '7F2025',
+    fontSize: 12,
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 25,
     borderColor: '#7F2025',
-
-  }
+  },
 });

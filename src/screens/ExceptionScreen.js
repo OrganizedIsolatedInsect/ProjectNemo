@@ -12,14 +12,16 @@ import {Text, View, Pressable} from 'react-native';
 const ExceptionScreen = props => {
   return (
     <View style={styles.background}>
-      <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>
-      <View>
-        <Pressable onPress={() => navAid.navigate('SearchScreen')}>
-          <View>
-            <Ionicons name={'search-outline'} size={30} />
-          </View>
-        </Pressable>
-      </View>
+
+<View>
+
+<View>
+  <Ionicons name={'search-outline'} size={30} />
+</View>
+
+</View>
+
+      <View style={styles.sectionDivider} />
       <Text style={[styles.heading_1, styles.neutral]}>EXCEPTION SCREEN</Text>
       <Text style={styles.heading_2}>Heading 2</Text>
       <Text style={[styles.body, styles.accent_1]}>Body</Text>
@@ -31,5 +33,10 @@ const ExceptionScreen = props => {
     </View>
   );
 };
+
+
+//TO DO
+
+//take row 16 SEARCH and replace with a textbox and search icon
 
 export default ExceptionScreen;

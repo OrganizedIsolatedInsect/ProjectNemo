@@ -23,3 +23,4 @@ const Bookmark = () => {
 export default Bookmark;
 
 
+//SOURCE for bookmark state change:  https://stackoverflow.com/questions/42451214/react-native-change-icon-color-on-press
