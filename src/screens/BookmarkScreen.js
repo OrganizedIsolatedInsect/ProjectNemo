@@ -12,14 +12,41 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import SearchScreen from './SearchScreen';
 import {useNavigation} from '@react-navigation/native';
+import Bookmark from '../components/Bookmark';
 
 const BookmarkScreen = props => {
 
   const navAid = useNavigation();
 
-  //Prepares data to be output to flatlistlist
-  const renderBookmarkList = () => {
-    return <View></View>;
+//*************TEST DATA for FLATLIST
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+//*************END TEST DATA
+
+
+
+
+
+/*
+Preps texts for output to Flatlist;  also calls the Bookmark button state change.  Change Bookmark.js to send data to add/delete from bookmark array
+*/
+  const renderBookmarkList = ({title}) => {
+    return (<View>
+      <Text>{title}</Text>
+      <Bookmark  />    
+    </View>);
   };
 
   return (
@@ -46,7 +73,11 @@ const BookmarkScreen = props => {
 
         <View>
           <Text>Flatlist setup goes here</Text>
-          <FlatList data={renderBookmarkList} />
+          <FlatList 
+            data={DATA} 
+            renderItem={renderBookmarkList}
+          keyExtractor={item=>item.id}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -55,5 +86,3 @@ const BookmarkScreen = props => {
 
 export default BookmarkScreen;
 
-//          onPress={navAid.navigate('SearchResultScreen')}>
-//          onPress={() => navAid.navigate('SearchStack', {screen: 'SearchResultScreen'})}>
