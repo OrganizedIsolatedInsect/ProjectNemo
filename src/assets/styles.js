@@ -10,7 +10,7 @@ export const colors = {
 
 export default StyleSheet.create({
   background: {
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
   },
   title: {
     fontFamily: 'Lato-Bold',
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   heading_2: {
     fontFamily: 'Lato-Regular',
     fontSize: 16,
-    color: '#7F2025',
+    color: colors.primary,
   },
   body: {
     fontFamily: 'NotoSans-Regular',
