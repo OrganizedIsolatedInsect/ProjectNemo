@@ -9,9 +9,9 @@ import {useNavigation} from '@react-navigation/native';
 import { SafeAreaView} from 'react-native-safe-area-context';
 
 const SearchScreen = props => {
-  //VARIABLE SETUP
+
   const navAid = useNavigation();
-  //
+
 
   return (
     <SafeAreaView>
