@@ -2,8 +2,8 @@
 import React from 'react';
 import styles from '../assets/styles';
 import {useNavigation} from '@react-navigation/native';
-import {Text, View, Pressable, SafeAreaView, FlatList} from 'react-native';
-
+import {Text, View, Pressable, FlatList} from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
 //USER Imports
 import Bookmark from '../components/Bookmark';
 

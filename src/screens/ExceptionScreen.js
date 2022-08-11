@@ -5,7 +5,7 @@
 
 import React from 'react';
 import styles from '../assets/styles';
-
+import { SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, Pressable} from 'react-native';
 //USER Imports
 

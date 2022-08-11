@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-
+import { SafeAreaView} from 'react-native-safe-area-context';
 //USER Imports
 import styles from '../assets/styles';
 

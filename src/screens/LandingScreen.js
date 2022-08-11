@@ -1,8 +1,10 @@
 //PACKAGE Imports
 import React from 'react';
 import styles from '../assets/styles';
-import {Text, View, Button, Pressable, SafeAreaView} from 'react-native';
+import {Text, View, Button, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { SafeAreaView} from 'react-native-safe-area-context';
+
 
 const LandingScreen = props => {
   const navAid = useNavigation();

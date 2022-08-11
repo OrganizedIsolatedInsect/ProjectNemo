@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../assets/styles';
-
-import {Text, View, Pressable, SafeAreaView} from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
+import {Text, View, Pressable} from 'react-native';
 //USER Imports
 import Bookmark from '../components/Bookmark';
 

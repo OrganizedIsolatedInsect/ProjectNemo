@@ -4,9 +4,9 @@
 
 import React from 'react';
 import styles from '../assets/styles';
-import {Text, View, Pressable, SafeAreaView} from 'react-native';
+import {Text, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
+import { SafeAreaView} from 'react-native-safe-area-context';
 
 const SearchScreen = props => {
   //VARIABLE SETUP
