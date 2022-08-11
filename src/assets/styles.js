@@ -1,23 +1,16 @@
 import {StyleSheet} from 'react-native';
 
+export const colors = {
+  primary: '#7F2025',
+  secondary: '#053C5E',
+  neutral: '#E6E6E6',
+  accent_1: '#1F7ABC',
+  accent_2: '#CB333B',
+};
+
 export default StyleSheet.create({
   background: {
-    backgroundColor: 'white',
-  },
-  primary: {
-    color: '#7F2025',
-  },
-  secondary: {
-    color: '#053C5E',
-  },
-  neutral: {
-    color: '#E6E6E6',
-  },
-  accent_1: {
-    color: '#1F7ABC',
-  },
-  accent_2: {
-    color: '#CB333B',
+    backgroundColor: '#ffffff',
   },
   title: {
     fontFamily: 'Lato-Bold',
@@ -30,7 +23,7 @@ export default StyleSheet.create({
   heading_2: {
     fontFamily: 'Lato-Regular',
     fontSize: 16,
-    color: '#7F2025',
+    color: colors.primary,
   },
   body: {
     fontFamily: 'NotoSans-Regular',
