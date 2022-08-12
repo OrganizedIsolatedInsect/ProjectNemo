@@ -1,37 +1,41 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList, View} from 'react-native';
+import {FlatList, ScrollView, Text, View} from 'react-native';
 import styles from '../assets/styles';
 import LegislationGridList from '../components/LegislationGridList';
 import {LEGISLATION} from '../data/LegislationMenuItems';
 import MVAGridList from '../components/MVAGridList';
 import MVA from '../data/mvavt_records.json';
 
-const LegislationScreen = () => {
-  //const MVARecords = JSON.parse(MVA);
-  const [currentScreen, setCurrentScreen] = useState('Landing');
-  const [currentData, setCurrentData] = useState(LEGISLATION);
 
+
+const LegislationScreen = () => {
+
+  const [currentScreen, setCurrentScreen] = useState('Landing');
+  const [useableData, setUsableData] = useState(LEGISLATION);
+
+
+  /*Switch data depending on what "screen" user is on.*/
   const CurrentData = () => {
-    console.log(currentData);
     if (currentScreen === 'Landing') {
-      setCurrentData(LEGISLATION);
+      setUsableData(LEGISLATION);
+
     } else {
-      setCurrentData(MVA);
-    }
+      setUsableData(MVA);
+    };
+
   };
 
-  //Function for setting up the Render list for the FlatList
+  //Function for setting up the Render list for the FlatList; Generic depending on what data is showing
   const renderList = itemdata => {
     if (currentScreen === 'Landing') {
-      console.log('render landing');
+      return(
       <LegislationGridList
         id={itemdata.item.id}
         title={itemdata.item.title}
         destination={itemdata.item.destination}
-      />;
+      />);
     } else {
-      console.log('render not landing');
       return (
         <MVAGridList
           provision={itemdata.item.provision}
@@ -44,11 +48,15 @@ const LegislationScreen = () => {
 
   /*OUTPUT*/
 
+
   return (
     <SafeAreaView>
       <CurrentData />
       <View style={styles.background}>
-        <FlatList data={currentData} renderItem={renderList} />
+        <View>
+
+          <FlatList data={useableData} renderItem={renderList} keyExtractor={item => item.id} />
+        </View>
       </View> 
     </SafeAreaView>
   );

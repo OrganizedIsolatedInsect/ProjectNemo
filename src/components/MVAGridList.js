@@ -10,12 +10,13 @@ const MVAGridList = props => {
   const navAid = useNavigation();
 
   
-console.log(props);
-
+  // TODO navigation is temporoary; needs to change the Browse Screen/component of tools     
   return (
     <View>
-      <Pressable onPress={() => navAid.navigate('Bookmarks')}>
-        <Text styles={styles.heading_2}>{props.contravention.fine}</Text>
+      <Pressable onPress={() => navAid.navigate('Bookmarks')}>     
+        <Text styles={styles.heading_2}>{props.contravention}</Text>
+        <Text styles={styles.heading_2}>{props.provision}</Text>
+        <Text styles={styles.heading_2}>{props.fine}</Text>
       </Pressable>
     </View>
   );
