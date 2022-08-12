@@ -1,23 +1,48 @@
 import React from 'react';
 import styles from '../assets/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LegislationGridList from '../components/LegislationGridList';
+import {LEGISLATION} from '../data/LegislationMenuItems';
 
-import {Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
 
 const LegislationScreen = () => {
+
+
+  const renderLandingList = (itemdata) => {
+    console.log('Legscreen' + JSON.stringify(itemdata));
+
+    return(
+    <LegislationGridList
+      id={itemdata.item.id}
+      title={itemdata.item.title}
+      destination={itemdata.item.destination}
+    />);
+
+
+
+    console.log('legscreen - Legscreen other side iof gridlist');
+  };
+
+
+
+
+
+
+  console.log('Legscreen before flatlist');
   return (
-    <View style={styles.background}>
-      <Text style={[styles.title, styles.secondary]}>Project Nemo</Text>
-      <Text style={[styles.heading_1, styles.neutral]}>Heading 1</Text>
-      <Text style={styles.heading_2}>Heading 2</Text>
-      <Text style={[styles.body, styles.accent_1]}>Body</Text>
-      <Text style={[styles.body, styles.accent_2]}>Body 2</Text>
-      <Ionicons name={'bookmark'} size={30} />
-      <Ionicons name={'bookmark-outline'} size={30} />
-      <Ionicons name={'book'} size={30} />
-      <Ionicons name={'book-outline'} size={30} />
-    </View>
+    <SafeAreaView>
+      <View style={styles.background}>
+        <View>{console.log('inside return')}</View>
+
+
+        <FlatList data={ LEGISLATION } renderItem={renderLandingList} />
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default LegislationScreen;
+//        keyExtractor={(item, index) => item.id}
