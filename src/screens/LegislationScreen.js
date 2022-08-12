@@ -10,39 +10,46 @@ import MVA from '../data/mvavt_records.json';
 const LegislationScreen = () => {
   //const MVARecords = JSON.parse(MVA);
   const [currentScreen, setCurrentScreen] = useState('Landing');
+  const [currentData, setCurrentData] = useState(LEGISLATION);
+
+  const CurrentData = () => {
+    console.log(currentData);
+    if (currentScreen === 'Landing') {
+      setCurrentData(LEGISLATION);
+    } else {
+      setCurrentData(MVA);
+    }
+  };
 
   //Function for setting up the Render list for the FlatList
-  const renderLegislationList = itemdata => {
-    return (
+  const renderList = itemdata => {
+    if (currentScreen === 'Landing') {
+      console.log('render landing');
       <LegislationGridList
         id={itemdata.item.id}
         title={itemdata.item.title}
         destination={itemdata.item.destination}
-      />
-    );
-  };
-
-  //Function for setting up the Render list for the FlatList
-  const renderMVARecords = itemdata => {
-    return (
-      <MVAGridList
-        provision={itemdata.item.provision}
-        contravention={itemdata.item.contravention}
-        fine={itemdata.item.fine}
-      />
-    );
+      />;
+    } else {
+      console.log('render not landing');
+      return (
+        <MVAGridList
+          provision={itemdata.item.provision}
+          contravention={itemdata.item.contravention}
+          fine={itemdata.item.fine}
+        />
+      );
+    }
   };
 
   /*OUTPUT*/
+
   return (
     <SafeAreaView>
+      <CurrentData />
       <View style={styles.background}>
-        if (currentScreen === 'Landing')
-        {<FlatList data={LEGISLATION} renderItem={renderLegislationList} />}
-        else {<FlatList data={MVA} renderItem={renderMVARecords} />}
-        {/* <FlatList data={ LEGISLATION } renderItem={renderLegislationList} /> */}
-        {/* <FlatList data={MVA} renderItem={renderMVARecords} /> */}
-      </View>
+        <FlatList data={currentData} renderItem={renderList} />
+      </View> 
     </SafeAreaView>
   );
 };
