@@ -1,19 +1,15 @@
 import React from 'react';
-import styles from '../assets/styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import LegislationGridList from '../components/LegislationGridList';
 import {LEGISLATION} from '../data/LegislationMenuItems';
-
-import {FlatList, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, View} from 'react-native';
+import styles from '../assets/styles';
 
 
 const LegislationScreen = () => {
 
-
+  //Function for setting up the Render list for the FlatList 
   const renderLandingList = (itemdata) => {
-    console.log('Legscreen' + JSON.stringify(itemdata));
-
     return(
     <LegislationGridList
       id={itemdata.item.id}
@@ -21,23 +17,12 @@ const LegislationScreen = () => {
       destination={itemdata.item.destination}
     />);
 
-
-
-    console.log('legscreen - Legscreen other side iof gridlist');
   };
 
-
-
-
-
-
-  console.log('Legscreen before flatlist');
+  /*OUTPUT*/
   return (
     <SafeAreaView>
       <View style={styles.background}>
-        <View>{console.log('inside return')}</View>
-
-
         <FlatList data={ LEGISLATION } renderItem={renderLandingList} />
       </View>
     </SafeAreaView>
@@ -45,4 +30,4 @@ const LegislationScreen = () => {
 };
 
 export default LegislationScreen;
-//        keyExtractor={(item, index) => item.id}
+
