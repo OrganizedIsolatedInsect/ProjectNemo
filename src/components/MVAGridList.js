@@ -6,19 +6,19 @@ import {Text, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 
-const LegislationGridList = props => {
+const MVAGridList = props => {
   const navAid = useNavigation();
 
   
-
+console.log(props);
 
   return (
     <View>
-      <Pressable onPress={() => navAid.navigate(props.destination)}>
-        <Text styles={styles.heading_2}>{props.title}</Text>
+      <Pressable onPress={() => navAid.navigate('Bookmarks')}>
+        <Text styles={styles.heading_2}>{props.contravention.fine}</Text>
       </Pressable>
     </View>
   );
 };
 
-export default LegislationGridList;
+export default MVAGridList;
