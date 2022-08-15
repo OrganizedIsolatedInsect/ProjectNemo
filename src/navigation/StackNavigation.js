@@ -52,7 +52,8 @@ const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: true,
   headerTitle: (props) => <CustomScreenHeader {...props} /> ,
-  headerLeft: null
+  headerLeft: null,
+  headerTitleAlign: 'center',
 };
  
 export {ContentStack, BookMarkStack};

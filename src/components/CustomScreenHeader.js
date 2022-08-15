@@ -19,7 +19,7 @@ import { colors } from '../assets/styles';
 const CustomScreenHeader = () => {
     const navAid = useNavigation();
     return (
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between' }}>
             <Pressable onPress={()=> navAid.navigate('LandingScreen')}><Text style={[styles.title, colors.primary]}>Project Nemo</Text></Pressable>
             <View><Text>       </Text></View>
             <Pressable onPress={()=> navAid.navigate('SearchScreen')}><Icon name={'search'} size={30} /></Pressable>
