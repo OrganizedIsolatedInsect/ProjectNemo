@@ -1,60 +1,49 @@
 import React from 'react';
-
+import styles from '../assets/styles';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, Button, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
 import Bookmark from '../components/Bookmark';
-import DATA from '../data/dummy-data';
-import styles from '../assets/styles';
+import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useDispatch} from 'react-redux';
+
+import {removeBookMark} from '../redux/bookmarkSlice';
 
 const BookmarkScreen = props => {
   const navAid = useNavigation();
 
-
-
-/*
-Preps texts for output to Flatlist;  also calls the Bookmark button state change.  Change Bookmark.js to send data to add/delete from bookmark array
-*/
-  const renderBookmarkList = ({item}) => {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <Pressable onPress={() => navAid.navigate('ContentScreen')}>
-          <Text>{item.title}</Text>
-        </Pressable>
-        <Bookmark />
-      </View>
-    );
-  };
+  const bookmarks = useSelector(state => state.bookmarks);
+  console.log(bookmarks);
+  const dispatch = useDispatch();
 
   /*Output Section*/
   return (
-
+    <SafeAreaView>
       <View style={styles.background}>
-        <Text style={[styles.heading_1, styles.neutral]}>
-          Dev Screen name: BOOKMARK SCREEN
-        </Text>
-        <View style={styles.sectionDivider} />
-        <View>
-          <Text>Insert Filters Here</Text>
-          <Button
-            style={styles.filterButton}
-            onpress={''}
-            title="Create filters here"
-          />
-        </View>
-        <View style={styles.sectionDivider} />
-        <View>
-          <Text>Flatlist setup goes here</Text>
-          <FlatList
-            data={DATA}
-            renderItem={renderBookmarkList}
-            keyExtractor={item => item.id}
-          />
-        </View>
+        <FlatList
+          data={bookmarks.sections}
+          renderItem={({item}) => (
+            <View style={{flexDirection: 'row'}}>
+              <Text>
+                {item.section} {item.sectionHeader}
+              </Text>
+              <Icon
+                name="bookmark"
+                size={30}
+                onPress={() =>
+                  dispatch(removeBookMark({section: item.section}))
+                }
+              />
+            </View>
+          )}
+        />
+      </View>
+      <View>
+        <Button title="debug" onPress={() => console.log(bookmarks)} />
       </View>
 
   );
 };
 
 export default BookmarkScreen;
-

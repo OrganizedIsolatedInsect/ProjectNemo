@@ -33,7 +33,8 @@ export default StyleSheet.create({
   sectionDivider: {
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 15
+    marginBottom: 15,
+    flexDirection: 'row',
   },
 
   container: {

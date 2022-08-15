@@ -2,28 +2,92 @@
 
 */
 import React from 'react';
+import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, Pressable} from 'react-native';
+import {
+  Text,
+  View,
+  Pressable,
+  Button,
+  FlatList,
+  SectionList,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Bookmark from '../components/Bookmark';
-import styles from '../assets/styles';
+import testData from '../data/test.json';
+import Section from '../components/Section';
+import {addBookmark} from '../redux/bookmarkSlice';
 
-const ContentScreen = props => {
+const MVAContent = props => {
+  const dispatch = useDispatch();
+
+  const testButton = () => {
+    console.log(testData.sectionHeader);
+  };
+
+  const ParagraphItem = ({index, section, paragraph, paragraphText}) => (
+    <View>
+      <Text style={[styles.body, styles.accent_1]}>
+        {paragraph} {paragraphText}
+      </Text>
+    </View>
+  );
+
+  const SectionHeader = ({index, section, sectionHeader}) => (
+    <View style={styles.sectionDivider}>
+      <Text style={[styles.heading_2, styles.accent_2]}>
+        {section} {sectionHeader}
+      </Text>
+      <Icon
+        name="bookmark"
+        size={30}
+        onPress={() => {
+          dispatch(
+            addBookmark({
+              index: index,
+              section: section,
+              sectionHeader: sectionHeader,
+            }),
+          );
+        }}
+      />
+    </View>
+  );
+
+  const renderItem = ({item}) => {
+    if (item.paragraph !== null) {
+      return (
+        <View>
+          <ParagraphItem
+            index={item.index}
+            section={item.section}
+            paragraph={item.paragraph}
+            paragraphText={item.paragraphText}
+          />
+        </View>
+      );
+    }
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.background}>
         <View style={styles.sectionDivider} />
-        <Text style={[styles.heading_1, styles.neutral]}>
-          DEV screen name: MVA CONTENT
-        </Text>
-        <Text style={styles.heading_2}>Heading 2</Text>
-        <Bookmark />
-        <Text style={[styles.body, styles.accent_1]}>Body</Text>
-        <Text style={[styles.body, styles.accent_2]}>Body 2</Text>
+
+        <SectionHeader
+          index={testData[3].index}
+          section={testData[3].section}
+          sectionHeader={testData[3].sectionHeader}
+        />
+        <View>
+          <FlatList data={testData} renderItem={renderItem} />
+        </View>
+        <Button title="console log" onPress={() => testButton()} />
       </View>
     </SafeAreaView>
   );
 };
 
-export default ContentScreen;
-
+export default MVAContent;
