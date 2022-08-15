@@ -1,17 +1,37 @@
 
 //PACKAGE Imports
 import React from 'react';
+import { Pressable } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+
 //USER Imports
 import { BookMarkStack, ContentStack } from './StackNavigation';
+import colors from '../assets/styles';
 
 
 const BottomTab = createBottomTabNavigator();
 
+
+
+
 //NEW BLOCK
 export const AppNavigator = () => {
+
+  const CustomTabButton = (props) => (
+    <Pressable
+      {...props}
+      style={
+        props.accessibilityState.selected
+          ? [props.style, { borderTopColor: colors.primary, borderTopWidth: 2 }]
+          : props.style
+      }
+    />
+  );
+
+
+
   return (
       <BottomTab.Navigator
         screenOptions={({route}) => ({
@@ -23,7 +43,7 @@ export const AppNavigator = () => {
             }
 
             // You can return any component that you like here!
-            return <Icon name={iconName} size={50} color={color} />;
+            return <Icon name={iconName} size={50} color={colors.primary} />;
           },
           // tabBarOptions: {iconStyle: { height: 10000, width: 10000}},   TODO continue with this project
           headerShown: false,
@@ -31,8 +51,8 @@ export const AppNavigator = () => {
 
 
         })}>
-        <BottomTab.Screen name="Legislation" component={ContentStack} />
-        <BottomTab.Screen name="Bookmarks" component={BookMarkStack} />
+        <BottomTab.Screen name="Legislation" component={ContentStack} options={{tabBarButton: CustomTabButton}} />
+        <BottomTab.Screen name="Bookmarks" component={BookMarkStack} options={{tabBarButton: CustomTabButton}} />
       </BottomTab.Navigator>
   );
 };
