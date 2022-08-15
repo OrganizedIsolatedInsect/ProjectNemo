@@ -56,3 +56,6 @@ const screenOptionStyle = {
 };
  
 export {ContentStack, BookMarkStack};
+
+
+//Remove Header Back Button:   https://infinitbility.com/how-to-remove-back-button-in-react-navigation/
