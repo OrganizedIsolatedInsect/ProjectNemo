@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from '../assets/styles';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {Text, View, Button, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+
 import Bookmark from '../components/Bookmark';
-import DATA from '../dummydata/data';
+import DATA from '../data/dummy-data';
+import styles from '../assets/styles';
 
 const BookmarkScreen = props => {
   const navAid = useNavigation();
@@ -17,7 +18,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
   const renderBookmarkList = ({item}) => {
     return (
       <View style={{flexDirection: 'row'}}>
-        <Pressable onPress={() => navAid.navigate('MVAContent')}>
+        <Pressable onPress={() => navAid.navigate('ContentScreen')}>
           <Text>{item.title}</Text>
         </Pressable>
         <Bookmark />
@@ -27,7 +28,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
 
   /*Output Section*/
   return (
-    <SafeAreaView>
+
       <View style={styles.background}>
         <Text style={[styles.heading_1, styles.neutral]}>
           Dev Screen name: BOOKMARK SCREEN
@@ -51,7 +52,7 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
           />
         </View>
       </View>
-    </SafeAreaView>
+
   );
 };
 

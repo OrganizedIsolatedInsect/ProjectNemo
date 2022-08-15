@@ -1,14 +1,14 @@
 //PACKAGE IMPORTS
 import React from 'react';
-import styles from '../assets/styles';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, FlatList} from 'react-native';
-import { SafeAreaView} from 'react-native-safe-area-context';
+
 //USER Imports
 import Bookmark from '../components/Bookmark';
-import DATA from '../dummydata/data';
+import DATA from '../data/dummy-data';
+import styles from '../assets/styles';
 
-const MVABrowse = props => {
+const BrowseScreen = props => {
 
   const navAid = useNavigation();
 
@@ -19,14 +19,16 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
   const renderBrowseList = ({item}) => {
     return (
       <View style={{flexDirection: 'row'}}>
-        <Pressable onPress={() => navAid.navigate('MVAContent')}><Text>{item.title}</Text></Pressable>
+        <Pressable onPress={() => navAid.navigate('ContentScreen')}><Text>{item.title}</Text></Pressable>
         <Bookmark />
       </View>
     );
   };
 
+
+  /*OUTPUT*/
   return (
-    <SafeAreaView>
+
       <View style={styles.background}>
 
         <View style={styles.sectionDivider} />
@@ -44,8 +46,8 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
           />
         </View>
       </View>
-    </SafeAreaView>
+
   );
 };
 
-export default MVABrowse;
+export default BrowseScreen;

@@ -2,12 +2,13 @@
 
 */
 import React from 'react';
-import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, Pressable} from 'react-native';
-import Bookmark from '../components/Bookmark';
 
-const MVAContent = props => {
+import Bookmark from '../components/Bookmark';
+import styles from '../assets/styles';
+
+const ContentScreen = props => {
   return (
     <SafeAreaView>
       <View style={styles.background}>
@@ -24,5 +25,5 @@ const MVAContent = props => {
   );
 };
 
-export default MVAContent;
+export default ContentScreen;
 

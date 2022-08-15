@@ -11,9 +11,11 @@ import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
 
-const BookMarkNavigator = createStackNavigator();
 
+
+const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
+
 
 const ContentStack = () => {
 
@@ -44,12 +46,13 @@ const BookMarkStack = () => {
 };
 
 //STYLING
+//shows CustomHeader
+//removes back button
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: true,
   headerTitle: (props) => <CustomScreenHeader {...props} /> ,
- 
-  
+  headerLeft: null
 };
  
 export {ContentStack, BookMarkStack};

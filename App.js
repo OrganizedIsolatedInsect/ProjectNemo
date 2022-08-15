@@ -6,8 +6,13 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 //USER Imports
 import AppNavigator from './src/navigation/TabNavigation';
 
-const App = () => {
 
+// TODO - DEV tool only - remove upon production
+let date = new Date();
+console.log(date);
+
+
+const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
