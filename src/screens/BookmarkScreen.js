@@ -3,12 +3,12 @@ import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, Button, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Bookmark from '../components/Bookmark';
+
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
 
-import {removeBookMark} from '../redux/bookmarkSlice';
+import {removeBookmark} from '../redux/bookmarkSlice';
 
 const BookmarkScreen = props => {
   const navAid = useNavigation();
@@ -24,15 +24,24 @@ const BookmarkScreen = props => {
         <FlatList
           data={bookmarks.sections}
           renderItem={({item}) => (
-            <View style={{flexDirection: 'row'}}>
-              <Text>
-                {item.section} {item.sectionHeader}
-              </Text>
-              <Icon
-                name="bookmark"
-                size={30}
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Pressable
                 onPress={() =>
-                  dispatch(removeBookMark({section: item.section}))
+                  navAid.navigate('MVAContent', {
+                    section: item.section,
+                  })
+                }>
+                <Text>
+                  {item.section} {item.sectionHeader}
+                </Text>
+              </Pressable>
+
+              <Icon
+                name="delete"
+                size={20}
+                onPress={() =>
+                  dispatch(removeBookmark({section: item.section}))
                 }
               />
             </View>

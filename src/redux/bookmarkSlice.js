@@ -1,13 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+//redux store for boookmarks
+
 const initialState = {
-  sections: [
-    {
-      index: '0',
-      section: '0.6',
-      sectionHeader: 'Initial State Data',
-    },
-  ],
+  sections: [],
 };
 
 const bookmarkSlice = createSlice({
@@ -17,7 +13,7 @@ const bookmarkSlice = createSlice({
     addBookmark: (state, action) => {
       state.sections.push(action.payload);
     },
-    removeBookMark: (state, action) => {
+    removeBookmark: (state, action) => {
       state.sections = state.sections.filter(
         sections => sections.section !== action.payload.section,
       );
@@ -25,6 +21,6 @@ const bookmarkSlice = createSlice({
   },
 });
 
-export const {addBookmark, removeBookMark} = bookmarkSlice.actions;
+export const {addBookmark, removeBookmark} = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;
