@@ -50,4 +50,48 @@ export default StyleSheet.create({
     borderRadius: 25,
     borderColor: '#7F2025',
   },
+  container: {
+    paddingTop: 20,
+    paddingHorizontal: 30,
+    marginBottom: 50,
+    flexDirection: 'column',
+    alignContent: 'space-between',
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.8,
+    borderBottomColor: 'black',
+  },
+  innerContainerLeft: {
+    paddingVertical: 9,
+    flex: 1,
+    width: '70%',
+  },
+  innerContainerRight: {
+    alignItems: 'flex-end',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 10,
+    marginHorizontal: 20,
+    marginBottom: 10,
+    justifyContent: 'flex-start',
+  },
+  buttonAct: {
+    borderRadius: 25,
+    borderColor: '#7F2025',
+    borderWidth: 1,
+    width: 120,
+    padding: 5,
+  },
+  buttonActText: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 17,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+
 });
