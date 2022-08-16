@@ -29,4 +29,25 @@ export default StyleSheet.create({
     fontFamily: 'NotoSans-Regular',
     fontSize: 14,
   },
+  sectionDivider: {
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 15
+  },
+  filterBox: {
+    borderColor: '#dff0e3',
+    borderWidth: 1,
+  },
+  filterButton: {
+    flex: 0.25,
+    width: '30%',
+    fontFamily: 'Lato-Regular',
+    fontWeight: 'Bold',
+    color: '#E6E6E6',
+    tintColor: '7F2025',
+    fontSize: 12,
+    padding: 20,
+    borderRadius: 25,
+    borderColor: '#7F2025',
+  },
 });
