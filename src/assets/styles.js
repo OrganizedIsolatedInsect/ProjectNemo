@@ -13,8 +13,9 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   title: {
-    fontFamily: 'Lato-Bold',
+    fontFamily: 'Lato-Regular',
     fontSize: 20,
+    fontWeight: "bold"
   },
   heading_1: {
     fontFamily: 'Lato-Regular',
@@ -34,25 +35,10 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 15
   },
-  filterBox: {
-    borderColor: '#dff0e3',
-    borderWidth: 1,
-  },
-  filterButton: {
-    flex: 0.25,
-    width: '30%',
-    fontFamily: 'Lato-Regular',
-    fontWeight: 'Bold',
-    color: '#E6E6E6',
-    tintColor: '7F2025',
-    fontSize: 12,
-    padding: 20,
-    borderRadius: 25,
-    borderColor: '#7F2025',
-  },
+
   container: {
     paddingTop: 20,
-    paddingHorizontal: 30,
+    paddingHorizontal: 18,
     marginBottom: 50,
     flexDirection: 'column',
     alignContent: 'space-between',
@@ -75,7 +61,7 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     padding: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 8,
     marginBottom: 10,
     justifyContent: 'flex-start',
   },

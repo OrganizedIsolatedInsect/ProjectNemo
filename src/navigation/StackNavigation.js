@@ -26,8 +26,7 @@ const ContentStack = () => {
       <ContentNavigator.Screen name="ContentScreen" component={ContentScreen} />
       <ContentNavigator.Screen
         name="ExceptionScreen"
-        component={ExceptionScreen}
-        options={{ headerTitle: (props) => <CustomScreenHeader {...props} /> }} />
+        component={ExceptionScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen}  />
     </ContentNavigator.Navigator>
   );

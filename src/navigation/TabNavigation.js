@@ -25,7 +25,7 @@ export const AppNavigator = () => {
                 borderTopColor: colors.primary,
                 borderTopWidth: 2,
                 // width: 36,
-                // height: 75,
+                // height: 44,
               },
             ]
           : props.style

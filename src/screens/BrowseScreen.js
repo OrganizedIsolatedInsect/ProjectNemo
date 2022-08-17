@@ -1,34 +1,39 @@
 
-import React, {useState} from 'react';
+/* BROWSE screen - re-usable screen for browses for all legislation
+*/
 
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, ScrollView, StyleSheet} from 'react-native';
 
 //USER Imports
-import Bookmark from '../components/Bookmark';
-import MVA from '../data/mvavt_records.json';
+import MVA from '../data/mvavt_records.json';  // for PRODUCTION Purposes
+import { MVAData, CCDATA } from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles from '../assets/styles';
 
-const BrowseScreen = props => {
+const BrowseScreen = ({route}) => {
 
   const [ShowAct, setShowAct] = useState(true);
   const [ShowReg, setShowReg] = useState(true);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);      //for loading spinner
+  const [newData, setNewData] = useState('Testing so far'); 
+  const [whichData, setWhichData] = useState('CC');
 
   const navAid = useNavigation();
 
-  /*
-Preps texts for output to Flatlist;  also calls the Bookmark button state change.  Change Bookmark.js to send data to add/delete from bookmark array
-*/
-  // const renderBrowseList = ({item}) => {
-  //   return (
-  //     <View style={{flexDirection: 'row'}}>
-  //       <Pressable onPress={() => navAid.navigate('MVAContent')}><Text>{item.title}</Text></Pressable>
-  //       <Bookmark />
-  //     </View>
-  //   );
-  // };
+  const source = route.params.paramkey;
+
+
+  //captures the data that was selected on the Landing screen into this screen so we can display onto the page.
+  useEffect(() => {
+    setWhichData(source);
+    if (whichData === 'CC') {
+      setNewData(CCDATA)
+    } else {
+      setNewData(MVAData)
+    };
+  },[]);
+
 
   return (
     <View style={styles.background}>
@@ -134,57 +139,14 @@ Preps texts for output to Flatlist;  also calls the Bookmark button state change
 
 export default BrowseScreen;
 
-// const stylesMVA = StyleSheet.create({
-//   container: {
-//     paddingTop: 20,
-//     paddingHorizontal: 30,
-//     marginBottom: 50,
-//     flexDirection: 'column',
-//     alignContent: 'space-between',
-//   },
-//   innerContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     borderBottomWidth: 0.8,
-//     borderBottomColor: 'black',
-//   },
-//   innerContainerLeft: {
-//     paddingVertical: 9,
-//     flex: 1,
-//     width: '70%',
-//   },
-//   innerContainerRight: {
-//     alignItems: 'flex-end',
-//   },
-//   buttonContainer: {
-//     display: 'flex',
-//     flexDirection: 'row',
-//     padding: 10,
-//     marginHorizontal: 20,
-//     marginBottom: 10,
-//     justifyContent: 'flex-start',
-//   },
-//   buttonAct: {
-//     borderRadius: 25,
-//     borderColor: '#7F2025',
-//     borderWidth: 1,
-//     width: 120,
-//     padding: 5,
-//   },
-//   buttonActText: {
-//     fontFamily: 'Lato-Regular',
-//     fontSize: 17,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     textAlignVertical: 'center',
-//   },
-// });
 
+
+//SAMPLE CODES AND SOURCES
 {
   /// Maping JSON example ///
   /* {MVA.map(MVA_List => {
 return (
-  <View key={MVA_List.index} style={stylesMVA.innerContainer}>
+  <View key={MVA_List.index} style={styles.innerContainer}>
     <View>
       <Text>{MVA_List.contravention}</Text>
     </View>

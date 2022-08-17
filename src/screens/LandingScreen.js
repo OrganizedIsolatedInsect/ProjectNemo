@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import {View, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 //USER IMPORTS
 import LegislationGridList from '../components/LegislationGridList';
@@ -11,7 +10,6 @@ import MVA from '../data/mvavt_records.json';
 import styles from '../assets/styles';
 
 const LandingScreen = props => {
-  const navAid = useNavigation();
 
   const [currentScreen, setCurrentScreen] = useState('Landing');
   const [useableData, setUsableData] = useState(LEGISLATION);
@@ -33,6 +31,7 @@ const LandingScreen = props => {
           id={itemdata.item.id}
           title={itemdata.item.title}
           destination={itemdata.item.destination}
+          dataSource={itemdata.item.dataSource}
         />
       );
     } else {
@@ -50,7 +49,7 @@ const LandingScreen = props => {
   return (
     <View>
       <CurrentData />
-      <View style={styles.background}>
+      <View style={[styles.background, styles.container]}>
         <View>
           <FlatList
             data={useableData}
