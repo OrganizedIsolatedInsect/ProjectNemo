@@ -92,7 +92,7 @@ const BrowseScreen = ({route}) => {
                 return (
                   <Pressable
                     key={MVA_List.index}
-                    onPress={() => navAid.navigate('ContentScreen')}
+                    onPress={() => navAid.navigate('ContentScreen', {item: MVA_List})}
                     style={styles.innerContainer}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
