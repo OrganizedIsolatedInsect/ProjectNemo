@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import testData from '../data/test.json';
 import crimData from '../data/C-46.json';
@@ -25,13 +25,22 @@ const Section = ({section, type}) => {
   const dispatch = useDispatch();
   const [marked, setMarked] = useState(false);
 
+  //pull state to see if current section exists in bookmarks
+  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+
   const switchMarks = () => {
     setMarked(!marked);
   };
 
+  useEffect(() => {
+    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
+    if (bookmarkStateId.some(e => e.section === section)) {
+      setMarked(true);
+    }
+  }, [marked]);
+
   //dispatch add or remove bookmarks based bookmark icon
   const dispatchAction = (section, sectionHeader) => {
-    console.log(section);
     if (marked === false) {
       dispatch(
         addBookmark({
