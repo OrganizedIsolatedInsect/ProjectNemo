@@ -14,14 +14,15 @@ console.log(date);
 
 
 const App = () => {
-
   return (
     <Provider store={store}>
+      <Provider store={store}>
       <SafeAreaProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </SafeAreaProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </SafeAreaProvider>
+    </Provider>
     </Provider>
   );
 };
