@@ -1,18 +1,18 @@
 //PACKAGE Imports
 import React from 'react';
-import {Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 //USER Imports
 import AppNavigator from './src/navigation/TabNavigation';
 
-const App = () => {
-  //TO DO - Remove Console Log
-  let now = new Date();
-  // convert date to a string in UTC timezone format:
-  console.log('[Apps] - Last Compile/Run -' + now.toUTCString());
 
+// TODO - DEV tool only - remove upon production
+let date = new Date();
+console.log(date);
+
+
+const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>

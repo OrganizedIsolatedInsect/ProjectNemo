@@ -5,27 +5,28 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import MVABrowse from '../screens/MVABrowse';
-import MVAContent from '../screens/MVAContent';
+import BrowseScreen from '../screens/BrowseScreen';
+import ContentScreen from '../screens/ContentScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
 
-const BookMarkNavigator = createStackNavigator();
 
+
+const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
+
 
 const ContentStack = () => {
 
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
-      <ContentNavigator.Screen name="MVABrowse" component={MVABrowse} />
-      <ContentNavigator.Screen name="MVAContent" component={MVAContent} />
+      <ContentNavigator.Screen name="BrowseScreen" component={BrowseScreen} />
+      <ContentNavigator.Screen name="ContentScreen" component={ContentScreen} />
       <ContentNavigator.Screen
         name="ExceptionScreen"
-        component={ExceptionScreen}
-        options={{ headerTitle: (props) => <CustomScreenHeader {...props} /> }} />
+        component={ExceptionScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen}  />
     </ContentNavigator.Navigator>
   );
@@ -44,12 +45,17 @@ const BookMarkStack = () => {
 };
 
 //STYLING
+//shows CustomHeader
+//removes back button
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: true,
   headerTitle: (props) => <CustomScreenHeader {...props} /> ,
- 
-  
+  headerLeft: null,
+  headerTitleAlign: 'center',
 };
  
 export {ContentStack, BookMarkStack};
+
+
+//Remove Header Back Button:   https://infinitbility.com/how-to-remove-back-button-in-react-navigation/
