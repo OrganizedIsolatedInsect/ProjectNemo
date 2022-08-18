@@ -17,6 +17,12 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  coloredTitle: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
   heading_1: {
     fontFamily: 'Lato-Regular',
     fontSize: 20,
@@ -29,6 +35,22 @@ export default StyleSheet.create({
   body: {
     fontFamily: 'NotoSans-Regular',
     fontSize: 14,
+  },
+  sectionDivider: {
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 15,
+  },
+  container: {
+    paddingTop: 20,
+    paddingHorizontal: 18,
+    marginBottom: 50,
+    flexDirection: 'column',
+    alignContent: 'space-between',
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   //Styling specifically for the Searchbar component.

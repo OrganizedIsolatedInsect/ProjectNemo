@@ -1,5 +1,5 @@
 /*
-    TO BE REMOVED
+
 */
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -8,7 +8,7 @@ import {Text, View, Pressable} from 'react-native';
 import Bookmark from '../components/Bookmark';
 import styles from '../assets/styles';
 
-const ContentScreen = props => {
+const ContentMVAScreen = props => {
   return (
     <SafeAreaView>
       <View style={styles.background}>
@@ -25,5 +25,5 @@ const ContentScreen = props => {
   );
 };
 
-export default ContentScreen;
+export default ContentMVAScreen;
 
