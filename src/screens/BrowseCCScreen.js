@@ -26,11 +26,11 @@ const BrowseCCScreen = ({route}) => {
     );
   };
 
-  const Item = ({ part }) => (
-    <View style={sty.item}>
-      <Text style={sty.title}>{part}</Text>
-    </View>
-  );
+//   const Item = ({ part }) => (
+//     <View style={sty.item}>
+//       <Text style={sty.title}>{part}</Text>
+//     </View>
+//   );
   
   return (
     <View style={[styles.background, styles.container]}>
