@@ -12,6 +12,8 @@ let date = new Date();
 console.log(date);
 
 
+import {AppNavigator} from './src/navigation/navigator';
+
 import SearchBar from './src/components/SearchBar';
 
 const App = () => {
