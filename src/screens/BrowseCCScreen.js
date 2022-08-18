@@ -2,7 +2,7 @@
  */
 
 import React, {useState} from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, SectionList, StyleSheet } from 'react-native';
 
 //USER Imports
 import {CCDATAPARTS} from '../data/dummy-data'; //for DEVELOPMENT Purposes
@@ -15,7 +15,7 @@ const BrowseCCScreen = ({route}) => {
 
 
   const renderList = itemdata => {
-    console.log(itemdata);
+
     return (
       <CrimCodeGridList
         index={itemdata.item.index}
@@ -26,6 +26,12 @@ const BrowseCCScreen = ({route}) => {
     );
   };
 
+  const Item = ({ part }) => (
+    <View style={sty.item}>
+      <Text style={sty.title}>{part}</Text>
+    </View>
+  );
+  
   return (
     <View style={[styles.background, styles.container]}>
       <FlatList
@@ -34,8 +40,40 @@ const BrowseCCScreen = ({route}) => {
         keyExtractor={item => item.index}
         ItemSeparatorComponent={() => <View style={{margin: 15}} />}
       />
+
+
+
     </View>
+
+
+
+
   );
 };
+
+const sty = StyleSheet.create({
+    screen: {
+      marginTop: 18,
+    },
+    header: {
+      fontSize: 30,
+      color: "#FFF",
+      marginTop: 10,
+      padding: 2,
+      backgroundColor: "#C2185B",
+      textAlign: "center",
+    },
+    row: {
+        marginHorizontal: 15,
+        marginTop: 10,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 2,
+      },
+      rowText: {
+        fontSize: 18,
+      },
+  });
 
 export default BrowseCCScreen;

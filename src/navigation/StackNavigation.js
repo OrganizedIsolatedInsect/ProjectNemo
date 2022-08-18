@@ -10,7 +10,7 @@ import BrowseCCScreen from '../screens/BrowseCCScreen';
 import BrowseMVAScreen from '../screens/BrowseCCScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
 import ContentScreen from '../screens/ContentScreen';       // TODO  REmove this line
-import ContentMVAScreen from '..screens/ContentMVAScreen;'
+import ContentMVAScreen from '../screens/ContentMVAScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
