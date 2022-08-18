@@ -15,7 +15,7 @@ export default StyleSheet.create({
   title: {
     fontFamily: 'Lato-Regular',
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   heading_1: {
     fontFamily: 'Lato-Regular',
@@ -40,13 +40,13 @@ export default StyleSheet.create({
     position: 'relative',
     zIndex: 1,
     // marginTop: 10,
-    flex: 1,
+    // flex: 1,
     width: '80%',
-    borderColor: '#e6e6e6',
+    borderColor: colors.neutral,
     borderWidth: 1,
     borderRadius: 15,
     paddingLeft: 45,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: colors.neutral,
     marginLeft: 15,
   },
   searchIcon_styling: {
@@ -70,5 +70,14 @@ export default StyleSheet.create({
     // color: 'blue',
     // borderless: 'true',
     radius: 25,
+  },
+  // SEARCHBAR Styling END
+
+  // Search Results Flatlist Styling
+  searchResultsFlatList_ItemView: {padding: 10},
+  searchResultsFlatList_ItemSeparator: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: colors.neutral,
   },
 });
