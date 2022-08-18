@@ -5,32 +5,40 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import BrowseScreen from '../screens/BrowseScreen';
-import ContentScreen from '../screens/ContentScreen';
+import BrowseScreen from '../screens/BrowseCCScreen';     // TODO  REmove this line
+import BrowseCCScreen from '../screens/BrowseCCScreen';
+import BrowseMVAScreen from '../screens/BrowseCCScreen';
+import ContentCCScreen from '../screens/ContentCCScreen';
+import ContentScreen from '../screens/ContentScreen';       // TODO  REmove this line
+import ContentMVAScreen from '..screens/ContentMVAScreen;'
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
 
 
 
-const BookMarkNavigator = createStackNavigator();
-const ContentNavigator = createStackNavigator();
+const BookMarkNavigator = createStackNavigator();       
+const ContentNavigator = createStackNavigator();         
 
 
 const ContentStack = () => {
-
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
-      <ContentNavigator.Screen name="BrowseScreen" component={BrowseScreen} />
-      <ContentNavigator.Screen name="ContentScreen" component={ContentScreen} />
+      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen}  />
+      <ContentNavigator.Screen name="BrowseCCScreen" component={BrowseCCScreen} />
+      <ContentNavigator.Screen name="ContentCCScreen" component={ContentCCScreen} />
+      <ContentNavigator.Screen name="BrowseMVAScreen" component={BrowseMVAScreen} />
+      <ContentNavigator.Screen name="ContentMVAScreen" component={ContentMVAScreen} />
       <ContentNavigator.Screen
         name="ExceptionScreen"
         component={ExceptionScreen} />
-      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen}  />
+
     </ContentNavigator.Navigator>
   );
 };
+
+
 
 const BookMarkStack = () => {
 
@@ -54,8 +62,8 @@ const screenOptionStyle = {
   headerLeft: null,
   headerTitleAlign: 'center',
 };
- 
-export {ContentStack, BookMarkStack};
+
+ export {ContentStack, BookMarkStack};
 
 
 //Remove Header Back Button:   https://infinitbility.com/how-to-remove-back-button-in-react-navigation/

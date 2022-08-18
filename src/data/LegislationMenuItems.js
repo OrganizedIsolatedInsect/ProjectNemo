@@ -3,6 +3,6 @@
 import LegislationItem from '../models/LegislationItem';
 
 export const LEGISLATION = [
-  new LegislationItem('l1', 'Criminal Code of Canada', 'BrowseScreen', 'CC'),
-  new LegislationItem('l2', 'Motor Vehicle Acts + Regulations', 'BrowseScreen', 'MVA'),
+  new LegislationItem('l1', 'Criminal Code of Canada', 'BrowseCCScreen', 'CC'),
+  new LegislationItem('l2', 'Motor Vehicle Acts + Regulations', 'BrowseMVAScreen', 'MVA'),
 ];
