@@ -2,8 +2,7 @@
 
 */
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, Pressable, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 
 import Bookmark from '../components/Bookmark';
 import styles from '../assets/styles';
