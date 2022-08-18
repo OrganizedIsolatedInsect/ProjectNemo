@@ -696,6 +696,140 @@ const CCDATA = [
     },
 ];
 
-  export { DATA, MVAData, CCDATA } ;
+const CCDATAPARTS = [
+	{
+		"index": 0,
+		"part": "Part I",
+		"section": "1",
+		"sectionHeader": "Short title"
+	},
+	{
+		"index": 1,
+		"part": "Part I",
+		"section": "2",
+		"sectionHeader": "Definitions"
+	},
+	{
+		"index": 2,
+		"part": "Part I",
+		"section": "2.1",
+		"sectionHeader": "Further definitions — firearms"
+	},
+	{
+		"index": 3,
+		"part": "Part I",
+		"section": "2.2",
+		"sectionHeader": "Acting on victim’s behalf"
+	},
+	{
+		"index": 4,
+		"part": "Part I",
+		"section": "2.3",
+		"sectionHeader": "Concurrent jurisdiction"
+	},
+	{
+		"index": 5,
+		"part": "Part I",
+		"section": "3",
+		"sectionHeader": "Descriptive cross-references"
+	},
+	{
+		"index": 6,
+		"part": "Part I",
+		"section": "3.1",
+		"sectionHeader": "Effect of judicial acts"
+	},
+	{
+		"index": 7,
+		"part": "Part I",
+		"section": "4",
+		"sectionHeader": "Postcard a chattel, value"
+	},
+	{
+		"index": 8,
+		"part": "Part I",
+		"section": "5",
+		"sectionHeader": "Canadian Forces not affected"
+	},
+	{
+		"index": 9,
+		"part": "Part I",
+		"section": "6",
+		"sectionHeader": "Presumption of innocence"
+	},
+	{
+		"index": 10,
+		"part": "Part I",
+		"section": "7",
+		"sectionHeader": "Offences committed on aircraft"
+	},
+	{
+		"index": 11,
+		"part": "Part I",
+		"section": "8",
+		"sectionHeader": "Application to territories"
+	},
+	{
+		"index": 12,
+		"part": "Part I",
+		"section": "9",
+		"sectionHeader": "Criminal offences to be under law of Canada"
+	},
+	{
+		"index": 13,
+		"part": "Part I",
+		"section": "10",
+		"sectionHeader": "Appeal"
+	},
+	{
+		"index": 14,
+		"part": "Part I",
+		"section": "11",
+		"sectionHeader": "Civil remedy not suspended"
+	},
+	{
+		"index": 15,
+		"part": "Part I",
+		"section": "12",
+		"sectionHeader": "Offence punishable under more than one Act"
+	},
+	{
+		"index": 16,
+		"part": "Part I",
+		"section": "13",
+		"sectionHeader": "Child under twelve"
+	},
+	{
+		"index": 17,
+		"part": "Part I",
+		"section": "14",
+		"sectionHeader": "Consent to death"
+	},
+	{
+		"index": 18,
+		"part": "Part I",
+		"section": "15",
+		"sectionHeader": "Obedience to "
+	},
+	{
+		"index": 19,
+		"part": "Part I",
+		"section": "16",
+		"sectionHeader": "Defence of mental disorder"
+	},
+	{
+		"index": 20,
+		"part": "Part I",
+		"section": "17",
+		"sectionHeader": "Compulsion by threats"
+	},
+	{
+		"index": 21,
+		"part": "Part I",
+		"section": "18",
+		"sectionHeader": "Compulsion of spouse"
+	},
+]
 
+  export { DATA, MVAData, CCDATA, CCDATAPARTS } ;
 
