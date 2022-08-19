@@ -10,7 +10,7 @@ import testData from '../data/test.json';
 import Section from '../components/Section';
 import crimData from '../data/C-46.json';
 
-const MVAContent = props => {
+const ContentCCScreen = props => {
   //pull section number from browse screen to send to section component
   let sectionId = props.route.params.section;
 
@@ -20,10 +20,10 @@ const MVAContent = props => {
     <SafeAreaView>
       <View style={styles.background}>
         <View style={styles.sectionDivider} />
-        <Section section={sectionId} typeId={typeId} />
+        <Section section={sectionId} typeId={lawType} />
       </View>
     </SafeAreaView>
   );
 };
 
-export default MVAContent;
+export default ContentCCScreen;

@@ -7,22 +7,18 @@ import {Provider} from 'react-redux';
 import AppNavigator from './src/navigation/TabNavigation';
 import store from './src/redux/store';
 
-
 // TODO - DEV tool only - remove upon production
 let date = new Date();
 console.log(date);
 
-
 const App = () => {
   return (
     <Provider store={store}>
-      <Provider store={store}>
       <SafeAreaProvider>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-        </SafeAreaProvider>
-    </Provider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 };

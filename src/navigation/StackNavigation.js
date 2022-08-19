@@ -6,7 +6,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
 import BrowseScreen from '../screens/BrowseScreen';
-import ContentScreen from '../screens/ContentScreen';
+import BrowseCCScreen from '../screens/BrowseCCScreen';
+import ContentCCScreen from '../screens/ContentCCScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
@@ -19,7 +20,14 @@ const ContentStack = () => {
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
       <ContentNavigator.Screen name="BrowseScreen" component={BrowseScreen} />
-      <ContentNavigator.Screen name="ContentScreen" component={ContentScreen} />
+      <ContentNavigator.Screen
+        name="BrowseCCScreen"
+        component={BrowseCCScreen}
+      />
+      <ContentNavigator.Screen
+        name="ContentCCScreen"
+        component={ContentCCScreen}
+      />
       <ContentNavigator.Screen
         name="ExceptionScreen"
         component={ExceptionScreen}
@@ -37,7 +45,7 @@ const BookMarkStack = () => {
         name="BookmarkList"
         component={BookmarkScreen}
       />
-      <BookMarkNavigator.Screen name="MVAContent" component={MVAContent} />
+      <BookMarkNavigator.Screen name="MVAContent" component={ContentCCScreen} />
     </BookMarkNavigator.Navigator>
   );
 };

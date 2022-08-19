@@ -25,6 +25,7 @@ const BookmarkScreen = props => {
           data={bookmarks.sections}
           renderItem={({item}) => (
             <View
+              // eslint-disable-next-line react-native/no-inline-styles
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Pressable
                 onPress={() =>
@@ -51,7 +52,7 @@ const BookmarkScreen = props => {
       <View>
         <Button title="debug" onPress={() => console.log(bookmarks)} />
       </View>
-
+    </SafeAreaView>
   );
 };
 

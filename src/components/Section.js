@@ -22,6 +22,40 @@ const Section = ({section, type}) => {
     return obj.section === sectionId;
   });
 
+  //Create array to divide up subsections
+  let subsectionArray = [];
+
+  for (var i = 0, l = sectionData.length; i < l; i++) {
+    const section = sectionData[i].section;
+    const subsection = sectionData[i].subsection;
+    const subsectionHeader = sectionData[i].subsectionHeader;
+    const subsectionText = sectionData[i].subsectionText;
+
+    const pushArray = (
+      section,
+      subsection,
+      subsectionHeader,
+      subsectionText,
+    ) => {
+      subsectionArray.push({
+        section: section,
+        subsection: subsection,
+        subsectionHeader: subsectionHeader,
+        subsectionText: subsectionText,
+      });
+    };
+
+    if (i === 0) {
+      pushArray(section, subsection, subsectionHeader, subsectionText);
+    } else {
+      const prevSubsection = sectionData[i - 1].subsection;
+
+      if (subsection != prevSubsection) {
+        pushArray(section, subsection, subsectionHeader, subsectionText);
+      }
+    }
+  }
+
   const dispatch = useDispatch();
   const [marked, setMarked] = useState(false);
 
@@ -41,6 +75,7 @@ const Section = ({section, type}) => {
 
   //dispatch add or remove bookmarks based bookmark icon
   const dispatchAction = (section, sectionHeader) => {
+    // dispatch based on opposite of flag because marked does not change until the rerender
     if (marked === false) {
       dispatch(
         addBookmark({
@@ -57,14 +92,6 @@ const Section = ({section, type}) => {
       );
     }
   };
-
-  const ParagraphItem = ({section, paragraph, paragraphText}) => (
-    <View>
-      <Text style={[styles.body, styles.accent_1]}>
-        {paragraph} {paragraphText}
-      </Text>
-    </View>
-  );
 
   //bookmark to dispatch redux action to add bookmark
   const SectionHeader = ({section, sectionHeader}) => (
@@ -84,15 +111,94 @@ const Section = ({section, type}) => {
     </View>
   );
 
-  const renderItem = ({item}) => {
+  const SubsectionHeader = ({subsection, subsectionHeader, subsectionText}) => {
+    if (subsectionHeader !== null) {
+      return (
+        <View>
+          <View>
+            <Text>
+              {subsectionHeader}
+              {'\n'}
+              {'\n'}
+              {subsection} {subsectionText}
+            </Text>
+          </View>
+        </View>
+      );
+    }
+    if (subsectionHeader === null) {
+      return (
+        <View style={styles.sectionDivider}>
+          <View>
+            <Text>
+              {subsection} {subsectionText}
+            </Text>
+          </View>
+        </View>
+      );
+    }
+  };
+
+  const renderItemSubsection = ({item, index}) => {
+    var paraData = sectionData.filter(
+      (subsection, i) => sectionData[i].subsection === item.subsection,
+    );
+
+    const paraFilter = [];
+
+    for (var i = 0, l = paraData.length; i < l; i++) {
+      if (i === 0) {
+        paraFilter.push(paraData[i]);
+      }
+      if (i > 0) {
+        const prevPara = paraData[i - 1].paragraph;
+
+        if (paraData[i].paragraph !== prevPara) {
+          paraFilter.push(paraData[i]);
+        }
+      }
+    }
+
+    return (
+      <View>
+        <SubsectionHeader
+          subsection={item.subsection}
+          subsectionHeader={item.subsectionHeader}
+          subsectionText={item.subsectionText}
+        />
+        <View>
+          <FlatList data={paraFilter} renderItem={renderItemPara} />
+        </View>
+      </View>
+    );
+  };
+
+  const renderItemPara = ({item}) => {
+    const subparaData = sectionData.filter(
+      (subsection, i) => sectionData[i].subsection === item.subsection,
+    );
+
+    //console.log(item);
+
     if (item.paragraph !== null) {
       return (
         <View>
-          <ParagraphItem
-            section={item.section}
-            paragraph={item.paragraph}
-            paragraphText={item.paragraphText}
-          />
+          <Text style={{paddingLeft: 20}}>
+            {/* In{item.index} */}
+            {item.paragraph} {item.paragraphText}
+          </Text>
+          {/* <FlatList
+            data={{item}}
+            renderItem={({item}) => {
+              if (item.subparagraph !== null) {
+                return (
+                  <View>
+                    <Text style={{paddingLeft: 30}}>{item.subparagraph}</Text>
+                  </View>
+                );
+              }
+            }}
+          /> */}
         </View>
       );
     }
@@ -100,14 +206,14 @@ const Section = ({section, type}) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.background}>
+      <View style={{height: 600}}>
         <View style={styles.sectionDivider}>
           <SectionHeader
             section={sectionData[0].section}
             sectionHeader={sectionData[0].sectionHeader}
           />
         </View>
-        <FlatList data={sectionData} renderItem={renderItem} />
+        <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
       </View>
     </SafeAreaView>
   );

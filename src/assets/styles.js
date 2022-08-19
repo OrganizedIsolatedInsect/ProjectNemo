@@ -15,7 +15,7 @@ export default StyleSheet.create({
   title: {
     fontFamily: 'Lato-Regular',
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   heading_1: {
     fontFamily: 'Lato-Regular',
@@ -80,5 +80,4 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-
 });
