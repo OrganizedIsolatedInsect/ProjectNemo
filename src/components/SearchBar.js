@@ -10,6 +10,8 @@ import styles from '../assets/styles';
 
 import data from '../data/mvavt_records.json';
 
+// TODO separate the searchbar and list components
+
 const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState(data);
@@ -26,6 +28,7 @@ const SearchBar = () => {
           ? item.contravention.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
+        
         return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
@@ -46,7 +49,8 @@ const SearchBar = () => {
         onPress={() => getItem(item)}>
         {item.index}
         {'.'}
-        {item.contravention.toUpperCase()}
+        {/* {item.contravention.toUpperCase()} */}
+        {item.contravention}
       </Text>
     );
   };
