@@ -2,13 +2,13 @@ import React from 'react';
 import {Text, View, ScrollView} from 'react-native';
 
 import Bookmark from '../components/Bookmark';
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 
 function ContentMVA({item}) {
   return (
     <ScrollView style={styles.background}>
       <View style={styles.sectionDivider} />
-      <Text style={[styles.heading_1, styles.neutral]}>
+      <Text style={[styles.heading_1, {color: colors.neutral}]}>
         DEV screen name: MVA CONTENT
       </Text>
       <View style={styles.MVAContentHeadingContainer}>
@@ -25,8 +25,10 @@ function ContentMVA({item}) {
         <Text style={styles.accent_1}>
           {item.source}, Section {item.provision}
         </Text>
-        <Text style={styles.MVAContentSectionText}>{item.sectionText}</Text>
-        <Text></Text>
+        <Text style={styles.MVAContentSectionText}>
+          {item.sectionText}
+          {'\n'}
+        </Text>
         <View style={styles.MVAContentSubsection}>
           <Text>{item.sectionSubsection}</Text>
           <Text>{item.sectionParagraph}</Text>
@@ -40,7 +42,7 @@ function ContentMVA({item}) {
           Ticketed Amount: {item.fine}
         </Text>
         <Text style={styles.MVAContentTicket}>
-          Reduced ticked amount ({'<'}30 days): {item.reducedFine}
+          Reduced ticket amount ({'<'}30 days): {item.reducedFine}
         </Text>
       </View>
     </ScrollView>
