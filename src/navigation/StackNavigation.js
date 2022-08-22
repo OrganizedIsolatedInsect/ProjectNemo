@@ -7,7 +7,7 @@ import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
 import BrowseScreen from '../screens/BrowseCCScreen'; // TODO  REmove this line
 import BrowseCCScreen from '../screens/BrowseCCScreen';
-import BrowseMVAScreen from '../screens/BrowseCCScreen';
+import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
 import ContentScreen from '../screens/ContentScreen'; // TODO  REmove this line
 import ContentMVAScreen from '../screens/ContentMVAScreen';
