@@ -2,28 +2,28 @@
 
 */
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, Pressable} from 'react-native';
-
-import Bookmark from '../components/Bookmark';
 import styles from '../assets/styles';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {View} from 'react-native';
+
+import testData from '../data/test.json';
+import Section from '../components/Section';
+import crimData from '../data/C-46.json';
 
 const ContentCCScreen = props => {
+  //pull section number from browse screen to send to section component
+  let sectionId = props.route.params.section;
+
+  let lawType = 'crim code';
+
   return (
     <SafeAreaView>
       <View style={styles.background}>
         <View style={styles.sectionDivider} />
-        <Text style={[styles.heading_1, styles.neutral]}>
-          DEV screen name: CC CONTENT
-        </Text>
-        <Text style={styles.heading_2}>Heading 2</Text>
-
-        <Text style={[styles.body, styles.accent_1]}>Body</Text>
-        <Text style={[styles.body, styles.accent_2]}>Body 2</Text>
+        <Section section={sectionId} typeId={lawType} />
       </View>
     </SafeAreaView>
   );
 };
 
 export default ContentCCScreen;
-
