@@ -51,9 +51,67 @@ export default StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomWidth: 0.8,
+    borderBottomColor: 'black',
   },
-
-  //Styling specifically for the Searchbar component.
+  innerContainerLeft: {
+    paddingVertical: 9,
+    flex: 1,
+    width: '70%',
+  },
+  innerContainerRight: {
+    alignItems: 'flex-end',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 10,
+    marginHorizontal: 8,
+    marginBottom: 10,
+    justifyContent: 'flex-start',
+  },
+  buttonAct: {
+    borderRadius: 25,
+    borderColor: colors.primary,
+    borderWidth: 1,
+    width: 120,
+    padding: 5,
+  },
+  buttonActText: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 17,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  MVAContentHeadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 18,
+    paddingTop: 18,
+  },
+  MVAContentHeadingContainerLeft: {
+    flex: 1,
+    width: '95%',
+  },
+  MVAContentHeadingContainerRight: {
+    alignItems: 'flex-end',
+  },
+  MVAContentSection: {
+    paddingHorizontal: 18,
+  },
+  MVAContentSectionText: {
+    paddingTop: 18,
+  },
+  MVAContentSubsection: {
+    paddingHorizontal: 18,
+  },
+  MVAContentTicket: {
+    paddingHorizontal: 18,
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+   //Styling specifically for the Searchbar component.
   searchView_Styling: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -89,7 +147,7 @@ export default StyleSheet.create({
     height: '100%',
   },
   closeIcon_ripple_styling: {
-    // color: 'blue',
+    // color: 'colors.secondary',
     // borderless: 'true',
     radius: 25,
   },
@@ -102,4 +160,5 @@ export default StyleSheet.create({
     width: '100%',
     backgroundColor: colors.neutral,
   },
+  
 });
