@@ -96,8 +96,8 @@ const Section = ({section, type}) => {
 
   //bookmark to dispatch redux action to add bookmark
   const SectionHeader = ({section, sectionHeader}) => (
-    <View style={{flexDirection: 'row'}}>
-      <Text style={[styles.heading_2, styles.accent_2]}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Text style={styles.heading_2}>
         {section} {sectionHeader}
       </Text>
       {/* <Bookmark section={section} sectionHeader={sectionHeader} /> */}
@@ -217,7 +217,7 @@ const Section = ({section, type}) => {
   return (
     <SafeAreaView>
       <View style={styles.CCcontent}>
-        <View style={styles.sectionDivider}>
+        <View>
           <SectionHeader
             section={sectionData[0].section}
             sectionHeader={sectionData[0].sectionHeader}
