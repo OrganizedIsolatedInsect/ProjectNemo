@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -108,6 +108,7 @@ const Section = ({section, type}) => {
           switchMarks();
           dispatchAction(section, sectionHeader);
         }}
+        style={{color: colors.primary}}
       />
     </View>
   );
