@@ -4,13 +4,9 @@ import {Text, View, ScrollView} from 'react-native';
 import Bookmark from '../components/Bookmark';
 import styles, {colors} from '../assets/styles';
 
-function ContentMVA({item}) {
+const ContentMVA=({item}) =>{
   return (
     <ScrollView style={styles.background}>
-      <View style={styles.sectionDivider} />
-      <Text style={[styles.heading_1, {color: colors.neutral}]}>
-        DEV screen name: MVA CONTENT
-      </Text>
       <View style={styles.MVAContentHeadingContainer}>
         <View style={styles.MVAContentHeadingContainerLeft}>
           <Text style={{...styles.heading_1, fontWeight: 'bold'}}>
