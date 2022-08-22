@@ -15,7 +15,7 @@ export default StyleSheet.create({
   title: {
     fontFamily: 'Lato-Regular',
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   heading_1: {
     fontFamily: 'Lato-Regular',
@@ -33,9 +33,9 @@ export default StyleSheet.create({
   sectionDivider: {
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 15
+    marginBottom: 15,
+    flexDirection: 'row',
   },
-
   container: {
     paddingTop: 20,
     paddingHorizontal: 18,
@@ -79,5 +79,40 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-
+  MVAContentHeadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 18,
+    paddingTop: 18,
+  },
+  MVAContentHeadingContainerLeft: {
+    flex: 1,
+    width: '95%',
+  },
+  MVAContentHeadingContainerRight: {
+    alignItems: 'flex-end',
+  },
+  MVAContentSection: {
+    paddingHorizontal: 18,
+  },
+  MVAContentSectionText: {
+    paddingTop: 18,
+  },
+  MVAContentSubsection: {
+    paddingHorizontal: 18,
+  },
+  MVAContentTicket: {
+    paddingHorizontal: 18,
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  paragraph: {
+    paddingLeft: 20,
+  },
+  subParagraph: {
+    paddingLeft: 35,
+  },
+  CCcontent: {
+    height: 600,
+  },
 });

@@ -2,6 +2,9 @@
 /* BROWSE screen - re-usable screen for browses for all legislation
 */
 
+
+//TO BE REMOVED AND REPLACED.
+
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, ScrollView, StyleSheet} from 'react-native';
@@ -11,13 +14,17 @@ import MVA from '../data/mvavt_records.json';  // for PRODUCTION Purposes
 import { MVAData, CCDATA } from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles from '../assets/styles';
 
+
+//THIS SCREEN TO BE REMOVED
+
+
 const BrowseScreen = ({route}) => {
 
   const [ShowAct, setShowAct] = useState(true);
   const [ShowReg, setShowReg] = useState(true);
   const [isLoading, setIsLoading] = useState(false);      //for loading spinner
   const [newData, setNewData] = useState('Testing so far'); 
-  const [whichData, setWhichData] = useState('CC');
+  const [lawType, setLawType] = useState('CC');
 
   const navAid = useNavigation();
 
@@ -26,7 +33,7 @@ const BrowseScreen = ({route}) => {
 
   //captures the data that was selected on the Landing screen into this screen so we can display onto the page.
   useEffect(() => {
-    setWhichData(source);
+    setLawType(source);
     if (whichData === 'CC') {
       setNewData(CCDATA)
     } else {
@@ -92,7 +99,7 @@ const BrowseScreen = ({route}) => {
                 return (
                   <Pressable
                     key={MVA_List.index}
-                    onPress={() => navAid.navigate('ContentScreen')}
+                    onPress={() => navAid.navigate('ContentScreen', {item: MVA_List})}
                     style={styles.innerContainer}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
@@ -118,7 +125,7 @@ const BrowseScreen = ({route}) => {
                   <Pressable
                     key={MVA_List.index}
                     style={styles.innerContainer}
-                    onPress={() => navAid.navigate('ContentScreen')}>
+                    onPress={() => navAid.navigate('ContentScreen', {item: MVA_List})}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
                       <Text>{MVA_List.provision}</Text>
