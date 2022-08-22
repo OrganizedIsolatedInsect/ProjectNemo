@@ -32,7 +32,7 @@ const SearchBar = () => {
           ? item.contravention.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
-        
+
         return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
@@ -69,9 +69,7 @@ const SearchBar = () => {
   const getItem = item => {
     // Function for click on an item
     // alert('Id : ' + item.index + ' Title : ' + item.contravention);
-    console.log(item);
-    // FIXME: Navigation not working.
-    navAid.navigate('ContentMVAScreen', {paramkey: item.contravention})
+    navAid.navigate('ContentMVAScreen', {paramkey: item});
   };
 
   return (
