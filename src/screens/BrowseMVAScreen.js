@@ -13,7 +13,7 @@ import styles from '../assets/styles';
 
 
 
-const BrowseMVAScreen = ({route}) => {
+const BrowseMVAScreen = (props) => {
 
   const [ShowAct, setShowAct] = useState(true);
   const [ShowReg, setShowReg] = useState(true);
@@ -79,7 +79,7 @@ const BrowseMVAScreen = ({route}) => {
                 return (
                   <Pressable
                     key={MVA_List.index}
-                    onPress={() => navAid.navigate('ContentMVAScreen')}
+                    onPress={() => navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})}
                     style={styles.innerContainer}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
@@ -105,7 +105,7 @@ const BrowseMVAScreen = ({route}) => {
                   <Pressable
                     key={MVA_List.index}
                     style={styles.innerContainer}
-                    onPress={() => navAid.navigate('ContentMVAScreen')}>
+                    onPress={() => navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
                       <Text>{MVA_List.provision}</Text>
