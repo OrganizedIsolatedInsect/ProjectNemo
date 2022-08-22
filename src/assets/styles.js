@@ -17,6 +17,12 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  coloredTitle: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.primary
+  },
   heading_1: {
     fontFamily: 'Lato-Regular',
     fontSize: 20,
@@ -35,7 +41,6 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 15,
   },
-
   container: {
     paddingTop: 20,
     paddingHorizontal: 18,
