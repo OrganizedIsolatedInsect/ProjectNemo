@@ -1,67 +1,42 @@
 //PACKAGE Imports
 import React, {useState} from 'react';
 import {View, FlatList} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
 //USER IMPORTS
 import LegislationGridList from '../components/LegislationGridList';
 import {LEGISLATION} from '../data/LegislationMenuItems';
-import MVA from '../data/mvavt_records.json';
 import styles from '../assets/styles';
 
 const LandingScreen = props => {
-
-  const [currentScreen, setCurrentScreen] = useState('Landing');
   const [useableData, setUsableData] = useState(LEGISLATION);
-
-  /*Switch data depending on what "screen" user is on.*/
-  const CurrentData = () => {
-    if (currentScreen === 'Landing') {
-      setUsableData(LEGISLATION);
-    } else {
-      setUsableData(MVA);
-    }
-  };
 
   //Function for setting up the Render list for the FlatList; Generic depending on what data is showing
   const renderList = itemdata => {
-    if (currentScreen === 'Landing') {
-      return (
-        <LegislationGridList
-          id={itemdata.item.id}
-          title={itemdata.item.title}
-          destination={itemdata.item.destination}
-          dataSource={itemdata.item.dataSource}
-        />
-      );
-    } else {
-      return (
-        <MVAGridList
-          provision={itemdata.item.provision}
-          contravention={itemdata.item.contravention}
-          fine={itemdata.item.fine}
-        />
-      );
-    }
+    return (
+      <LegislationGridList
+        id={itemdata.item.id}
+        title={itemdata.item.title}
+        destination={itemdata.item.destination}
+        dataSource={itemdata.item.dataSource}
+      />
+    );
   };
 
   /*OUTPUT*/
   return (
     <View>
-      <CurrentData />
       <View style={[styles.background, styles.container]}>
         <View>
           <FlatList
-            data={useableData}
+            data={LEGISLATION}
             renderItem={renderList}
             keyExtractor={item => item.id}
+            ItemSeparatorComponent={() => <View style={{margin: 15}} />}
           />
         </View>
       </View>
     </View>
   );
-
-
 };
 
 export default LandingScreen;

@@ -5,9 +5,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import BrowseScreen from '../screens/BrowseScreen';
+import BrowseScreen from '../screens/BrowseCCScreen'; // TODO  REmove this line
 import BrowseCCScreen from '../screens/BrowseCCScreen';
+import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
+import ContentScreen from '../screens/ContentScreen'; // TODO  REmove this line
+import ContentMVAScreen from '../screens/ContentMVAScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
@@ -19,7 +22,7 @@ const ContentStack = () => {
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
-      <ContentNavigator.Screen name="BrowseScreen" component={BrowseScreen} />
+      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
       <ContentNavigator.Screen
         name="BrowseCCScreen"
         component={BrowseCCScreen}
@@ -29,11 +32,17 @@ const ContentStack = () => {
         component={ContentCCScreen}
       />
       <ContentNavigator.Screen
+        name="BrowseMVAScreen"
+        component={BrowseMVAScreen}
+      />
+      <ContentNavigator.Screen
+        name="ContentMVAScreen"
+        component={ContentMVAScreen}
+      />
+      <ContentNavigator.Screen
         name="ExceptionScreen"
         component={ExceptionScreen}
-        options={{headerTitle: props => <CustomScreenHeader {...props} />}}
       />
-      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
     </ContentNavigator.Navigator>
   );
 };

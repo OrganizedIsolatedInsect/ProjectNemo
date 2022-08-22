@@ -7,7 +7,7 @@ export const LEGISLATION = [
   new LegislationItem(
     'l2',
     'Motor Vehicle Acts + Regulations',
-    'BrowseScreen',
+    'BrowseMVAScreen',
     'MVA',
   ),
 ];

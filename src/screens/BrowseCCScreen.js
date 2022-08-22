@@ -1,49 +1,34 @@
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {Text, View, Pressable, FlatList, StyleSheet} from 'react-native';
+/* BROWSE screen - re-usable screen for browses for all legislation
+ */
 
-const BrowseCCScreen = () => {
-  const dummyData = [
-    {
-      section: '2.2',
-      sectionHeader: "Acting on victim's behalf",
-    },
-    {
-      section: '2.3',
-      sectionHeader: 'Concurrent jurisdiction',
-    },
-    {
-      section: '3',
-      sectionHeader: 'Descriptive cross-references',
-    },
-    {
-      section: '3.1',
-      sectionHeader: 'Effect of judicial acts',
-    },
-    {
-      section: '4',
-      sectionHeader: 'Postcard a chattel, value',
-    },
-  ];
+import React, {useState} from 'react';
+import {View, FlatList, SectionList, StyleSheet} from 'react-native';
 
-  const navAid = useNavigation();
+//USER Imports
+import {CCDATAPARTS} from '../data/dummy-data'; //for DEVELOPMENT Purposes
+import styles from '../assets/styles';
+import CrimCodeGridList from '../components/CrimCodeGridList';
 
+const BrowseCCScreen = ({route}) => {
+  const [isLoading, setIsLoading] = useState(false); //for loading spinner
+
+  const renderList = itemdata => {
+    return (
+      <CrimCodeGridList
+        index={itemdata.item.index}
+        part={itemdata.item.part}
+        section={itemdata.item.section}
+        sectionHeader={itemdata.item.sectionHeader}
+      />
+    );
+  };
   return (
-    <View>
+    <View style={[styles.background, styles.container]}>
       <FlatList
-        data={dummyData}
-        renderItem={({item}) => (
-          <Pressable
-            onPress={section =>
-              navAid.navigate('ContentCCScreen', {
-                section: item.section,
-              })
-            }>
-            <Text>
-              {item.section} {item.sectionHeader}
-            </Text>
-          </Pressable>
-        )}
+        data={CCDATAPARTS}
+        renderItem={renderList}
+        keyExtractor={item => item.index}
+        ItemSeparatorComponent={() => <View style={{margin: 15}} />}
       />
     </View>
   );
