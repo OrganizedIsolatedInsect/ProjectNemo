@@ -1,28 +1,23 @@
-
 /* BROWSE screen - re-usable screen for browses for all legislation
-*/
+ */
 
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, ScrollView, StyleSheet} from 'react-native';
 
 //USER Imports
-import MVA from '../data/mvavt_records.json';  // for PRODUCTION Purposes
-import { MVAData } from '../data/dummy-data'; //for DEVELOPMENT Purposes
+import MVA from '../data/mvavt_records.json'; // for PRODUCTION Purposes
+import {MVAData} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles from '../assets/styles';
 
-
-
-const BrowseMVAScreen = (props) => {
-
+const BrowseMVAScreen = props => {
   const [ShowAct, setShowAct] = useState(true);
   const [ShowReg, setShowReg] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);      //for loading spinner
+  const [isLoading, setIsLoading] = useState(false); //for loading spinner
 
   const navAid = useNavigation();
 
   return (
-
     <View style={styles.background}>
       <View style={styles.buttonContainer}>
         {/* Hide Show View component
@@ -79,7 +74,9 @@ const BrowseMVAScreen = (props) => {
                 return (
                   <Pressable
                     key={MVA_List.index}
-                    onPress={() => navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})}
+                    onPress={() =>
+                      navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})
+                    }
                     style={styles.innerContainer}>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
@@ -105,7 +102,9 @@ const BrowseMVAScreen = (props) => {
                   <Pressable
                     key={MVA_List.index}
                     style={styles.innerContainer}
-                    onPress={() => navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})}>
+                    onPress={() =>
+                      navAid.navigate('ContentMVAScreen', {paramkey: MVA_List})
+                    }>
                     <View style={styles.innerContainerLeft}>
                       <Text>{MVA_List.contravention}</Text>
                       <Text>{MVA_List.provision}</Text>
@@ -125,8 +124,6 @@ const BrowseMVAScreen = (props) => {
 };
 
 export default BrowseMVAScreen;
-
-
 
 //SAMPLE CODES AND SOURCES
 {

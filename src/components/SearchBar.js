@@ -4,6 +4,8 @@
 import React, {useState} from 'react';
 import {View, TextInput, Pressable, Text, FlatList} from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from '../assets/styles';
@@ -16,6 +18,8 @@ const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState(data);
   const [masterDataSource, setMasterDataSource] = useState(data);
+
+  const navAid = useNavigation();
 
   const searchFilterFunction = text => {
     // Check if searched text is not blank
@@ -64,7 +68,10 @@ const SearchBar = () => {
 
   const getItem = item => {
     // Function for click on an item
-    alert('Id : ' + item.index + ' Title : ' + item.contravention);
+    // alert('Id : ' + item.index + ' Title : ' + item.contravention);
+    console.log(item);
+    // FIXME: Navigation not working.
+    navAid.navigate('ContentMVAScreen', {paramkey: item.contravention})
   };
 
   return (
