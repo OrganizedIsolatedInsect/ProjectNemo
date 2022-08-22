@@ -13,6 +13,7 @@ import crimData from '../data/C-46.json';
 const ContentCCScreen = props => {
   //pull section number from browse screen to send to section component
   let sectionId = props.route.params.section;
+  console.log(sectionId);
 
   let lawType = 'crim code';
 

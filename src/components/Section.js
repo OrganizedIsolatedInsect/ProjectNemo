@@ -19,7 +19,7 @@ const Section = ({section, type}) => {
   const sectionId = section;
   const typeId = type;
 
-  const sectionData = testData.filter(obj => {
+  const sectionData = crimData.filter(obj => {
     return obj.section === sectionId;
   });
 
@@ -96,7 +96,7 @@ const Section = ({section, type}) => {
 
   //bookmark to dispatch redux action to add bookmark
   const SectionHeader = ({section, sectionHeader}) => (
-    <View style={styles.sectionDivider}>
+    <View style={{flexDirection: 'row'}}>
       <Text style={[styles.heading_2, styles.accent_2]}>
         {section} {sectionHeader}
       </Text>
@@ -129,7 +129,7 @@ const Section = ({section, type}) => {
     }
     if (subsectionHeader === null) {
       return (
-        <View style={styles.sectionDivider}>
+        <View>
           <View>
             <Text>
               {subsection} {subsectionText}

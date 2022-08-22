@@ -33,7 +33,7 @@ export default StyleSheet.create({
   sectionDivider: {
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 15,,
+    marginBottom: 15,
     flexDirection: 'row',
   },
   container: {
@@ -105,7 +105,8 @@ export default StyleSheet.create({
     paddingHorizontal: 18,
     fontWeight: 'bold',
     fontSize: 15,
-  },paragraph: {
+  },
+  paragraph: {
     paddingLeft: 20,
   },
   subParagraph: {
