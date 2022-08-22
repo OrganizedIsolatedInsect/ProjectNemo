@@ -9,7 +9,8 @@ import {CCDATAPARTS} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 
-const BrowseCCScreen = ({route}) => {
+
+const BrowseCCScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
 
   const renderList = itemdata => {
