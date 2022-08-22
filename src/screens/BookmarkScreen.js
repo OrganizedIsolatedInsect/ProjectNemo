@@ -13,8 +13,9 @@ import {removeBookmark} from '../redux/bookmarkSlice';
 const BookmarkScreen = props => {
   const navAid = useNavigation();
 
+  //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks);
-  console.log(bookmarks);
+
   const dispatch = useDispatch();
 
   /*Output Section*/
@@ -48,9 +49,6 @@ const BookmarkScreen = props => {
             </View>
           )}
         />
-      </View>
-      <View>
-        <Button title="debug" onPress={() => console.log(bookmarks)} />
       </View>
     </SafeAreaView>
   );

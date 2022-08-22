@@ -80,4 +80,13 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
+  paragraph: {
+    paddingLeft: 20,
+  },
+  subParagraph: {
+    paddingLeft: 35,
+  },
+  CCcontent: {
+    height: 600,
+  },
 });

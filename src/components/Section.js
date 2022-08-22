@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import testData from '../data/test.json';
 import crimData from '../data/C-46.json';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
+import {Item} from 'react-navigation-header-buttons';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
@@ -50,7 +51,7 @@ const Section = ({section, type}) => {
     } else {
       const prevSubsection = sectionData[i - 1].subsection;
 
-      if (subsection != prevSubsection) {
+      if (subsection !== prevSubsection) {
         pushArray(section, subsection, subsectionHeader, subsectionText);
       }
     }
@@ -140,10 +141,13 @@ const Section = ({section, type}) => {
   };
 
   const renderItemSubsection = ({item, index}) => {
-    var paraData = sectionData.filter(
+    let paraData = sectionData.filter(
       (subsection, i) => sectionData[i].subsection === item.subsection,
     );
 
+    //console.log(subParaData);
+
+    //crate array of paragraphs that remove duplications due to having sub paragraphs, send this array as data for flatlist
     const paraFilter = [];
 
     for (var i = 0, l = paraData.length; i < l; i++) {
@@ -174,39 +178,44 @@ const Section = ({section, type}) => {
   };
 
   const renderItemPara = ({item}) => {
-    const subparaData = sectionData.filter(
-      (subsection, i) => sectionData[i].subsection === item.subsection,
+    //console.log(item);
+
+    //filter out data that has sub paragraphs in order to pass to flatlist for sub paragraphs
+    let subparaData = sectionData.filter(
+      (section, i) =>
+        sectionData[i].paragraph === item.paragraph &&
+        sectionData[i].paragraphText === item.paragraphText &&
+        sectionData[i].subparagraph !== null,
     );
 
-    //console.log(item);
+    //console.log(subparaData);
 
     if (item.paragraph !== null) {
       return (
         <View>
-          <Text style={{paddingLeft: 20}}>
-            {/* In{item.index} */}
+          <Text style={styles.paragraph}>
+            {/*  In{item.index} */}
             {item.paragraph} {item.paragraphText}
           </Text>
-          {/* <FlatList
-            data={{item}}
-            renderItem={({item}) => {
-              if (item.subparagraph !== null) {
-                return (
-                  <View>
-                    <Text style={{paddingLeft: 30}}>{item.subparagraph}</Text>
-                  </View>
-                );
-              }
-            }}
-          /> */}
+          <FlatList data={subparaData} renderItem={renderSubPara} />
         </View>
       );
     }
   };
 
+  const renderSubPara = ({item}) => {
+    return (
+      <View>
+        <Text style={styles.subParagraph}>
+          {item.subparagraph} {item.subparagraphText}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView>
-      <View style={{height: 600}}>
+      <View style={styles.CCcontent}>
         <View style={styles.sectionDivider}>
           <SectionHeader
             section={sectionData[0].section}
