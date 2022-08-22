@@ -111,7 +111,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
-   //Styling specifically for the Searchbar component.
+  //Styling specifically for the Searchbar component.
   searchView_Styling: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -160,5 +160,4 @@ export default StyleSheet.create({
     width: '100%',
     backgroundColor: colors.neutral,
   },
-  
 });
