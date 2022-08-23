@@ -5,27 +5,23 @@
 
 
 //SYSTEM Imports
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import React from 'react';
+import {View, Text, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 
 //USER Imports
-import styles from '../assets/styles';
-
-
+import styles, { colors } from '../assets/styles';
 
 //Sets up Screen header with title and search button, both which have a navigation component
 const CustomScreenHeader = () => {
     const navAid = useNavigation();
     return (
         <View style={{flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Pressable onPress={()=> navAid.navigate('LandingScreen')}><Text style={[styles.title, styles.coloredTitle]}>Project Nemo</Text></Pressable>
+            <Pressable onPress={()=> navAid.navigate('LandingScreen')}><Text style={[styles.title, {color: colors.primary}]}>Project Nemo</Text></Pressable>
             <View><Text>       </Text></View>
             <Pressable onPress={()=> navAid.navigate('SearchScreen')}><Icon name={'search'} size={30} /></Pressable>
         </View>
-
-
     );
   };
 
