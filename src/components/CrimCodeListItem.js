@@ -9,21 +9,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../assets/styles';
 
 const CrimCodeListItem = props => {
-    return(
-        <View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.heading_1}>{props.part}</Text>
-            <Text style={styles.heading_1}>{props.section}</Text>
-            <Text style={styles.heading_1}>{props.sectionHeader}</Text> 
+  return (
+    <View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.heading_1}>{props.part}</Text>
+        <Text style={styles.heading_1}>{props.section}</Text>
+        <Text style={styles.heading_1}>{props.sectionHeader}</Text>
 
-            <Icon name={'arrow-forward'} size={20} />
-          </View>
-      </View>       
-
-    );
-
-
+        <Icon name={'arrow-forward'} size={20} />
+      </View>
+    </View>
+  );
 };
 
 export default CrimCodeListItem;
-

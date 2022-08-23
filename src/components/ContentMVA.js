@@ -4,7 +4,7 @@ import {Text, View, ScrollView} from 'react-native';
 import Bookmark from '../components/Bookmark';
 import styles, {colors} from '../assets/styles';
 
-const ContentMVA=({item}) =>{
+const ContentMVA = ({item}) => {
   return (
     <ScrollView style={styles.background}>
       <View style={styles.MVAContentHeadingContainer}>
@@ -43,6 +43,6 @@ const ContentMVA=({item}) =>{
       </View>
     </ScrollView>
   );
-}
+};
 
 export default ContentMVA;

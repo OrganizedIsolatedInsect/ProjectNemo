@@ -15,9 +15,7 @@ const LegislationGridList = props => {
   return (
     <View>
       <Pressable
-        onPress={() =>
-          navAid.navigate(props.destination, {paramkey: props})
-        }>
+        onPress={() => navAid.navigate(props.destination, {paramkey: props})}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.heading_1}>{props.title}</Text>
           <Icon name={'arrow-forward'} size={30} />

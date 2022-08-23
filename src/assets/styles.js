@@ -6,11 +6,14 @@ export const colors = {
   neutral: '#E6E6E6',
   accent_1: '#1F7ABC',
   accent_2: '#CB333B',
+  backgroundColoring: '#FFFFFF',
+  borderColoring: '#000000',
+  fontColoring: '#000000',
 };
 
 export default StyleSheet.create({
   background: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.backgroundColoring,
   },
   title: {
     fontFamily: 'Lato-Regular',
@@ -31,7 +34,7 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   sectionDivider: {
-    borderBottomColor: 'black',
+    borderBottomColor: colors.borderColoring,
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 15,
     flexDirection: 'row',
@@ -47,7 +50,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 0.8,
-    borderBottomColor: 'black',
+    borderBottomColor: colors.borderColoring,
   },
   innerContainerLeft: {
     paddingVertical: 9,
@@ -67,7 +70,7 @@ export default StyleSheet.create({
   },
   buttonAct: {
     borderRadius: 25,
-    borderColor: '#7F2025',
+    borderColor: colors.primary,
     borderWidth: 1,
     width: 120,
     padding: 5,
@@ -115,4 +118,49 @@ export default StyleSheet.create({
   CCcontent: {
     height: 600,
   },
+
+  //SEARCHBAR Styling START
+  searchView_Styling: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  SearchBar_Styling: {
+    position: 'relative',
+    zIndex: 1,
+    width: '80%',
+    borderColor: colors.neutral,
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingLeft: 45,
+    backgroundColor: colors.neutral,
+    marginLeft: 15,
+  },
+  searchIcon_styling: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 25,
+    bottom: 10,
+  },
+  closeIcon_styling: {
+    marginLeft: 7,
+    marginRight: 15,
+  },
+  closeIcon_pressable_styling: {
+    paddingLeft: 5,
+    paddingTop: 10,
+    height: '100%',
+  },
+  closeIcon_ripple_styling: {
+    radius: 25,
+  },
+  // SEARCHBAR Styling END
+
+  // Search Results Flatlist Styling START
+  searchResultsFlatList_ItemView: {padding: 10},
+  searchResultsFlatList_ItemSeparator: {
+    height: 0.5,
+    width: '100%',
+    backgroundColor: colors.neutral,
+  },
+  // Search Results Flatlist Styling END
 });

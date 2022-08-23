@@ -8,8 +8,6 @@ const ContentMVAScreen = ({route}) => {
   const item = route.params.paramkey;
 
   return <ContentMVA item={item} />;
-}
-
+};
 
 export default ContentMVAScreen;
-
