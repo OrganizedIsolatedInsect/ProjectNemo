@@ -2,23 +2,24 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
+import {Provider} from 'react-redux';
 //USER Imports
 import AppNavigator from './src/navigation/TabNavigation';
-
+import store from './src/redux/store';
 
 // TODO - DEV tool only - remove upon production
 let date = new Date();
 console.log(date);
 
-
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

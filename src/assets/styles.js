@@ -34,6 +34,7 @@ export default StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 15,
+    flexDirection: 'row',
   },
   container: {
     paddingTop: 20,
@@ -104,5 +105,14 @@ export default StyleSheet.create({
     paddingHorizontal: 18,
     fontWeight: 'bold',
     fontSize: 15,
+  },
+  paragraph: {
+    paddingLeft: 20,
+  },
+  subParagraph: {
+    paddingLeft: 35,
+  },
+  CCcontent: {
+    height: 600,
   },
 });
