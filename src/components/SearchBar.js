@@ -4,13 +4,12 @@
 import React, {useState} from 'react';
 import {View, TextInput, Pressable, Text, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Highlighter from 'react-highlight-words';
 
 import HighlightText from '@sanar/react-native-highlight-text';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
 
 import data from '../data/mvavt_records.json';
 
