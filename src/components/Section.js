@@ -32,6 +32,7 @@ const Section = ({section, type}) => {
     const subsectionHeader = sectionData[i].subsectionHeader;
     const subsectionText = sectionData[i].subsectionText;
 
+    //function to push subsections into subsectionArray
     const pushArray = (
       section,
       subsection,
@@ -63,6 +64,7 @@ const Section = ({section, type}) => {
   //pull state to see if current section exists in bookmarks
   const bookmarkStateId = useSelector(state => state.bookmarks.sections);
 
+  //used to switch the bookmark icon from outline to fill and vice versa
   const switchMarks = () => {
     setMarked(!marked);
   };
