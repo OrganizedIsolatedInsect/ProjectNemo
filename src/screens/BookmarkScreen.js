@@ -19,39 +19,47 @@ const BookmarkScreen = props => {
   const dispatch = useDispatch();
 
   /*Output Section*/
-  return (
-    <SafeAreaView>
-      <View style={styles.background}>
-        <FlatList
-          data={bookmarks.sections}
-          renderItem={({item}) => (
-            <View
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Pressable
-                onPress={() =>
-                  navAid.navigate('MVAContent', {
-                    section: item.section,
-                  })
-                }>
-                <Text>
-                  {item.section} {item.sectionHeader}
-                </Text>
-              </Pressable>
-
-              <Icon
-                name="delete"
-                size={20}
-                onPress={() =>
-                  dispatch(removeBookmark({section: item.section}))
-                }
-              />
-            </View>
-          )}
-        />
+  if (bookmarks.sections.length === 0) {
+    return (
+      <View>
+        <Text>No Bookmarks Currently</Text>
       </View>
-    </SafeAreaView>
-  );
+    );
+  } else {
+    return (
+      <SafeAreaView>
+        <View style={styles.background}>
+          <FlatList
+            data={bookmarks.sections}
+            renderItem={({item}) => (
+              <View
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Pressable
+                  onPress={() =>
+                    navAid.navigate('MVAContent', {
+                      section: item.section,
+                    })
+                  }>
+                  <Text>
+                    {item.section} {item.sectionHeader}
+                  </Text>
+                </Pressable>
+
+                <Icon
+                  name="delete"
+                  size={20}
+                  onPress={() =>
+                    dispatch(removeBookmark({section: item.section}))
+                  }
+                />
+              </View>
+            )}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
 
 export default BookmarkScreen;
