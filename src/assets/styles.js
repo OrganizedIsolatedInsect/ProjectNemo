@@ -9,6 +9,8 @@ export const colors = {
   backgroundColoring: '#FFFFFF',
   borderColoring: '#000000',
   fontColoring: '#000000',
+  highlightBgColor: '#829DAF',
+  highlightColor: '#FFFFFF',
 };
 
 export default StyleSheet.create({
@@ -161,6 +163,10 @@ export default StyleSheet.create({
     height: 0.5,
     width: '100%',
     backgroundColor: colors.neutral,
+  },
+  searchResultsHighlight: {
+    color: colors.highlightColor,
+    backgroundColor: colors.highlightBgColor,
   },
   // Search Results Flatlist Styling END
 });
