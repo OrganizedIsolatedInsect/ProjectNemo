@@ -7,7 +7,6 @@ import styles, {colors} from '../assets/styles';
 const ContentMVA=({item}) =>{
   return (
     <ScrollView style={styles.background}>
-
       <View style={styles.MVAContentHeadingContainer}>
         <View style={styles.MVAContentHeadingContainerLeft}>
           <Text style={{...styles.heading_1, fontWeight: 'bold'}}>
