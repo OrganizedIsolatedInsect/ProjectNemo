@@ -5,11 +5,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import BrowseScreen from '../screens/BrowseCCScreen'; // TODO  REmove this line
+import BrowseScreen from '../screens/BrowseCCScreen'; // TODO  Remove this line
 import BrowseCCScreen from '../screens/BrowseCCScreen';
 import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
-import ContentScreen from '../screens/ContentScreen'; // TODO  REmove this line
+import ContentScreen from '../screens/ContentScreen'; // TODO  Remove this line
 import ContentMVAScreen from '../screens/ContentMVAScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';

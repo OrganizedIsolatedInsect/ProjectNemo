@@ -11,8 +11,6 @@ import colors from '../assets/styles';
 const BottomTab = createBottomTabNavigator();
 
 export const AppNavigator = () => {
-
-  
   //Changes style of the Icon to show a line on top
   const CustomTabButton = props => (
     <Pressable
@@ -70,7 +68,7 @@ export const AppNavigator = () => {
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: false,
- // tabBarOptions: {iconStyle: {height: 50, width: 50}},
+  // tabBarOptions: {iconStyle: {height: 50, width: 50}},
 };
 
 export default AppNavigator;

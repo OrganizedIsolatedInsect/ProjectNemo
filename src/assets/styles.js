@@ -6,11 +6,14 @@ export const colors = {
   neutral: '#E6E6E6',
   accent_1: '#1F7ABC',
   accent_2: '#CB333B',
+  backgroundColoring: '#FFFFFF',
+  borderColoring: '#000000',
+  fontColoring: '#000000',
 };
 
 export default StyleSheet.create({
   background: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.backgroundColoring,
   },
   title: {
     fontFamily: 'Lato-Regular',
@@ -31,7 +34,7 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   sectionDivider: {
-    borderBottomColor: 'black',
+    borderBottomColor: colors.borderColoring,
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 15,
     flexDirection: 'row',
@@ -47,7 +50,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 0.8,
-    borderBottomColor: 'black',
+    borderBottomColor: colors.borderColoring,
   },
   innerContainerLeft: {
     paddingVertical: 9,
@@ -106,7 +109,17 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
-  //Styling specifically for the Searchbar component.
+  paragraph: {
+    paddingLeft: 20,
+  },
+  subParagraph: {
+    paddingLeft: 35,
+  },
+  CCcontent: {
+    height: 600,
+  },
+
+  //SEARCHBAR Styling START
   searchView_Styling: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -114,8 +127,6 @@ export default StyleSheet.create({
   SearchBar_Styling: {
     position: 'relative',
     zIndex: 1,
-    // marginTop: 10,
-    // flex: 1,
     width: '80%',
     borderColor: colors.neutral,
     borderWidth: 1,
@@ -131,10 +142,8 @@ export default StyleSheet.create({
     bottom: 10,
   },
   closeIcon_styling: {
-    // marginTop: 18,
     marginLeft: 7,
     marginRight: 15,
-    // height: 50
   },
   closeIcon_pressable_styling: {
     paddingLeft: 5,
@@ -142,26 +151,16 @@ export default StyleSheet.create({
     height: '100%',
   },
   closeIcon_ripple_styling: {
-    // color: 'colors.secondary',
-    // borderless: 'true',
     radius: 25,
   },
   // SEARCHBAR Styling END
 
-  // Search Results Flatlist Styling
+  // Search Results Flatlist Styling START
   searchResultsFlatList_ItemView: {padding: 10},
   searchResultsFlatList_ItemSeparator: {
     height: 0.5,
     width: '100%',
     backgroundColor: colors.neutral,
   },
-  paragraph: {
-    paddingLeft: 20,
-  },
-  subParagraph: {
-    paddingLeft: 35,
-  },
-  CCcontent: {
-    height: 600,
-  },
+  // Search Results Flatlist Styling END
 });
