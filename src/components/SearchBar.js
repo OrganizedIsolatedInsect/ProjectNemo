@@ -13,6 +13,7 @@ import styles from '../assets/styles';
 import data from '../data/mvavt_records.json';
 
 // TODO separate the searchbar and list components
+// TODO replace spaces in the search query with + (RegEx)
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
