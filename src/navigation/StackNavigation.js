@@ -54,7 +54,10 @@ const BookMarkStack = () => {
         name="BookmarkList"
         component={BookmarkScreen}
       />
-      <BookMarkNavigator.Screen name="MVAContent" component={ContentCCScreen} />
+      <BookMarkNavigator.Screen
+        name="ContentCCScreen"
+        component={ContentCCScreen}
+      />
     </BookMarkNavigator.Navigator>
   );
 };

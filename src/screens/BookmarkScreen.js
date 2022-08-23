@@ -19,6 +19,8 @@ const BookmarkScreen = props => {
   const dispatch = useDispatch();
 
   /*Output Section*/
+
+  // checks if bookmarks state from redux store exists, if it doesn't render a no bookmark screen
   if (bookmarks.sections.length === 0) {
     return (
       <View>
@@ -37,7 +39,7 @@ const BookmarkScreen = props => {
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Pressable
                   onPress={() =>
-                    navAid.navigate('MVAContent', {
+                    navAid.navigate('ContentCCScreen', {
                       section: item.section,
                     })
                   }>
@@ -45,7 +47,7 @@ const BookmarkScreen = props => {
                     {item.section} {item.sectionHeader}
                   </Text>
                 </Pressable>
-
+                {/* trash can icon to delete bookmark */}
                 <Icon
                   name="delete"
                   size={20}
