@@ -1,29 +1,38 @@
 /* BROWSE screen - re-usable screen for browses for all legislation
  */
 
-import React, {useEffect, useState} from 'react';
+///SectionList code sample:
+///https://blog.logrocket.com/react-native-sectionlist-tutorial-examples/
+///https://www.reactnative.express/core_components/lists/sectionlist
+///https://reactnative.dev/docs/sectionlist
+
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Text, View, Pressable, SectionList, StyleSheet} from 'react-native';
+import {Text, View, Pressable, SectionList} from 'react-native';
 
 //USER Imports
 import MVA from '../data/mvavt_records.json'; // for PRODUCTION Purposes
 import {MVAData} from '../data/dummy-data'; //for DEVELOPMENT Purposes
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 
 const BrowseMVAScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
 
   const navAid = useNavigation();
 
-  const data_Act = MVA.filter(element => element.source == 'Motor Vehicle Act');
+  ///filter JSON data
+  const data_Act = MVA.filter(
+    element => element.source === 'Motor Vehicle Act',
+  );
   const data_Reg = MVA.filter(
-    element => element.source == 'Motor Vehicle Act Regulations',
+    element => element.source === 'Motor Vehicle Act Regulations',
   );
 
-  var data_Act_Array = [];
+  ///Add title to the array
+  const data_Act_Array = [];
   data_Act_Array.push({title: 'Motor Vehicle Act', data: data_Act});
 
-  var data_Reg_Array = [];
+  const data_Reg_Array = [];
   data_Reg_Array.push({title: 'Motor Vehicle Act Regulations', data: data_Reg});
 
   const [ShowAct, setShowAct] = useState(data_Act_Array);
@@ -32,19 +41,26 @@ const BrowseMVAScreen = props => {
   const [ShowActButton, setShowActButton] = useState(true);
   const [ShowRegButton, setShowRegButton] = useState(true);
 
-  function onPressActHandler() {
+  const onPressActHandler = () => {
+    ///UseState boolean example
+    ///https://codesandbox.io/s/usestate-boolean-basic-example-iepcl?file=/src/Test.tsx
+
     if (ShowAct.length === 0) {
       setShowAct(data_Act_Array);
       setShowActButton(!ShowActButton);
-    } else setShowAct([]);
+    } else {
+      setShowAct([]);
+    }
     setShowActButton(!ShowActButton);
-  }
+  };
 
   function onPressRegHandler() {
     if (ShowReg.length === 0) {
       setShowReg(data_Reg_Array);
       setShowRegButton(!ShowRegButton);
-    } else setShowReg([]);
+    } else {
+      setShowReg([]);
+    }
     setShowRegButton(!ShowRegButton);
   }
 
@@ -56,13 +72,15 @@ const BrowseMVAScreen = props => {
         <Pressable
           style={{
             ...styles.buttonAct,
-            backgroundColor: ShowActButton ? '#7F2025' : '#FFFFFF',
+            backgroundColor: ShowActButton
+              ? colors.primary
+              : colors.backgroundColoring,
           }}
           onPress={() => onPressActHandler()}>
           <Text
             style={{
               ...styles.buttonActText,
-              color: ShowActButton ? '#E6E6E6' : '#000000',
+              color: ShowActButton ? colors.neutral : colors.fontColoring,
             }}>
             Act
           </Text>
@@ -75,13 +93,15 @@ const BrowseMVAScreen = props => {
         <Pressable
           style={{
             ...styles.buttonAct,
-            backgroundColor: ShowRegButton ? '#7F2025' : '#FFFFFF',
+            backgroundColor: ShowRegButton
+              ? colors.primary
+              : colors.backgroundColoring,
           }}
           onPress={() => onPressRegHandler()}>
           <Text
             style={{
               ...styles.buttonActText,
-              color: ShowRegButton ? '#E6E6E6' : '#000000',
+              color: ShowRegButton ? colors.neutral : colors.fontColoring,
             }}>
             Regulations
           </Text>
@@ -127,4 +147,3 @@ const BrowseMVAScreen = props => {
 };
 
 export default BrowseMVAScreen;
-
