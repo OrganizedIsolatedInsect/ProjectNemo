@@ -8,14 +8,24 @@ export const colors = {
   accent_2: '#CB333B',
   backgroundColoring: '#FFFFFF',
   borderColoring: '#000000',
-  fontColoring: '#000000',
   highlightBgColor: '#829DAF',
   highlightColor: '#FFFFFF',
+  primaryText: '#000000',
 };
 
 export default StyleSheet.create({
   background: {
     backgroundColor: colors.backgroundColoring,
+  },
+  headerText: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 30,
+  },
+  headerViewStyle: {
+    width: '100%',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     fontFamily: 'Lato-Regular',
@@ -158,7 +168,10 @@ export default StyleSheet.create({
   // SEARCHBAR Styling END
 
   // Search Results Flatlist Styling START
-  searchResultsFlatList_ItemView: {padding: 10},
+  searchResultsFlatList_ItemView: {
+    paddingBottom: 15,
+    paddingLeft: 15,
+  },
   searchResultsFlatList_ItemSeparator: {
     height: 0.5,
     width: '100%',
