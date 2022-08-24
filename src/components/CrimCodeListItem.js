@@ -1,4 +1,6 @@
 /*  Creates the an item of Criminal Code Parts/Sections to choose from
+
+  THIS COMPONENT TO BE REMOVED
  */
 //SYSTEM PACKAGES
 import React from 'react';
