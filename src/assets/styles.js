@@ -40,9 +40,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   container: {
-    paddingTop: 20,
+    paddingTop: 0,
     paddingHorizontal: 18,
-    marginBottom: 50,
+    marginBottom: 2,
     flexDirection: 'column',
     alignContent: 'space-between',
   },
@@ -163,4 +163,17 @@ export default StyleSheet.create({
     backgroundColor: colors.neutral,
   },
   // Search Results Flatlist Styling END
+
+  //Section List for Browse MVA screen
+
+  sectionListTitle: {
+    backgroundColor: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,
+    elevation: 4,
+    marginHorizontal: 11,
+    marginBottom: 0,
+    borderRadius: 10,
+  },
 });
