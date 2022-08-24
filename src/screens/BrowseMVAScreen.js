@@ -54,7 +54,7 @@ const BrowseMVAScreen = props => {
     setShowActButton(!ShowActButton);
   };
 
-  function onPressRegHandler() {
+  const onPressRegHandler = () => {
     if (ShowReg.length === 0) {
       setShowReg(data_Reg_Array);
       setShowRegButton(!ShowRegButton);
@@ -62,7 +62,7 @@ const BrowseMVAScreen = props => {
       setShowReg([]);
     }
     setShowRegButton(!ShowRegButton);
-  }
+  };
 
   return (
     <View style={styles.background}>
