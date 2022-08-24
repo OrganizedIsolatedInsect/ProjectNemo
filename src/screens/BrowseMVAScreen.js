@@ -133,7 +133,7 @@ const BrowseMVAScreen = props => {
           renderSectionHeader={({section}) => (
             <View style={styles.sectionListTitle}>
               <Text style={styles.heading_1}>{section.title}</Text>
-              <Text style={styles.heading_2}>Definition</Text>
+              <Text style={styles.heading_2}>Definitions</Text>
             </View>
           )}
           keyExtractor={item => item.index}
