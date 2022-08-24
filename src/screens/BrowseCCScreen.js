@@ -1,4 +1,4 @@
-/* BROWSE screen - re-usable screen for browses for all legislation
+/* BROWSE screen - re-usable screen for browses for just the Criminal Code Legislation
  */
 
 import React, {useState} from 'react';
