@@ -64,7 +64,7 @@ const BookMarkStack = () => {
 
 //STYLING
 //shows CustomHeader
-//removes back button
+//removes back button -(NEEDS TO BE REIMPLEMENTED)
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: true,
