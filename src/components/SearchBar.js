@@ -3,17 +3,18 @@
 
 import React, {useState} from 'react';
 import {View, TextInput, Pressable, Text, FlatList} from 'react-native';
-
 import {useNavigation} from '@react-navigation/native';
+
+import HighlightText from '@sanar/react-native-highlight-text';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 
 import data from '../data/mvavt_records.json';
 
 // TODO separate the searchbar and list components
-// TODO replace spaces in the search query with + (RegEx)
+// TODO replace spaces in the search query with '+' (RegEx?)
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
@@ -49,27 +50,36 @@ const SearchBar = () => {
   const ItemView = ({item}) => {
     return (
       // Flat List Item
-      <Text
-        style={styles.searchResultsFlatList_ItemView}
-        onPress={() => getItem(item)}>
-        {item.index}
-        {'.'}
-        {/* {item.contravention.toUpperCase()} */}
-        {item.contravention}
-      </Text>
+      <View>
+        <Text
+          style={[
+            styles.searchResultsFlatList_ItemView,
+            styles.body,
+            {color: colors.primaryText},
+          ]}
+          onPress={() => getItem(item)}>
+          {item.index + 1}
+          {'. '}
+          {/* {item.contravention.toUpperCase()} */}
+          <HighlightText
+            searchWords={[query]}
+            textToHighlight={item.contravention}
+            highlightStyle={styles.searchResultsHighlight}
+          />
+        </Text>
+      </View>
     );
   };
 
   const ItemSeparatorView = () => {
     return (
       // Flat List Item Separator
-      <View style={styles.searchResultsFlatList_ItemSeparator} />
+      <View style={styles.sectionDivider} />
     );
   };
 
   const getItem = item => {
-    // Function for click on an item
-    // alert('Id : ' + item.index + ' Title : ' + item.contravention);
+    // Navigate to the content screen when clicked
     navAid.navigate('ContentMVAScreen', {paramkey: item});
   };
 
@@ -81,7 +91,7 @@ const SearchBar = () => {
           onChangeText={text => searchFilterFunction(text)}
           value={query}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          placeholder="Search"
         />
         <Icon name="search" size={30} style={styles.searchIcon_styling} />
         <Pressable
@@ -99,6 +109,7 @@ const SearchBar = () => {
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={ItemSeparatorView}
         renderItem={ItemView}
+        // initialNumToRender={500}
       />
     </View>
   );
