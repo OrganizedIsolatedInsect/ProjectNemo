@@ -34,3 +34,9 @@ How to use Github in VS Code in general (of importance, **Pull requests**):
 ```
 https://code.visualstudio.com/docs/editor/github
 ```
+
+Figma Link
+
+```
+https://www.figma.com/file/PTth8wIjXV6Y2lFN02RH85/OII-App?node-id=0%3A1
+```
