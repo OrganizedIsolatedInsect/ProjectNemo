@@ -5,27 +5,38 @@
 //SYSTEM Imports
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
+
+import {getDefaultHeaderHeight} from '@react-navigation/elements';
+
+import {
+  useSafeAreaFrame,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 //USER Imports
 import styles, {colors} from '../assets/styles';
 
 //Sets up Screen header with title and search button, both which have a navigation component
 const CustomScreenHeader = () => {
+  const frame = useSafeAreaFrame();
+  const insets = useSafeAreaInsets();
+
+  const headerHeight = getDefaultHeaderHeight(frame, false, insets.top);
+
+  console.log('Header Height:', headerHeight);
+  console.log('Frame: ', frame);
+  console.log('Insets: ', insets);
+
   const navAid = useNavigation();
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    <View style={styles.headerViewStyle}>
       <Pressable onPress={() => navAid.navigate('LandingScreen')}>
-        <Text style={[styles.title, {color: colors.primary}]}>
-          Project Nemo
+        <Text style={styles.headerText}>
+          <Text style={{color: colors.primaryText}}>
+            PROJECT <Text style={{color: colors.primary}}>NEMO</Text>
+          </Text>
         </Text>
-      </Pressable>
-      <View>
-        <Text> </Text>
-      </View>
-      <Pressable onPress={() => navAid.navigate('SearchScreen')}>
-        <Icon name={'search'} size={30} />
       </Pressable>
     </View>
   );
