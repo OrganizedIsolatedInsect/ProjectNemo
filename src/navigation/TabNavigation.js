@@ -2,11 +2,11 @@
 import React from 'react';
 import {Pressable} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //USER Imports
 import {BookMarkStack, ContentStack} from './StackNavigation';
-import colors from '../assets/styles';
+import {colors} from '../assets/styles';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -22,8 +22,6 @@ export const AppNavigator = () => {
               {
                 borderTopColor: colors.primary,
                 borderTopWidth: 2,
-                // width: 36,
-                // height: 44,
               },
             ]
           : props.style
@@ -35,20 +33,29 @@ export const AppNavigator = () => {
   return (
     <BottomTab.Navigator
       screenOptions={({route}) => ({
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.primaryText,
+        tabBarLabelStyle: {
+          fontFamily: 'NotoSans-Regular',
+          fontSize: 12,
+        },
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Legislation') {
-            iconName = focused ? 'import-contacts' : 'import-contacts';
+            iconName = focused
+              ? 'book-open-page-variant-outline'
+              : 'book-open-page-variant-outline';
           } else if (route.name === 'Bookmarks') {
-            iconName = focused ? 'bookmarks' : 'bookmarks';
+            iconName = focused
+              ? 'bookmark-multiple-outline'
+              : 'bookmark-multiple-outline';
           }
 
           // You can return any component that you like here!
-          return <Icon name={iconName} size={50} color={colors.primary} />;
+          return <Icon name={iconName} size={50} color={color} />;
         },
-        // tabBarOptions: {iconStyle: { height: 10000, width: 10000}},   TODO continue with this project
         headerShown: false,
-        tabBarStyle: {height: 75},
+        tabBarStyle: {height: 90},
       })}>
       <BottomTab.Screen
         name="Legislation"
