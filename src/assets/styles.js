@@ -195,8 +195,6 @@ export default StyleSheet.create({
     marginBottom: 0,
     borderRadius: 10,
   },
-});
-
   centerOnScreen: {
     flex: 1,
     alignItems: 'center',
@@ -206,6 +204,5 @@ export default StyleSheet.create({
   alignOnRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-  }
+  },
 });
-
