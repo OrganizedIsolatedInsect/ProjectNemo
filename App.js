@@ -1,6 +1,8 @@
 //PACKAGE Imports
 import React from 'react';
+import {StatusBar} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 //USER Imports
@@ -26,6 +28,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
+        <StatusBar
+          backgroundColor={colors.backgroundColoring}
+          barStyle="dark-content"
+        />
         <NavigationContainer theme={navTheme}>
           <AppNavigator />
         </NavigationContainer>
