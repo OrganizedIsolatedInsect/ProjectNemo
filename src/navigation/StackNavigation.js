@@ -5,15 +5,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import BrowseScreen from '../screens/BrowseCCScreen'; // TODO  Remove this line
 import BrowseCCScreen from '../screens/BrowseCCScreen';
 import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
-import ContentScreen from '../screens/ContentScreen'; // TODO  Remove this line
 import ContentMVAScreen from '../screens/ContentMVAScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
+import {SearchIconButton} from '../components/HeaderSearchIconButton';
 
 const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
@@ -54,21 +53,25 @@ const BookMarkStack = () => {
         name="BookmarkList"
         component={BookmarkScreen}
       />
-      <BookMarkNavigator.Screen
-        name="ContentCCScreen"
-        component={ContentCCScreen}
-      />
+      <BookMarkNavigator.Screen name="MVAContent" component={ContentCCScreen} />
     </BookMarkNavigator.Navigator>
   );
 };
 
 //STYLING
 //shows CustomHeader
-//removes back button -(NEEDS TO BE REIMPLEMENTED)
+//removes back button
 const screenOptionStyle = {
   //Navigation Headers turned off as Headers to be created within Screens.
   headerShown: true,
+  headerTitleAlign: 'center',
+  headerLeft: () => null,
   headerTitle: props => <CustomScreenHeader {...props} />,
+  headerRight: props => <SearchIconButton {...props} />,
+  headerSearchBarOptions: {
+    autoCapitalize: 'none',
+    obscureBackground: false,
+  },
 };
 
 export {ContentStack, BookMarkStack};
