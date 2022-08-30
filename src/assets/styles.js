@@ -196,3 +196,16 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+  centerOnScreen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  alignOnRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  }
+});
+
