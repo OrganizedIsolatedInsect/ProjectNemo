@@ -40,3 +40,4 @@ Figma Link
 ```
 https://www.figma.com/file/PTth8wIjXV6Y2lFN02RH85/OII-App?node-id=0%3A1
 ```
+SQL Lite Browser: https://sqlitebrowser.org/
