@@ -23,7 +23,7 @@ const BrowseCCScreen = props => {
     );
   };
   return (
-    <View style={[styles.background, styles.container]}>
+    <View style={[styles.container]}>
       <Text
         style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
         Criminal Code of Canada

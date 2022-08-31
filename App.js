@@ -1,6 +1,9 @@
 //PACKAGE Imports
 import React from 'react';
+
+// Required to make the status bar background color and icons match our theme
 import {StatusBar} from 'react-native';
+
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -15,7 +18,8 @@ import {colors} from './src/assets/styles';
 let date = new Date();
 console.log(date);
 
-// Make React Navigation's default theme background color match the rest of the app
+// Make React Navigation's default theme background color match the rest of the app. This ensures all
+// backgrounds are the same color without needing it to be declared in "View Styles"
 const navTheme = {
   ...DefaultTheme,
   colors: {

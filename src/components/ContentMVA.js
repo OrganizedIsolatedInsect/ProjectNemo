@@ -11,8 +11,7 @@ const ContentMVA = ({item}) => {
         <View style={styles.MVAContentHeadingContainerLeft}>
           <Text
             style={{
-              ...styles.heading_1,
-              fontWeight: 'bold',
+              ...styles.title,
               color: colors.primaryText,
             }}>
             {item.contravention}
@@ -23,11 +22,15 @@ const ContentMVA = ({item}) => {
         </View>
       </View>
       <View style={styles.MVAContentSection}>
-        <Text style={{...styles.accent_1, color: colors.primaryText}}>
+        <Text style={{...styles.body, color: colors.primaryText}}>
           {item.source}, Section {item.provision}
         </Text>
         <Text
-          style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
+          style={{
+            ...styles.MVAContentSectionText,
+            ...styles.body,
+            color: colors.primaryText,
+          }}>
           {item.sectionText}
           {'\n'}
         </Text>
@@ -35,6 +38,7 @@ const ContentMVA = ({item}) => {
           <Text
             style={{
               ...styles.MVAContentSectionText,
+              ...styles.body,
               color: colors.primaryText,
             }}>
             {item.sectionSubsection}
@@ -47,7 +51,12 @@ const ContentMVA = ({item}) => {
       </View>
 
       <View>
-        <Text style={{...styles.MVAContentTicket, color: colors.primaryText}}>
+        <Text
+          style={{
+            ...styles.MVAContentTicket,
+            color: colors.primaryText,
+            fontFamily: 'NotoSans-Regular',
+          }}>
           Ticketed Amount: {item.fine} {'\n'}
           Reduced ticket amount ({'<'}30 days): {item.reducedFine}
         </Text>

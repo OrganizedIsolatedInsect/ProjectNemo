@@ -44,6 +44,7 @@ export default StyleSheet.create({
   body: {
     fontFamily: 'NotoSans-Regular',
     fontSize: 14,
+    textAlign: 'justify',
   },
   sectionDivider: {
     borderBottomColor: colors.borderColoring,

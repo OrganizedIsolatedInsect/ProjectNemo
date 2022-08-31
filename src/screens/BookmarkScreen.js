@@ -35,30 +35,36 @@ const BookmarkScreen = props => {
   } else {
     return (
       <SafeAreaView>
-        <View style={styles.background}>
+        <View>
           <FlatList
             data={bookmarks.sections}
             renderItem={({item}) => (
               <View
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                }}>
                 <Pressable
                   onPress={() =>
                     navAid.navigate('MVAContent', {
                       section: item.section,
                     })
                   }>
-                  <Text>
+                  <Text
+                    style={{...styles.heading_1, color: colors.primaryText}}>
                     {item.section} {item.sectionHeader}
                   </Text>
                 </Pressable>
 
                 <Icon
                   name="delete"
-                  size={20}
+                  size={30}
                   onPress={() =>
                     dispatch(removeBookmark({section: item.section}))
                   }
+                  color={colors.primaryText}
                 />
               </View>
             )}

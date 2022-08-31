@@ -98,8 +98,8 @@ const Section = ({section, type}) => {
 
   //bookmark to dispatch redux action to add bookmark
   const SectionHeader = ({section, sectionHeader}) => (
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-      <Text style={styles.heading_2}>
+    <View style={styles.gridListItem}>
+      <Text style={{...styles.title, color: colors.primaryText}}>
         {section} {sectionHeader}
       </Text>
       {/* <Bookmark section={section} sectionHeader={sectionHeader} /> */}
@@ -120,7 +120,7 @@ const Section = ({section, type}) => {
       return (
         <View>
           <View>
-            <Text>
+            <Text style={{...styles.body, color: colors.primaryText}}>
               {subsectionHeader}
               {'\n'}
               {'\n'}
@@ -134,7 +134,7 @@ const Section = ({section, type}) => {
       return (
         <View>
           <View>
-            <Text>
+            <Text style={{...styles.body, color: colors.primaryText}}>
               {subsection} {subsectionText}
             </Text>
           </View>
@@ -196,7 +196,12 @@ const Section = ({section, type}) => {
     if (item.paragraph !== null) {
       return (
         <View>
-          <Text style={styles.paragraph}>
+          <Text
+            style={{
+              ...styles.paragraph,
+              ...styles.body,
+              color: colors.primaryText,
+            }}>
             {/*  In{item.index} */}
             {item.paragraph} {item.paragraphText}
           </Text>
@@ -209,7 +214,12 @@ const Section = ({section, type}) => {
   const renderSubPara = ({item}) => {
     return (
       <View>
-        <Text style={styles.subParagraph}>
+        <Text
+          style={{
+            ...styles.subParagraph,
+            ...styles.body,
+            color: colors.primaryText,
+          }}>
           {item.subparagraph} {item.subparagraphText}
         </Text>
       </View>
@@ -218,7 +228,7 @@ const Section = ({section, type}) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.CCcontent}>
+      <View style={{marginHorizontal: 30}}>
         <View>
           <SectionHeader
             section={sectionData[0].section}
