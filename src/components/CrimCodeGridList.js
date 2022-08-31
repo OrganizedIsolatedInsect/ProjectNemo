@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //USER IMPORTS
 import CrimCodeListItem from './CrimCodeListItem';
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 
 const CrimCodeGridList = props => {
   const navAid = useNavigation();
@@ -20,12 +20,25 @@ const CrimCodeGridList = props => {
           navAid.navigate('ContentCCScreen', {section: props.section})
         }>
         <View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.heading_1}>{props.part}</Text>
-            <Text style={styles.heading_1}>{props.section}</Text>
-            <Text style={styles.heading_1}>{props.sectionHeader}</Text>
+          <View style={styles.gridListItem}>
+            <View style={[styles.gridItemMargin, styles.body]}>
+              <Text style={{textAlign: 'left', color: colors.primaryText}}>
+                {props.section}
+              </Text>
+              <Text
+                style={[
+                  styles.sentenceWrap,
+                  {marginLeft: 10, color: colors.primaryText},
+                ]}>
+                {props.sectionHeader}
+              </Text>
+            </View>
 
-            <Icon name={'arrow-forward'} size={20} />
+            <Icon
+              name={'arrow-forward-ios'}
+              size={20}
+              color={colors.primaryText}
+            />
           </View>
         </View>
       </Pressable>

@@ -38,6 +38,7 @@ export const AppNavigator = () => {
         tabBarLabelStyle: {
           fontFamily: 'NotoSans-Regular',
           fontSize: 12,
+          color: colors.primaryText,
         },
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
@@ -69,13 +70,6 @@ export const AppNavigator = () => {
       />
     </BottomTab.Navigator>
   );
-};
-
-//STYLING
-const screenOptionStyle = {
-  //Navigation Headers turned off as Headers to be created within Screens.
-  headerShown: false,
-  // tabBarOptions: {iconStyle: {height: 50, width: 50}},
 };
 
 export default AppNavigator;

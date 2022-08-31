@@ -184,7 +184,6 @@ export default StyleSheet.create({
   // Search Results Flatlist Styling END
 
   //Section List for Browse MVA screen
-
   sectionListTitle: {
     backgroundColor: colors.backgroundColoring,
     fontSize: 20,
@@ -204,5 +203,26 @@ export default StyleSheet.create({
   alignOnRow: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+
+  //GRID LIST ITEMS
+  gridListItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  titleMargin: {
+    marginTop: 10,
+  },
+  gridItemMargin: {
+    flexDirection: 'row',
+
+    marginLeft: 15,
+    marginBottom: 10,
+  },
+  rowSplit: {
+    width: '20%',
+  },
+  sentenceWrap: {
+    flexWrap: 'wrap',
   },
 });

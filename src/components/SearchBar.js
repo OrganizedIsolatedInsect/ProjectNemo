@@ -105,6 +105,7 @@ const SearchBar = () => {
         </Pressable>
       </View>
       <View style={{height: 640}}>
+        {/* TODO Discussion to be had on options for listing component ie. Scollview, Flatlist, Sectionlist, Flashlist? */}
         <FlatList
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}

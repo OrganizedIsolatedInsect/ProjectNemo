@@ -920,4 +920,86 @@ const CCDATAPARTS = [
   },
 ];
 
-export {DATA, MVAData, CCDATA, CCDATAPARTS};
+const CCDATASECTION = [
+  {
+    part: 'Part I',
+    data: [
+      {index: 0, section: '1', sectionHeader: 'Short title'},
+      {index: 1, section: '2', sectionHeader: 'Definitions'},
+      {
+        index: 2,
+        section: '2.1',
+        sectionHeader: 'Further definitions — firearms',
+      },
+      {index: 3, section: '2.2', sectionHeader: 'Acting on victim’s behalf'},
+      {
+        index: 4,
+        section: '2.3',
+        sectionHeader: 'Concurrent jurisdiction',
+      },
+      {
+        index: 5,
+        section: '3',
+        sectionHeader: 'Descriptive cross-references',
+      },
+      {
+        index: 6,
+        section: '3.1',
+        sectionHeader: 'Effect of judicial acts',
+      },
+      {
+        index: 7,
+        section: '4',
+        sectionHeader: 'Postcard a chattel, value',
+      },
+      {
+        index: 8,
+        section: '5',
+        sectionHeader: 'Canadian Forces not affected',
+      },
+      {
+        index: 9,
+        section: '6',
+        sectionHeader: 'Presumption of innocence',
+      },
+      {
+        index: 10,
+        section: '7',
+        sectionHeader: 'Offences committed on aircraft',
+      },
+      {
+        index: 11,
+        section: '8',
+        sectionHeader: 'Application to territories',
+      },
+      {
+        index: 12,
+        section: '9',
+        sectionHeader: 'Criminal offences to be under law of Canada',
+      },
+      {
+        index: 13,
+        section: '10',
+        sectionHeader: 'Appeal',
+      },
+      {
+        index: 14,
+        section: '11',
+        sectionHeader: 'Civil remedy not suspended',
+      },
+      {
+        index: 15,
+        section: '12',
+        sectionHeader: 'Offence punishable under more than one Act',
+      },
+      {index: 16, section: '13', sectionHeader: 'Child under twelve'},
+      {index: 17, section: '14', sectionHeader: 'Consent to death'},
+      {index: 18, section: '15', sectionHeader: 'Obedience to '},
+      {index: 19, section: '16', sectionHeader: 'Defence of mental disorder'},
+      {index: 20, section: '17', sectionHeader: 'Compulsion by threats'},
+      {index: 21, section: '18', sectionHeader: 'Compulsion of spouse'},
+    ],
+  },
+];
+
+export {DATA, MVAData, CCDATA, CCDATAPARTS, CCDATASECTION};

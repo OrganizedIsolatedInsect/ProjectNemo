@@ -16,7 +16,7 @@ const LegislationGridList = props => {
     <View>
       <Pressable
         onPress={() => navAid.navigate(props.destination, {paramkey: props})}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={styles.gridListItem}>
           <Text style={[styles.heading_1, {color: colors.primaryText}]}>
             {props.title}
           </Text>

@@ -34,7 +34,7 @@ const CustomScreenHeader = () => {
       <Pressable onPress={() => navAid.navigate('LandingScreen')}>
         <Text style={styles.headerText}>
           <Text style={{color: colors.primaryText}}>
-            PROJECT <Text style={{color: colors.primary}}>NEMO</Text>
+            FINDING <Text style={{color: colors.primary}}>NEMO</Text>
           </Text>
         </Text>
       </Pressable>

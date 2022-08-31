@@ -2,11 +2,11 @@
  */
 
 import React, {useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, Text, SectionList} from 'react-native';
 
 //USER Imports
-import {CCDATAPARTS} from '../data/dummy-data'; //for DEVELOPMENT Purposes
-import styles from '../assets/styles';
+import {CCDATAPARTS, CCDATASECTION} from '../data/dummy-data'; //for DEVELOPMENT Purposes
+import styles, {colors} from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 
 const BrowseCCScreen = props => {
@@ -24,11 +24,18 @@ const BrowseCCScreen = props => {
   };
   return (
     <View style={[styles.background, styles.container]}>
-      <FlatList
-        data={CCDATAPARTS}
-        renderItem={renderList}
+      <Text
+        style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
+        Criminal Code of Canada
+      </Text>
+      <SectionList
+        sections={CCDATASECTION}
         keyExtractor={item => item.index}
-        ItemSeparatorComponent={() => <View style={{margin: 15}} />}
+        renderItem={renderList}
+        renderSectionHeader={({section: {part}}) => (
+          <Text style={{color: colors.primary}}>{part}</Text>
+        )}
+        stickySectionHeadersEnabled={'true'}
       />
     </View>
   );

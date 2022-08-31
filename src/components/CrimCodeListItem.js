@@ -13,7 +13,7 @@ import styles from '../assets/styles';
 const CrimCodeListItem = props => {
   return (
     <View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={styles.gridListItem}>
         <Text style={styles.heading_1}>{props.part}</Text>
         <Text style={styles.heading_1}>{props.section}</Text>
         <Text style={styles.heading_1}>{props.sectionHeader}</Text>

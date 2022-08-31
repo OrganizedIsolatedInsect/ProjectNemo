@@ -68,10 +68,10 @@ const screenOptionStyle = {
   headerLeft: () => null,
   headerTitle: props => <CustomScreenHeader {...props} />,
   headerRight: props => <SearchIconButton {...props} />,
-  headerSearchBarOptions: {
-    autoCapitalize: 'none',
-    obscureBackground: false,
-  },
+  // headerSearchBarOptions: {
+  //   autoCapitalize: 'none',
+  //   obscureBackground: false,
+  // },
 };
 
 export {ContentStack, BookMarkStack};
