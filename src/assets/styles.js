@@ -186,7 +186,7 @@ export default StyleSheet.create({
   //Section List for Browse MVA screen
 
   sectionListTitle: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.backgroundColoring,
     fontSize: 20,
     fontWeight: 'bold',
     padding: 10,

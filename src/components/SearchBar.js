@@ -104,13 +104,15 @@ const SearchBar = () => {
           <Icon name="close" size={30} style={styles.closeIcon_styling} />
         </Pressable>
       </View>
-      <FlatList
-        data={filteredDataSource}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={ItemSeparatorView}
-        renderItem={ItemView}
-        // initialNumToRender={500}
-      />
+      <View style={{height: 640}}>
+        <FlatList
+          data={filteredDataSource}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={ItemSeparatorView}
+          renderItem={ItemView}
+          // initialNumToRender={500}
+        />
+      </View>
     </View>
   );
 };

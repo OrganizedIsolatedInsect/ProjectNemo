@@ -121,19 +121,34 @@ const BrowseMVAScreen = props => {
                 }
                 style={styles.innerContainer}>
                 <View style={styles.innerContainerLeft}>
-                  <Text>{item.contravention}</Text>
-                  <Text>{item.provision}</Text>
+                  <Text
+                    style={{
+                      ...styles.MVAContentSectionText,
+                      color: colors.primaryText,
+                    }}>
+                    {item.contravention}
+                    {'\n'}
+                    {item.provision}
+                  </Text>
                 </View>
                 <View style={styles.innerContainerRight}>
-                  <Text>{item.fine}</Text>
+                  <Text
+                    style={{
+                      ...styles.MVAContentSectionText,
+                      color: colors.primaryText,
+                    }}>
+                    {item.fine}
+                  </Text>
                 </View>
               </Pressable>
             </View>
           )}
           renderSectionHeader={({section}) => (
             <View style={styles.sectionListTitle}>
-              <Text style={styles.heading_1}>{section.title}</Text>
-              <Text style={styles.heading_2}>Definitions</Text>
+              <Text style={{...styles.heading_1, color: colors.primaryText}}>
+                {section.title}
+              </Text>
+              <Text style={{...styles.heading_2}}>Definitions</Text>
             </View>
           )}
           keyExtractor={item => item.index}

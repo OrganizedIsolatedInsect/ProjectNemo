@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, Button, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -19,12 +19,17 @@ const BookmarkScreen = props => {
   const dispatch = useDispatch();
 
   /*Output Section*/
-
-  // checks if bookmarks state from redux store exists, if it doesn't render a no bookmark screen
   if (bookmarks.sections.length === 0) {
     return (
-      <View>
-        <Text>No Bookmarks Currently</Text>
+      <View style={styles.centerOnScreen}>
+        <Text style={[styles.title, {color: colors.primaryText}]}>
+          No Bookmarks Currently
+        </Text>
+        <Icon
+          name="collections-bookmark"
+          size={200}
+          style={{color: colors.primaryText}}
+        />
       </View>
     );
   } else {
@@ -39,7 +44,7 @@ const BookmarkScreen = props => {
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Pressable
                   onPress={() =>
-                    navAid.navigate('ContentCCScreen', {
+                    navAid.navigate('MVAContent', {
                       section: item.section,
                     })
                   }>
@@ -47,7 +52,7 @@ const BookmarkScreen = props => {
                     {item.section} {item.sectionHeader}
                   </Text>
                 </Pressable>
-                {/* trash can icon to delete bookmark */}
+
                 <Icon
                   name="delete"
                   size={20}

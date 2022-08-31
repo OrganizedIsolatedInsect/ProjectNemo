@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
 
+import {colors} from '../assets/styles';
+
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 
 const Bookmark = (section, sectionHeader) => {
@@ -43,7 +45,11 @@ const Bookmark = (section, sectionHeader) => {
         switchMarks();
       }}>
       <View>
-        <Icon name={marked ? 'bookmark' : 'bookmark-outline'} size={30} />
+        <Icon
+          name={marked ? 'bookmark' : 'bookmark-outline'}
+          size={30}
+          style={{color: colors.primary}}
+        />
       </View>
     </Pressable>
   );
