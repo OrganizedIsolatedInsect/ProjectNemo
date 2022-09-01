@@ -7,7 +7,6 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //USER IMPORTS
-import CrimCodeListItem from './CrimCodeListItem';
 import styles, {colors} from '../assets/styles';
 
 const CrimCodeGridList = props => {
