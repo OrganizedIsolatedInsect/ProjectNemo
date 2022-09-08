@@ -5,6 +5,7 @@ import {Text, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
+import {useIsFocused} from '@react-navigation/native';
 
 import testData from '../data/test.json';
 import crimData from '../data/C-46.json';
@@ -17,21 +18,34 @@ return data set for paragraphs
 */
 
 const Section = ({section, type}) => {
+  //section prop passed on from browse screen
   const sectionId = section;
   const typeId = type;
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  //set states for bookmark flag, database data, loading
   const [marked, setMarked] = useState(false);
   const [dbData, setDbData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  //pull state to see if current section exists in bookmarks
+  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+
+  //used to switch the bookmark icon from outline to fill and vice versa
+  const switchMarks = () => {
+    setMarked(!marked);
+  };
+
   //Create array to divide up subsections
   let subsectionArray = [];
 
   useEffect(() => {
     getDbData(sectionId);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section === section)) {
+    if (bookmarkStateId.some(e => e.section == section)) {
       setMarked(true);
     }
-  }, []);
+  }, [marked, isFocused]);
 
   const getDbData = sectionId => {
     db.transaction(tx => {
@@ -44,16 +58,11 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
+          setLoading(true);
         },
       );
     });
   };
-
-  const sectionData = crimData.filter(obj => {
-    return obj.section === sectionId;
-  });
-
-  //console.log(dbData[0].section);
 
   for (var i = 0, l = dbData.length; i < l; i++) {
     const section = dbData[i].section;
@@ -86,14 +95,6 @@ const Section = ({section, type}) => {
       }
     }
   }
-
-  //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
-
-  //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
 
   //dispatch add or remove bookmarks based bookmark icon
   const dispatchAction = (section, sectionHeader) => {
@@ -199,6 +200,16 @@ const Section = ({section, type}) => {
     );
   };
 
+  const renderSubPara = ({item}) => {
+    return (
+      <View>
+        <Text style={styles.subParagraph}>
+          {item.subparagraph} {item.subparagraphText}
+        </Text>
+      </View>
+    );
+  };
+
   const renderItemPara = ({item}) => {
     //console.log(item);
 
@@ -225,29 +236,20 @@ const Section = ({section, type}) => {
     }
   };
 
-  const renderSubPara = ({item}) => {
+  if (loading === true)
     return (
-      <View>
-        <Text style={styles.subParagraph}>
-          {item.subparagraph} {item.subparagraphText}
-        </Text>
-      </View>
-    );
-  };
-
-  return (
-    <SafeAreaView>
-      <View style={styles.CCcontent}>
-        <View>
-          {/*   <SectionHeader
-            section={dbData[0].section}
-            sectionHeader={dbData[0].sectionHeader}
-          /> */}
+      <SafeAreaView>
+        <View style={styles.CCcontent}>
+          <View>
+            <SectionHeader
+              section={dbData[0].section}
+              sectionHeader={dbData[0].sectionHeader}
+            />
+          </View>
+          <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
         </View>
-        <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
-      </View>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    );
 };
 
 export default Section;
