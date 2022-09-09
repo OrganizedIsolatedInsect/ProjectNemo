@@ -14,7 +14,9 @@ import styles, {colors} from '../assets/styles';
 import data from '../data/mvavt_records.json';
 
 // TODO separate the searchbar and list components
-// TODO replace spaces in the search query with '+' (RegEx?)
+//      replace spaces in the search query with '+' (RegEx?)
+//       figure out 'Full Text Search' (FTS4 in SQLite) which will allow us to search across all columns
+//      in a table without needing to hardcode the column names, etc.
 
 import {openDatabase} from 'react-native-sqlite-storage';
 
@@ -48,7 +50,12 @@ const SearchBar = () => {
     });
   }, []);
 
+  // TODO - Figure out useEffect/useCallback to refresh data on query. Currently does not render
+  //        correct data on first run of query term.
+  //        Data does not display in results yet but with filteredMvaData, it should be be useable
+  //        in Flatlist data.
   const queryForMvaAct = () => {
+    // Build wildcard search string for SQL
     let queryWildcard = `%${query}%`;
 
     console.log('Queried Term:', query);
@@ -124,8 +131,8 @@ const SearchBar = () => {
     );
   };
 
+  // Navigate to the content screen when clicked
   const getItem = item => {
-    // Navigate to the content screen when clicked
     navAid.navigate('ContentMVAScreen', {paramkey: item});
   };
 
@@ -135,7 +142,6 @@ const SearchBar = () => {
         <TextInput
           style={styles.SearchBar_Styling}
           onChangeText={query => setQuery(query)}
-          // onSubmitEditing={queryForMvaAct(query)}
           value={query}
           underlineColorAndroid="transparent"
           placeholder="Search"
