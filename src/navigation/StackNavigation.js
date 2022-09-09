@@ -19,7 +19,10 @@ const ContentNavigator = createStackNavigator();
 
 const ContentStack = () => {
   return (
-    <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
+    <ContentNavigator.Navigator
+      screenOptions={screenOptionStyle}
+      // TODO - Remove initialRouteName - currently used to load directly into SearchScreen
+      initialRouteName="SearchScreen">
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
       <ContentNavigator.Screen

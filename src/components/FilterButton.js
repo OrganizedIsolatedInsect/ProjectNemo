@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import {View, Pressable, Text} from 'react-native';
 import styles, {colors} from '../assets/styles';
 
-const FilterButton = ({buttonLabel, searchFilters}) => {
+// Custom FilterButtons which take 'buttonLabel' (name of button) and 'onPress' (what to do) props.
+// On press out of the button, it changes the colors of the button to signify pressed or not.
+
+const FilterButton = ({buttonLabel, onPress}) => {
   const [filtered, setFiltered] = useState(true);
 
-  // searchFilters.map(item);
-
   const buttonPressed = () => {
-    setFiltered(!filtered);
-    console.log(buttonLabel, ':', !filtered);
+    setFiltered(previousState => !previousState);
+    // console.log(buttonLabel, ':', !filtered);
   };
 
   return (
@@ -21,7 +22,8 @@ const FilterButton = ({buttonLabel, searchFilters}) => {
             ? colors.primary
             : colors.backgroundColoring,
         }}
-        onPress={buttonPressed}>
+        onPress={onPress}
+        onPressOut={buttonPressed}>
         <Text
           style={{
             ...styles.buttonActText,
