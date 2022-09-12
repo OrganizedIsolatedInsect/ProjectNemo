@@ -7,8 +7,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 
-import testData from '../data/test.json';
-import crimData from '../data/C-46.json';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
 
@@ -44,9 +42,12 @@ const Section = ({section, type}) => {
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (bookmarkStateId.some(e => e.section == section)) {
       setMarked(true);
+    } else {
+      setMarked(false);
     }
   }, [marked, isFocused]);
 
+  //function to get data from NemoDB
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
