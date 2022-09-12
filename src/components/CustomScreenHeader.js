@@ -22,7 +22,7 @@ const CustomScreenHeader = () => {
   // const frame = useSafeAreaFrame();
   // const insets = useSafeAreaInsets();
 
-  // const headerHeight = getDefaultHeaderHeight(frame, false, insets.top);
+  const headerHeight = getDefaultHeaderHeight(frame, false, insets.top);
 
   // console.log('Header Height:', headerHeight);
   // console.log('Frame: ', frame);
