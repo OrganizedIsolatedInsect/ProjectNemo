@@ -24,10 +24,6 @@ const CustomScreenHeader = () => {
 
   const headerHeight = getDefaultHeaderHeight(frame, false, insets.top);
 
-  console.log('Header Height:', headerHeight);
-  console.log('Frame: ', frame);
-  console.log('Insets: ', insets);
-
   const navAid = useNavigation();
   return (
     <View style={styles.headerViewStyle}>
