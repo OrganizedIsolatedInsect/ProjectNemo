@@ -47,7 +47,7 @@ const Section = ({section, type}) => {
     }
   }, [marked, isFocused]);
 
-  //function to get data from NemoDB
+  // function to get data from NemoDB
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
