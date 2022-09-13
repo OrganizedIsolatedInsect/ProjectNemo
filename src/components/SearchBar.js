@@ -1,7 +1,7 @@
 // Searching using Search Bar Filter in React Native List View
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, TextInput, Pressable, Text, FlatList, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -13,33 +13,35 @@ import styles, {colors} from '../assets/styles';
 
 import data from '../data/mvavt_records.json';
 
+import {db} from './Database';
+
 // TODO separate the searchbar and list components
 //      replace spaces in the search query with '+' (RegEx?)
-//       figure out 'Full Text Search' (FTS4 in SQLite) which will allow us to search across all columns
+//      figure out 'Full Text Search' (FTS4 in SQLite) which will allow us to search across all columns
 //      in a table without needing to hardcode the column names, etc.
-
-import {openDatabase} from 'react-native-sqlite-storage';
-
-// Connction to access the pre-populated NemoDB.db
-const db = openDatabase({name: 'NemoDB.db', createFromLocation: 1});
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
 
-  const [filteredDataSource, setFilteredDataSource] = useState();
-  const [masterDataSource, setMasterDataSource] = useState();
+  // const [filteredDataSource, setFilteredDataSource] = useState();
+  // const [masterDataSource, setMasterDataSource] = useState();
 
   const [filteredMvaData, setFilteredMvaData] = useState([]);
   const [allMvaData, setAllMvaData] = useState([]);
 
-  const [allCCData, setAllCCData] = useState([]);
-  const [filteredCCData, setFilteredCCData] = useState([]);
+  // const [allCCData, setAllCCData] = useState([]);
+  // const [filteredCCData, setFilteredCCData] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+
+  // Build wildcard search string for SQL
+ // let queryWildcard = `%${query}%`;
 
   const navAid = useNavigation();
+  console.log(filteredMvaData.length);
 
   useEffect(() => {
+    console.log('first')
     db.transaction(tx => {
       tx.executeSql('SELECT * FROM MVA', [], (tx, results) => {
         var temp = [];
@@ -54,11 +56,10 @@ const SearchBar = () => {
   //        correct data on first run of query term.
   //        Data does not display in results yet but with filteredMvaData, it should be be useable
   //        in Flatlist data.
-  const queryForMvaAct = () => {
-    // Build wildcard search string for SQL
-    let queryWildcard = `%${query}%`;
 
+  const queryForMvaAct = (query) => {
     console.log('Queried Term:', query);
+    let queryWildcard = `%${query}%`;
     db.transaction(tx => {
       tx.executeSql(
         'SELECT * FROM MVA WHERE contravention like ? OR provision like ? OR sectionText like ? OR sectionSubsection like ? OR sectionParagraph like ? OR sectionSubparagraph like ?',
@@ -68,13 +69,15 @@ const SearchBar = () => {
           for (let i = 0; i < results.rows.length; ++i)
             temp.push(results.rows.item(i));
           setFilteredMvaData(temp);
-          console.log(filteredMvaData);
+          
         },
       );
     });
   };
 
-  useEffect(() => {}, [filteredMvaData]);
+  useEffect(() => {
+    queryForMvaAct(query);
+  }, [query]);
 
   const searchFilterFunction = text => {
     // Check if searched text is not blank
@@ -149,7 +152,7 @@ const SearchBar = () => {
         <Icon name="search" size={30} style={styles.searchIcon_styling} />
         <Pressable
           onPress={() => {
-            setFilteredDataSource(data);
+            setFilteredMvaData(allMvaData);
             setQuery('');
           }} // When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query.
           android_ripple={styles.closeIcon_ripple_styling}
@@ -158,13 +161,14 @@ const SearchBar = () => {
         </Pressable>
       </View>
       <View>
-        <Button title="debug" onPress={() => queryForMvaAct()} />
+        <Button title="debug" onPress={() => queryForMvaAct(query)} />
       </View>
       {/* List out the resulting data */}
       <View style={{height: 640}}>
         {/* TODO Discussion to be had on options for listing component ie. Scollview, Flatlist, Sectionlist, Flashlist? */}
         <FlatList
-          data={filteredDataSource}
+          // data={filteredDataSource}
+          data={filteredMvaData}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
           renderItem={ItemView}
