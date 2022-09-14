@@ -4,7 +4,12 @@ import {Text, View, ScrollView} from 'react-native';
 import Bookmark from '../components/Bookmark';
 import styles, {colors} from '../assets/styles';
 
-const ContentMVA = ({item}) => {
+import HighlightText from '@sanar/react-native-highlight-text';
+
+const ContentMVA = ({item, query}) => {
+  // prettier-ignore
+  const highlightedBodyText = `${item.sectionSubsection === null ? '' : item.sectionSubsection}${'\n'}${item.sectionParagraph === null ? '' : item.sectionParagraph}${'\n'}${item.sectionSubparagraph === null ? '' : item.sectionSubparagraph}${'\n'}`;
+
   return (
     <ScrollView style={styles.background}>
       <View style={styles.MVAContentHeadingContainer}>
@@ -15,7 +20,12 @@ const ContentMVA = ({item}) => {
               fontWeight: 'bold',
               color: colors.primaryText,
             }}>
-            {item.contravention}
+            <HighlightText
+              searchWords={[query]}
+              textToHighlight={item.contravention}
+              highlightStyle={styles.searchResultsHighlight}
+            />
+            {/* {item.contravention} */}
           </Text>
         </View>
         <View style={styles.MVAContentHeadingContainerRight}>
@@ -28,7 +38,11 @@ const ContentMVA = ({item}) => {
         </Text>
         <Text
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
-          {item.sectionText}
+          <HighlightText
+            searchWords={[query]}
+            textToHighlight={item.sectionText}
+            highlightStyle={styles.searchResultsHighlight}
+          />
           {'\n'}
         </Text>
         <View style={styles.MVAContentSubsection}>
@@ -37,10 +51,15 @@ const ContentMVA = ({item}) => {
               ...styles.MVAContentSectionText,
               color: colors.primaryText,
             }}>
-            {item.sectionSubsection}
+            <HighlightText
+              searchWords={[query]}
+              textToHighlight={highlightedBodyText}
+              highlightStyle={styles.searchResultsHighlight}
+            />
+            {/* {item.sectionSubsection}
             {item.sectionParagraph}
             {item.sectionSubparagraph}
-            {item.sectionSubLength}
+            {item.sectionSubLength} */}
             {'\n'}
           </Text>
         </View>
@@ -48,7 +67,7 @@ const ContentMVA = ({item}) => {
 
       <View>
         <Text style={{...styles.MVAContentTicket, color: colors.primaryText}}>
-          Ticketed Amount: {item.fine} {'\n'}
+          Ticketed amount: {item.fine} {'\n'}
           Reduced ticket amount ({'<'}30 days): {item.reducedFine}
         </Text>
       </View>

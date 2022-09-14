@@ -11,8 +11,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles, {colors} from '../assets/styles';
 
-import data from '../data/mvavt_records.json';
-
 import {db} from './Database';
 
 // TODO separate the searchbar and list components
@@ -35,13 +33,13 @@ const SearchBar = () => {
   // const [loading, setLoading] = useState(false);
 
   // Build wildcard search string for SQL
- // let queryWildcard = `%${query}%`;
+  let queryWildcard = `%${query}%`;
 
   const navAid = useNavigation();
   console.log(filteredMvaData.length);
 
   useEffect(() => {
-    console.log('first')
+    console.log('first');
     db.transaction(tx => {
       tx.executeSql('SELECT * FROM MVA', [], (tx, results) => {
         var temp = [];
@@ -52,14 +50,8 @@ const SearchBar = () => {
     });
   }, []);
 
-  // TODO - Figure out useEffect/useCallback to refresh data on query. Currently does not render
-  //        correct data on first run of query term.
-  //        Data does not display in results yet but with filteredMvaData, it should be be useable
-  //        in Flatlist data.
-
-  const queryForMvaAct = (query) => {
+  const queryForMvaAct = query => {
     console.log('Queried Term:', query);
-    let queryWildcard = `%${query}%`;
     db.transaction(tx => {
       tx.executeSql(
         'SELECT * FROM MVA WHERE contravention like ? OR provision like ? OR sectionText like ? OR sectionSubsection like ? OR sectionParagraph like ? OR sectionSubparagraph like ?',
@@ -69,7 +61,6 @@ const SearchBar = () => {
           for (let i = 0; i < results.rows.length; ++i)
             temp.push(results.rows.item(i));
           setFilteredMvaData(temp);
-          
         },
       );
     });
@@ -78,30 +69,6 @@ const SearchBar = () => {
   useEffect(() => {
     queryForMvaAct(query);
   }, [query]);
-
-  const searchFilterFunction = text => {
-    // Check if searched text is not blank
-    if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource
-      // Update FilteredDataSource
-      const newData = masterDataSource.filter(function (item) {
-        const itemData = item.contravention
-          ? item.contravention.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setQuery(text);
-    } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
-      setQuery(text);
-    }
-  };
 
   const ItemView = ({item}) => {
     return (
@@ -116,7 +83,6 @@ const SearchBar = () => {
           onPress={() => getItem(item)}>
           {item.index + 1}
           {'. '}
-          {/* {item.contravention.toUpperCase()} */}
           <HighlightText
             searchWords={[query]}
             textToHighlight={item.contravention}
@@ -136,7 +102,11 @@ const SearchBar = () => {
 
   // Navigate to the content screen when clicked
   const getItem = item => {
-    navAid.navigate('ContentMVAScreen', {paramkey: item});
+    navAid.navigate('ContentMVAScreen', {paramkey: item, query: query});
+  };
+
+  const submitTextQuery = text => {
+    setQuery(text);
   };
 
   return (
@@ -144,7 +114,8 @@ const SearchBar = () => {
       <View style={styles.searchView_Styling}>
         <TextInput
           style={styles.SearchBar_Styling}
-          onChangeText={query => setQuery(query)}
+          onChangeText={text => setQuery(text)}
+          // onSubmitEditing={text => setQuery(text)}
           value={query}
           underlineColorAndroid="transparent"
           placeholder="Search"
