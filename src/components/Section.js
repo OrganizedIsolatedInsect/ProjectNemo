@@ -8,7 +8,6 @@ import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
-import {Item} from 'react-navigation-header-buttons';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
