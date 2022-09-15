@@ -11,7 +11,7 @@ const Bookmark = (section, sectionHeader) => {
   const [marked, setMarked] = useState(false); // Preps icon for state chagne
   const dispatch = useDispatch();
 
-  console.log(section, sectionHeader);
+  // console.log(section, sectionHeader);
   //switches state of bookmark
   const switchMarks = () => {
     setMarked(!marked);

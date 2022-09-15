@@ -10,7 +10,6 @@ const FilterButton = ({buttonLabel, onPress}) => {
 
   const buttonPressed = () => {
     setFiltered(previousState => !previousState);
-    // console.log(buttonLabel, ':', !filtered);
   };
 
   return (

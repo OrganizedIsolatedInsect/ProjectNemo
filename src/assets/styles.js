@@ -203,6 +203,7 @@ export default StyleSheet.create({
   alignOnRow: {
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
 
   //GRID LIST ITEMS
