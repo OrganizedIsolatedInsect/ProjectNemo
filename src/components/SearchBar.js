@@ -2,7 +2,15 @@
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, Pressable, Text, FlatList, Button} from 'react-native';
+import {
+  View,
+  TextInput,
+  Pressable,
+  Text,
+  FlatList,
+  Button,
+  ScrollView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import HighlightText from '@sanar/react-native-highlight-text';
@@ -196,8 +204,46 @@ const SearchBar = () => {
     navAid.navigate('ContentMVAScreen', {paramkey: item, query: query});
   };
 
+  const flatListHeader = headerSource => {
+    return (
+      <View>
+        <Text style={{...styles.heading_2, textAlign: 'center'}}>
+          {headerSource}
+        </Text>
+      </View>
+    );
+  };
+
+  // Text to display if your search results are not found or are empty
+  const flatListEmpty = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            ...styles.heading_2,
+            color: colors.secondary,
+            textAlign: 'center',
+          }}>
+          No results found
+        </Text>
+      </View>
+    );
+  };
+
+  // If all search filters are turned on, present the below warning
+  const allFiltersOnText = () => {
+    return (
+      <View style={{...styles.centerOnScreen}}>
+        <Text style={[styles.title, {color: colors.primaryText}]}>
+          Please turn off at least one filter
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View>
+      {/* Searchbar component starts here */}
       <View style={styles.searchView_Styling}>
         <TextInput
           style={styles.SearchBar_Styling}
@@ -221,14 +267,16 @@ const SearchBar = () => {
           <Icon name="close" size={30} style={styles.closeIcon_styling} />
         </Pressable>
       </View>
-      <View style={{...styles.alignOnRow, marginHorizontal: 10}}>
+      {/* Searchbar component ends here */}
+      {/* Filter Buttons starts here */}
+      <View style={{...styles.alignOnRow}}>
         <FilterButton
           buttonLabel={'Motor Vehicle Act'}
           onPress={() => {
             queryForMvaAct(query);
             setMvaFiltered(previousState => !previousState);
           }}
-          query={query}
+          // query={query}
         />
         <FilterButton
           buttonLabel={'Motor Vehicle Act Regulations'}
@@ -236,7 +284,7 @@ const SearchBar = () => {
             queryForMvaRegulation(query);
             setMvaRegulationFiltered(previousState => !previousState);
           }}
-          query={query}
+          // query={query}
         />
         <FilterButton
           buttonLabel={'Criminal Code'}
@@ -246,45 +294,56 @@ const SearchBar = () => {
           }}
         />
       </View>
+      {/* Filter Buttons end here */}
       {/* List out the resulting data */}
-      <View style={{height: 640}}>
-        {/* TODO Discussion to be had on options for listing component ie. Scollview, Flatlist, Sectionlist, Flashlist? */}
-
-        {!ccFiltered ? (
-          <View>
-            <Text style={styles.alignOnRow}>Criminal Code</Text>
+      <View>
+        <ScrollView nestedScrollEnabled>
+          {/* TODO Discussion to be had on options for listing component ie. Scollview, Flatlist, Sectionlist, Flashlist? */}
+          {ccFiltered && mvaFiltered && mvaRegulationFiltered
+            ? allFiltersOnText()
+            : null}
+          {!ccFiltered ? (
             <FlatList
               data={filteredCCData}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={criminalCodeItemView}
+              nestedScrollEnabled
+              ListHeaderComponent={headerSource =>
+                flatListHeader((headerSource = 'Criminal Code'))
+              }
+              ListEmptyComponent={flatListEmpty}
             />
-          </View>
-        ) : null}
+          ) : null}
 
-        {!mvaFiltered ? (
-          <View>
-            <Text style={styles.alignOnRow}>Motor Vehicle Act</Text>
+          {!mvaFiltered ? (
             <FlatList
               data={filteredMvaData}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={motorVehicleItemView}
+              nestedScrollEnabled
+              ListHeaderComponent={headerSource =>
+                flatListHeader((headerSource = 'Motor Vehicle Act'))
+              }
+              ListEmptyComponent={flatListEmpty}
             />
-          </View>
-        ) : null}
+          ) : null}
 
-        {!mvaRegulationFiltered ? (
-          <View>
-            <Text style={styles.alignOnRow}>Motor Vehicle Act Regulations</Text>
+          {!mvaRegulationFiltered ? (
             <FlatList
               data={filteredMvaRegulationData}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={motorVehicleItemView}
+              nestedScrollEnabled
+              ListHeaderComponent={headerSource =>
+                flatListHeader((headerSource = 'Motor Vehicle Act Regulations'))
+              }
+              ListEmptyComponent={flatListEmpty}
             />
-          </View>
-        ) : null}
+          ) : null}
+        </ScrollView>
       </View>
     </View>
   );
