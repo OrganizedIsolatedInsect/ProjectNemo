@@ -24,7 +24,6 @@ import styles, {colors} from '../assets/styles';
 import {db} from './Database';
 
 // TODO separate the searchbar and list components
-//      replace spaces in the search query with '+' (RegEx?)
 //      figure out 'Full Text Search' (FTS4 in SQLite) which will allow us to search across all columns
 //      in a table without needing to hardcode the column names, etc.
 
@@ -46,8 +45,14 @@ const SearchBar = () => {
 
   // const [loading, setLoading] = useState(false);
 
-  // Build wildcard search string for SQL
-  let queryWildcard = `%${query}%`;
+  // Splits the query into individual words  and puts it into an array for HighlightText
+  let querySplit = query.split(/\s+/g);
+
+  // Replaces the spaces in the search term with %; the wildcard symbol in SQL
+  let queryReplaced = query.replace(/\s+/g, '%');
+
+  // Wraps the query term with additional % symbols to ensure full wildcard search
+  let queryWildcard = `%${queryReplaced}%`;
 
   const navAid = useNavigation();
   // console.log(filteredMvaData.length);
@@ -183,7 +188,9 @@ const SearchBar = () => {
           {item.index + 1}
           {'. '}
           <HighlightText
-            searchWords={[query]}
+            // searchWords={[query]}
+            // searchWords={["victim", "acting"]}
+            searchWords={querySplit}
             textToHighlight={item.sectionHeader}
             highlightStyle={styles.searchResultsHighlight}
           />
