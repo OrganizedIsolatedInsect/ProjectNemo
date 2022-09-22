@@ -6,7 +6,7 @@ import styles, {colors} from '../assets/styles';
 
 import HighlightText from '@sanar/react-native-highlight-text';
 
-const ContentMVA = ({item, query}) => {
+const ContentMVA = ({item, querySplit}) => {
   // prettier-ignore
   const highlightedBodyText = `${item.sectionSubsection === null ? '' : item.sectionSubsection}${'\n'}${item.sectionParagraph === null ? '' : item.sectionParagraph}${'\n'}${item.sectionSubparagraph === null ? '' : item.sectionSubparagraph}${'\n'}`;
 
@@ -21,7 +21,7 @@ const ContentMVA = ({item, query}) => {
               color: colors.primaryText,
             }}>
             <HighlightText
-              searchWords={[query]}
+              searchWords={querySplit}
               textToHighlight={item.contravention}
               highlightStyle={styles.searchResultsHighlight}
             />
@@ -39,7 +39,7 @@ const ContentMVA = ({item, query}) => {
         <Text
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
           <HighlightText
-            searchWords={[query]}
+           searchWords={querySplit}
             textToHighlight={item.sectionText}
             highlightStyle={styles.searchResultsHighlight}
           />
@@ -52,7 +52,7 @@ const ContentMVA = ({item, query}) => {
               color: colors.primaryText,
             }}>
             <HighlightText
-              searchWords={[query]}
+              searchWords={querySplit}
               textToHighlight={highlightedBodyText}
               highlightStyle={styles.searchResultsHighlight}
             />

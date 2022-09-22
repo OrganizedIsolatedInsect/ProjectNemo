@@ -45,7 +45,7 @@ const SearchBar = () => {
 
   // const [loading, setLoading] = useState(false);
 
-  // Splits the query into individual words  and puts it into an array for HighlightText
+  // Splits the query into individual words and puts it into an array for HighlightText
   let querySplit = query.split(/\s+/g);
 
   // Replaces the spaces in the search term with %; the wildcard symbol in SQL
@@ -165,7 +165,7 @@ const SearchBar = () => {
           {item.index + 1}
           {'. '}
           <HighlightText
-            searchWords={[query]}
+            searchWords={querySplit}
             textToHighlight={item.contravention}
             highlightStyle={styles.searchResultsHighlight}
           />
@@ -188,8 +188,6 @@ const SearchBar = () => {
           {item.index + 1}
           {'. '}
           <HighlightText
-            // searchWords={[query]}
-            // searchWords={["victim", "acting"]}
             searchWords={querySplit}
             textToHighlight={item.sectionHeader}
             highlightStyle={styles.searchResultsHighlight}
@@ -208,7 +206,7 @@ const SearchBar = () => {
 
   // Navigate to the content screen when clicked
   const getItem = item => {
-    navAid.navigate('ContentMVAScreen', {paramkey: item, query: query});
+    navAid.navigate('ContentMVAScreen', {paramkey: item, querySplit: querySplit});
   };
 
   const flatListHeader = headerSource => {
