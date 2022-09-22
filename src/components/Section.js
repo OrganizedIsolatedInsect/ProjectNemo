@@ -18,6 +18,7 @@ return data set for paragraphs
 const Section = ({section, type}) => {
   //section prop passed on from browse screen
   const sectionId = section;
+  console.log('[Section] sectionID: ' + sectionId);
   const typeId = type;
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -105,6 +106,7 @@ const Section = ({section, type}) => {
         addBookmark({
           section: section,
           sectionHeader: sectionHeader,
+          lawtype: 'CC',
         }),
       );
     }
@@ -112,6 +114,7 @@ const Section = ({section, type}) => {
       dispatch(
         removeBookmark({
           section: section,
+          lawtype: 'CC',
         }),
       );
     }
@@ -237,7 +240,7 @@ const Section = ({section, type}) => {
     }
   };
 
-  if (loading === true)
+  if (loading === true) {
     return (
       <SafeAreaView>
         <View style={styles.CCcontent}>
@@ -251,6 +254,7 @@ const Section = ({section, type}) => {
         </View>
       </SafeAreaView>
     );
+  }
 };
 
 export default Section;

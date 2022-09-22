@@ -6,10 +6,13 @@ import React from 'react';
 import ContentMVA from '../components/ContentMVA';
 
 const ContentMVAScreen = props => {
-  const provision = props.route.params.provision.provisionItem;
-  const lastScreen = props.route.params.provision.lastScreen;
+  const provision = props.route.params.provisionId;
+  console.log(
+    '[ContentMVAScreen] ' + JSON.stringify(props.route.params.provisionId),
+  );
+  console.log('[ContentMVAScreen] ' + JSON.stringify(provision));
 
-  return <ContentMVA provisionId={provision} lastScreen={lastScreen} />;
+  return <ContentMVA provisionId={provision} />;
 };
 
 export default ContentMVAScreen;

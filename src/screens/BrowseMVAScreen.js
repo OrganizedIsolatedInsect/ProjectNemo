@@ -120,10 +120,7 @@ const BrowseMVAScreen = props => {
                 key={item.index}
                 onPress={() =>
                   navAid.navigate('ContentMVAScreen', {
-                    provision: {
-                      provisionItem: item.provision,
-                      lastScreen: 'Browse',
-                    },
+                    provisionId: item.provision,
                   })
                 }
                 style={styles.innerContainer}>
