@@ -1,3 +1,6 @@
+
+//TO BE REMOVED
+
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';

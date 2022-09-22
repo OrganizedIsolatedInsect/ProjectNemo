@@ -52,7 +52,6 @@ const ContentMVA = ({provisionId}) => {
   //Issues:  setting setDBData does not appear to work properly in this component so variables set up via temp output
   const getDbData = provID => {
     const temp = [];
-    console.log('[getDbData] provID: ' + JSON.stringify(provID));
     db.transaction(tx => {
       tx.executeSql(
         'Select * from MVA where provision = ?',
