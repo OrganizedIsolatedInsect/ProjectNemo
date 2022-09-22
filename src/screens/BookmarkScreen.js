@@ -52,7 +52,6 @@ const BookmarkScreen = props => {
                     }
                     if (item.lawtype === 'CC') {
                       console.log('[BookmarkScreen] Lawtype: ' + item.lawtype);
-                      console.log('[BookmarkScreen] Lawtype: ' + item.section);
                       const sectionId = item.section;
                       navAid.navigate('ContentCCScreen', {
                         section: sectionId,

@@ -7,10 +7,6 @@ import ContentMVA from '../components/ContentMVA';
 
 const ContentMVAScreen = props => {
   const provision = props.route.params.provisionId;
-  console.log(
-    '[ContentMVAScreen] ' + JSON.stringify(props.route.params.provisionId),
-  );
-  console.log('[ContentMVAScreen] ' + JSON.stringify(provision));
 
   return <ContentMVA provisionId={provision} />;
 };

@@ -39,8 +39,6 @@ const ContentMVA = ({provisionId}) => {
     setLoading(true);
     getDbData(provisionID);
     setLoading(false);
-
-    // populateOutputVariables();
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (bookmarkStateId.some(e => e.section == provisionID)) {
       setMarked(true);
@@ -51,6 +49,7 @@ const ContentMVA = ({provisionId}) => {
 
   //lookup provisionID on the data table to find the proper row
   // function to get data from NemoDB
+  //Issues:  setting setDBData does not appear to work properly in this component so variables set up via temp output
   const getDbData = provID => {
     const temp = [];
     console.log('[getDbData] provID: ' + JSON.stringify(provID));
@@ -62,7 +61,7 @@ const ContentMVA = ({provisionId}) => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
-          //setDbData(temp);
+
           if (temp.length > 0) {
             setProvision(temp[0].provision);
             setContravention(temp[0].contravention);
@@ -74,35 +73,13 @@ const ContentMVA = ({provisionId}) => {
             setSectionParagraph(temp[0].sectionParagraph);
             setSectionSubparagraph(temp[0].sectionSubparagraph);
           }
-
-          console.log(
-            '[getDbData] data : ' + JSON.stringify(temp[0].provision),
-          );
-          console.log('[getDbData] datatemp : ' + JSON.stringify(temp));
-          console.log('[getDbData] data length: ' + temp.length);
         },
       );
     });
   };
 
-  //Populate the state variables with whatever is returned from the database.
-  //TODO If dbData.length > 1, this has to be handled in the future.
-
-  // const populateOutputVariables = () => {
-  //   if (dbData.length > 0) {
-  //     setProvision(dbData[0].provision);
-  //     setContravention(dbData[0].contravention);
-  //     setFine(dbData[0].fine);
-  //     setReducedFine(dbData[0].reducedFine);
-  //     setSource(dbData[0].source);
-  //     setSectionText(dbData[0].sectionText);
-  //     setSectionSubsection(dbData[0].sectionSubsection);
-  //     setSectionParagraph(dbData[0].sectionParagraph);
-  //     setSectionSubparagraph(dbData[0].sectionSubparagraph);
-  //   }
-  // };
-
   //dispatch add or remove bookmarks based bookmark icon
+  //Requires Lawtype to differentiate the source of the bookmark
   const dispatchAction = () => {
     // dispatch based on opposite of flag because marked does not change until the rerender
     if (marked === false) {

@@ -18,7 +18,6 @@ return data set for paragraphs
 const Section = ({section, type}) => {
   //section prop passed on from browse screen
   const sectionId = section;
-  console.log('[Section] sectionID: ' + sectionId);
   const typeId = type;
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -99,6 +98,7 @@ const Section = ({section, type}) => {
   }
 
   //dispatch add or remove bookmarks based bookmark icon
+  //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
     // dispatch based on opposite of flag because marked does not change until the rerender
     if (marked === false) {
@@ -121,6 +121,7 @@ const Section = ({section, type}) => {
   };
 
   //bookmark to dispatch redux action to add bookmark
+  // ONPRESS requires the LawType because when the Bookmark is clicked, that field must be passed into the redux
   const SectionHeader = ({section, sectionHeader}) => (
     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
       <Text style={styles.heading_2}>
