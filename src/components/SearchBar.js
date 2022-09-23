@@ -103,7 +103,7 @@ const SearchBar = () => {
   const queryForMvaAct = query => {
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM MVA WHERE contravention like ? OR provision like ? OR sectionText like ? OR sectionSubsection like ? OR sectionParagraph like ? OR sectionSubparagraph like ?',
+        'SELECT * FROM MVA WHERE source = "Motor Vehicle Act" AND contravention like ? OR provision like ? OR sectionText like ? OR sectionSubsection like ? OR sectionParagraph like ? OR sectionSubparagraph like ?',
         [queryWildcard],
         (tx, results) => {
           let temp = [];
