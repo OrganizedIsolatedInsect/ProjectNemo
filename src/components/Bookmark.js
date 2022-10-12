@@ -1,6 +1,3 @@
-
-//TO BE REMOVED
-
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -14,7 +11,7 @@ const Bookmark = (section, sectionHeader) => {
   const [marked, setMarked] = useState(false); // Preps icon for state chagne
   const dispatch = useDispatch();
 
-  console.log(section, sectionHeader);
+  //console.log(section, sectionHeader);
   //switches state of bookmark
   const switchMarks = () => {
     setMarked(!marked);
