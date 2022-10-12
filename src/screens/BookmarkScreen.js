@@ -43,11 +43,20 @@ const BookmarkScreen = props => {
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Pressable
-                  onPress={() =>
-                    navAid.navigate('MVAContent', {
-                      section: item.section,
-                    })
-                  }>
+                  onPress={() => {
+                    if (item.lawtype === 'MVA') {
+                      const provisionItem = item.section;
+                      navAid.navigate('ContentMVAScreen', {
+                        provisionId: provisionItem,
+                      });
+                    }
+                    if (item.lawtype === 'CC') {
+                      const sectionId = item.section;
+                      navAid.navigate('ContentCCScreen', {
+                        section: sectionId,
+                      });
+                    }
+                  }}>
                   <Text>
                     {item.section} {item.sectionHeader}
                   </Text>
