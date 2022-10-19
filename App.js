@@ -1,3 +1,7 @@
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
 //PACKAGE Imports
 import React from 'react';
 import {StatusBar} from 'react-native';
@@ -18,6 +22,8 @@ import {colors} from './src/assets/styles';
 // TODO - DEV tool only - remove upon production
 let date = new Date();
 console.log(date);
+
+
 
 // Make React Navigation's default theme background color match the rest of the app
 const navTheme = {
