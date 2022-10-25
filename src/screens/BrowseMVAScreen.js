@@ -108,7 +108,9 @@ const BrowseMVAScreen = props => {
         </Pressable>
       </View>
       <View>
-        {/* Start of SectionList */}
+        {/* Start of SectionList
+         * Upon pressing an item, the Provision and the screen name is passed to the Content MVA Screen
+         */}
 
         <SectionList
           sections={[...ShowAct, ...ShowReg]}
@@ -117,7 +119,9 @@ const BrowseMVAScreen = props => {
               <Pressable
                 key={item.index}
                 onPress={() =>
-                  navAid.navigate('ContentMVAScreen', {paramkey: item})
+                  navAid.navigate('ContentMVAScreen', {
+                    provisionId: item.provision,
+                  })
                 }
                 style={styles.innerContainer}>
                 <View style={styles.innerContainerLeft}>

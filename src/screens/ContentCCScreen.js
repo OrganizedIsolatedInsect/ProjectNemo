@@ -11,10 +11,10 @@ import Section from '../components/Section';
 import crimData from '../data/C-46.json';
 
 const ContentCCScreen = props => {
-  //pull section number from browse screen to send to section component
+  //pull section number from BrowseCCScreen or BookmarkScreen to send to section component
   let sectionId = props.route.params.section;
 
-  let lawType = 'crim code';
+  let lawType = 'crim code';  //TODO  should change this to "CC"
 
   return (
     <SafeAreaView>

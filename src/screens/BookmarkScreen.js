@@ -16,9 +16,56 @@ const BookmarkScreen = props => {
   //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks);
 
+  //create array for each section, then loop though bookmarks to parse into arrays
+  let MVAArray = [];
+  let CCArray = [];
+
+  for (let i = 0; i < bookmarks.sections.length; ++i) {
+    if (bookmarks.sections[i].lawtype == 'MVA') {
+      MVAArray.push(bookmarks.sections[i]);
+    }
+    if (bookmarks.sections[i].lawtype == 'CC') {
+      CCArray.push(bookmarks.sections[i]);
+    }
+  }
+
   const dispatch = useDispatch();
 
+  //render bookmark links and navigate based on section type
+  const renderBookmark = ({item}) => (
+    <View
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Pressable
+        onPress={() => {
+          if (item.lawtype === 'MVA') {
+            const provisionItem = item.section;
+            navAid.navigate('ContentMVAScreen', {
+              provisionId: provisionItem,
+            });
+          }
+          if (item.lawtype === 'CC') {
+            const sectionId = item.section;
+            navAid.navigate('ContentCCScreen', {
+              section: sectionId,
+            });
+          }
+        }}>
+        <Text style={[styles.body, {color: colors.primaryText}]}>
+          {item.section} {item.sectionHeader}
+        </Text>
+      </Pressable>
+
+      <Icon
+        name="delete"
+        size={20}
+        onPress={() => dispatch(removeBookmark({section: item.section}))}
+      />
+    </View>
+  );
+
   /*Output Section*/
+
   if (bookmarks.sections.length === 0) {
     return (
       <View style={styles.centerOnScreen}>
@@ -36,33 +83,19 @@ const BookmarkScreen = props => {
     return (
       <SafeAreaView>
         <View style={styles.background}>
-          <FlatList
-            data={bookmarks.sections}
-            renderItem={({item}) => (
-              <View
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Pressable
-                  onPress={() =>
-                    navAid.navigate('MVAContent', {
-                      section: item.section,
-                    })
-                  }>
-                  <Text>
-                    {item.section} {item.sectionHeader}
-                  </Text>
-                </Pressable>
-
-                <Icon
-                  name="delete"
-                  size={20}
-                  onPress={() =>
-                    dispatch(removeBookmark({section: item.section}))
-                  }
-                />
-              </View>
-            )}
-          />
+          {/* conditional headers based on section array length */}
+          {MVAArray.length > 0 && (
+            <View>
+              <Text style={styles.heading_2}>Motor Vehicle Act</Text>
+              <FlatList data={MVAArray} renderItem={renderBookmark} />
+            </View>
+          )}
+          {CCArray.length > 0 && (
+            <View>
+              <Text style={styles.heading_2}>Criminal Code of Canada</Text>
+              <FlatList data={CCArray} renderItem={renderBookmark} />
+            </View>
+          )}
         </View>
       </SafeAreaView>
     );

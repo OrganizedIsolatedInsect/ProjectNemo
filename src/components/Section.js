@@ -47,7 +47,7 @@ const Section = ({section, type}) => {
     }
   }, [marked, isFocused]);
 
-  //function to get data from NemoDB
+  // function to get data from NemoDB
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
@@ -98,6 +98,7 @@ const Section = ({section, type}) => {
   }
 
   //dispatch add or remove bookmarks based bookmark icon
+  //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
     // dispatch based on opposite of flag because marked does not change until the rerender
     if (marked === false) {
@@ -105,6 +106,7 @@ const Section = ({section, type}) => {
         addBookmark({
           section: section,
           sectionHeader: sectionHeader,
+          lawtype: 'CC',
         }),
       );
     }
@@ -112,12 +114,14 @@ const Section = ({section, type}) => {
       dispatch(
         removeBookmark({
           section: section,
+          lawtype: 'CC',
         }),
       );
     }
   };
 
   //bookmark to dispatch redux action to add bookmark
+  // ONPRESS requires the LawType because when the Bookmark is clicked, that field must be passed into the redux
   const SectionHeader = ({section, sectionHeader}) => (
     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
       <Text style={styles.heading_2}>
@@ -237,7 +241,7 @@ const Section = ({section, type}) => {
     }
   };
 
-  if (loading === true)
+  if (loading === true) {
     return (
       <SafeAreaView>
         <View style={styles.CCcontent}>
@@ -251,6 +255,7 @@ const Section = ({section, type}) => {
         </View>
       </SafeAreaView>
     );
+  }
 };
 
 export default Section;
