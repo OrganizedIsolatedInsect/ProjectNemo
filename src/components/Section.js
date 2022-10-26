@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
+import Reactotron from 'reactotron-react-native';
+import SQLite from 'react-native-sqlite-storage';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
@@ -38,6 +40,7 @@ const Section = ({section, type}) => {
   let subsectionArray = [];
 
   useEffect(() => {
+    getSample();
     getDbData(sectionId);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (bookmarkStateId.some(e => e.section == section)) {
@@ -58,10 +61,19 @@ const Section = ({section, type}) => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
+          console.log('old cc queryed');
           setDbData(temp);
           setLoading(true);
         },
       );
+    });
+  };
+
+  const getSample = () => {
+    db.transaction(tx => {
+      tx.executeSql('select * from CCSampleData', [], (tx, results) => {
+        console.log('CCSample complete');
+      });
     });
   };
 

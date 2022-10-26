@@ -3,9 +3,10 @@
 
 import React, {useState} from 'react';
 import {View, Text, SectionList} from 'react-native';
+import Reactotron from 'reactotron-react-native';
 
 //USER Imports
-import {CCDATAPARTS, CCDATASECTION} from '../data/dummy-data'; //for DEVELOPMENT Purposes
+import {CCDATAPARTS, CCDATASECTION, CCSampleTest} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles, {colors} from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 
@@ -24,16 +25,17 @@ const BrowseCCScreen = props => {
   };
   return (
     <View style={[styles.background, styles.container]}>
+      {Reactotron.log('BrowseCC Render')}
       <Text
         style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
         Criminal Code of Canada
       </Text>
       <SectionList
-        sections={CCDATASECTION}
+        sections={CCSampleTest}
         keyExtractor={item => item.index}
         renderItem={renderList}
         renderSectionHeader={({section: {part}}) => (
-          <Text style={{color: colors.primary}}>{part}</Text>
+          <Text style={{color: colors.primary}}></Text>
         )}
         stickySectionHeadersEnabled={'true'}
       />
