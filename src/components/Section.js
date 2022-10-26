@@ -4,9 +4,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
+import {db} from './Database';
+import {useIsFocused} from '@react-navigation/native';
+import Reactotron from 'reactotron-react-native';
+import SQLite from 'react-native-sqlite-storage';
 
-import testData from '../data/test.json';
-import crimData from '../data/C-46.json';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
 
@@ -16,21 +18,61 @@ return data set for paragraphs
 */
 
 const Section = ({section, type}) => {
+  //section prop passed on from browse screen
   const sectionId = section;
   const typeId = type;
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  //set states for bookmark flag, database data, loading
+  const [marked, setMarked] = useState(false);
+  const [dbData, setDbData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const sectionData = crimData.filter(obj => {
-    return obj.section === sectionId;
-  });
+  //pull state to see if current section exists in bookmarks
+  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+
+  //used to switch the bookmark icon from outline to fill and vice versa
+  const switchMarks = () => {
+    setMarked(!marked);
+  };
 
   //Create array to divide up subsections
   let subsectionArray = [];
 
-  for (var i = 0, l = sectionData.length; i < l; i++) {
-    const section = sectionData[i].section;
-    const subsection = sectionData[i].subsection;
-    const subsectionHeader = sectionData[i].subsectionHeader;
-    const subsectionText = sectionData[i].subsectionText;
+  useEffect(() => {
+    getDbData(sectionId);
+    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
+    if (bookmarkStateId.some(e => e.section == section)) {
+      setMarked(true);
+    } else {
+      setMarked(false);
+    }
+  }, [marked, isFocused]);
+
+  // function to get data from NemoDB
+  const getDbData = sectionId => {
+    db.transaction(tx => {
+      tx.executeSql(
+        // 'Select * from CrimCode where section = ?',
+        'Select * from CCSampleData where section = ?',
+        [sectionId],
+        (tx, results) => {
+          const temp = [];
+          for (let i = 0; i < results.rows.length; ++i) {
+            temp.push(results.rows.item(i));
+          }
+          setDbData(temp);
+          setLoading(true);
+        },
+      );
+    });
+  };
+
+  for (var i = 0, l = dbData.length; i < l; i++) {
+    const section = dbData[i].section;
+    const subsection = dbData[i].subsection;
+    const subsectionHeader = dbData[i].subsectionHeader;
+    const subsectionText = dbData[i].subsectionText;
 
     //function to push subsections into subsectionArray
     const pushArray = (
@@ -50,7 +92,7 @@ const Section = ({section, type}) => {
     if (i === 0) {
       pushArray(section, subsection, subsectionHeader, subsectionText);
     } else {
-      const prevSubsection = sectionData[i - 1].subsection;
+      const prevSubsection = dbData[i - 1].subsection;
 
       if (subsection !== prevSubsection) {
         pushArray(section, subsection, subsectionHeader, subsectionText);
@@ -58,25 +100,8 @@ const Section = ({section, type}) => {
     }
   }
 
-  const dispatch = useDispatch();
-  const [marked, setMarked] = useState(false);
-
-  //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
-
-  //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
-
-  useEffect(() => {
-    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section === section)) {
-      setMarked(true);
-    }
-  }, [marked]);
-
   //dispatch add or remove bookmarks based bookmark icon
+  //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
     // dispatch based on opposite of flag because marked does not change until the rerender
     if (marked === false) {
@@ -84,6 +109,7 @@ const Section = ({section, type}) => {
         addBookmark({
           section: section,
           sectionHeader: sectionHeader,
+          lawtype: 'CC',
         }),
       );
     }
@@ -91,12 +117,14 @@ const Section = ({section, type}) => {
       dispatch(
         removeBookmark({
           section: section,
+          lawtype: 'CC',
         }),
       );
     }
   };
 
   //bookmark to dispatch redux action to add bookmark
+  // ONPRESS requires the LawType because when the Bookmark is clicked, that field must be passed into the redux
   const SectionHeader = ({section, sectionHeader}) => (
     <View style={styles.gridListItem}>
       <Text style={{...styles.title, color: colors.primaryText}}>
@@ -144,8 +172,8 @@ const Section = ({section, type}) => {
   };
 
   const renderItemSubsection = ({item, index}) => {
-    let paraData = sectionData.filter(
-      (subsection, i) => sectionData[i].subsection === item.subsection,
+    let paraData = dbData.filter(
+      (subsection, i) => dbData[i].subsection === item.subsection,
     );
 
     //console.log(subParaData);
@@ -180,15 +208,25 @@ const Section = ({section, type}) => {
     );
   };
 
+  const renderSubPara = ({item}) => {
+    return (
+      <View>
+        <Text style={styles.subParagraph}>
+          {item.subparagraph} {item.subparagraphText}
+        </Text>
+      </View>
+    );
+  };
+
   const renderItemPara = ({item}) => {
     //console.log(item);
 
     //filter out data that has sub paragraphs in order to pass to flatlist for sub paragraphs
-    let subparaData = sectionData.filter(
+    let subparaData = dbData.filter(
       (section, i) =>
-        sectionData[i].paragraph === item.paragraph &&
-        sectionData[i].paragraphText === item.paragraphText &&
-        sectionData[i].subparagraph !== null,
+        dbData[i].paragraph === item.paragraph &&
+        dbData[i].paragraphText === item.paragraphText &&
+        dbData[i].subparagraph !== null,
     );
 
     //console.log(subparaData);
@@ -211,34 +249,21 @@ const Section = ({section, type}) => {
     }
   };
 
-  const renderSubPara = ({item}) => {
+  if (loading === true) {
     return (
-      <View>
-        <Text
-          style={{
-            ...styles.subParagraph,
-            ...styles.body,
-            color: colors.primaryText,
-          }}>
-          {item.subparagraph} {item.subparagraphText}
-        </Text>
-      </View>
-    );
-  };
-
-  return (
-    <SafeAreaView>
-      <View style={{marginHorizontal: 30}}>
-        <View>
-          <SectionHeader
-            section={sectionData[0].section}
-            sectionHeader={sectionData[0].sectionHeader}
-          />
+      <SafeAreaView>
+        <View style={styles.CCcontent}>
+          <View>
+            <SectionHeader
+              section={dbData[0].section}
+              sectionHeader={dbData[0].sectionHeader}
+            />
+          </View>
+          <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
         </View>
-        <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
-      </View>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    );
+  }
 };
 
 export default Section;

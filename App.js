@@ -1,4 +1,7 @@
-//PACKAGE Imports
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
 import React from 'react';
 
 // Required to make the status bar background color and icons match our theme
