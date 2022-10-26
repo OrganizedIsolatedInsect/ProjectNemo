@@ -40,7 +40,6 @@ const Section = ({section, type}) => {
   let subsectionArray = [];
 
   useEffect(() => {
-    getSample();
     getDbData(sectionId);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (bookmarkStateId.some(e => e.section == section)) {
@@ -54,26 +53,18 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        'Select * from CrimCode where section = ?',
+        // 'Select * from CrimCode where section = ?',
+        'Select * from CCSampleData where section = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
-          console.log('old cc queryed');
           setDbData(temp);
           setLoading(true);
         },
       );
-    });
-  };
-
-  const getSample = () => {
-    db.transaction(tx => {
-      tx.executeSql('select * from CCSampleData', [], (tx, results) => {
-        console.log('CCSample complete');
-      });
     });
   };
 
