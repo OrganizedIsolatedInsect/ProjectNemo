@@ -2,9 +2,7 @@ if (__DEV__) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
 }
 
-import React from 'react';
-
-// Required to make the status bar background color and icons match our theme
+import React, {useEffect, useState} from 'react';
 import {StatusBar} from 'react-native';
 
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
@@ -16,6 +14,8 @@ import AppNavigator from './src/navigation/TabNavigation';
 import store from './src/redux/store';
 
 import {colors} from './src/assets/styles';
+
+import {db} from './src/components/Database';
 
 // TODO - DEV tool only - remove upon production
 let date = new Date();
@@ -31,7 +31,32 @@ const navTheme = {
   },
 };
 
+// const queryForSample = () => {
+//   db.transaction(tx => {
+//     tx.executeSql('select * from CCSampleData', [], (tx, results) => {
+//       let temp = [];
+//       for (let i = 0; i < results.rows.length; ++i)
+//         temp.push(results.rows.item(i));
+//       console.log(temp);
+//     });
+//   });
+// };
+
 const App = () => {
+  let [flatListItems, setFlatListItems] = useState([]);
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('select * from CCSampleData', [], (tx, results) => {
+        var temp = [];
+        for (let i = 0; i < results.rows.length; ++i)
+          temp.push(results.rows.item(i));
+        // setFlatListItems(temp);
+        console.log('flatListItems');
+      });
+    });
+  }, []);
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>
