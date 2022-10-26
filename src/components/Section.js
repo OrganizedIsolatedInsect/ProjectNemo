@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
+import Reactotron from 'reactotron-react-native';
+import SQLite from 'react-native-sqlite-storage';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
@@ -51,7 +53,8 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        'Select * from CrimCode where section = ?',
+        // 'Select * from CrimCode where section = ?',
+        'Select * from CCSampleData where section = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];

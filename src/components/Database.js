@@ -4,6 +4,7 @@ import SQLite from 'react-native-sqlite-storage';
 export const db = SQLite.openDatabase(
   {
     name: 'NemoDB.db',
+    readOnly: true,
     location: 'default',
     createFromLocation: 1,
   },
