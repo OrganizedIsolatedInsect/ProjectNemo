@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, VirtualizedList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
@@ -69,6 +69,7 @@ const Section = ({section, type}) => {
   };
 
   for (var i = 0, l = dbData.length; i < l; i++) {
+    const index = dbData[i].index;
     const section = dbData[i].section;
     const subsection = dbData[i].subsection;
     const subsectionHeader = dbData[i].subsectionHeader;
@@ -76,12 +77,14 @@ const Section = ({section, type}) => {
 
     //function to push subsections into subsectionArray
     const pushArray = (
+      index,
       section,
       subsection,
       subsectionHeader,
       subsectionText,
     ) => {
       subsectionArray.push({
+        index: index,
         section: section,
         subsection: subsection,
         subsectionHeader: subsectionHeader,
@@ -90,12 +93,12 @@ const Section = ({section, type}) => {
     };
 
     if (i === 0) {
-      pushArray(section, subsection, subsectionHeader, subsectionText);
+      pushArray(index, section, subsection, subsectionHeader, subsectionText);
     } else {
       const prevSubsection = dbData[i - 1].subsection;
 
       if (subsection !== prevSubsection) {
-        pushArray(section, subsection, subsectionHeader, subsectionText);
+        pushArray(index, section, subsection, subsectionHeader, subsectionText);
       }
     }
   }
@@ -202,7 +205,11 @@ const Section = ({section, type}) => {
           subsectionText={item.subsectionText}
         />
         <View>
-          <FlatList data={paraFilter} renderItem={renderItemPara} />
+          <FlatList
+            data={paraFilter}
+            keyExtractor={data => data.index}
+            renderItem={renderItemPara}
+          />
         </View>
       </View>
     );
@@ -212,7 +219,7 @@ const Section = ({section, type}) => {
     return (
       <View>
         <Text style={styles.subParagraph}>
-          {item.subparagraph} {item.subparagraphText}
+          {item.subparagraph} {item.subParagraphText}
         </Text>
       </View>
     );
@@ -238,10 +245,18 @@ const Section = ({section, type}) => {
             {/*  In{item.index} */}
             {item.paragraph} {item.paragraphText}
           </Text>
-          <FlatList data={subparaData} renderItem={renderSubPara} />
+          <FlatList
+            data={subparaData}
+            renderItem={renderSubPara}
+            keyExtractor={data => data.index}
+          />
         </View>
       );
     }
+  };
+
+  const getItem = (data, index) => {
+    return data[index];
   };
 
   if (loading === true) {
@@ -254,7 +269,15 @@ const Section = ({section, type}) => {
               sectionHeader={dbData[0].sectionHeader}
             />
           </View>
-          <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
+          {/* <FlatList data={subsectionArray} renderItem={renderItemSubsection} /> */}
+          <VirtualizedList
+            data={subsectionArray}
+            initialNumToRender={4}
+            renderItem={renderItemSubsection}
+            keyExtractor={data => data.index}
+            getItemCount={data => data.length}
+            getItem={getItem}
+          />
         </View>
       </SafeAreaView>
     );
