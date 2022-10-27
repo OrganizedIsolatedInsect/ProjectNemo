@@ -29,7 +29,8 @@ const BrowseCCScreen = props => {
 
   db.transaction(tx => {
     tx.executeSql(
-      'select * from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
+     // 'select * from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
+      'select part, section, sectionHeader from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
       [],
       (tx, results) => {
         let temp = [];
