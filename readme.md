@@ -1,5 +1,11 @@
 # Project Nemo README
 
+## Overview and documentation
+Learn about the product vision, user research findings, and more.
+```
+https://organizedisolatedinsect.github.io/ProjectNemo/#/
+```
+
 ## Connecting to Github repository
 Clone the repository to Visual Studio Code
   - Open a new Visual Studio Code window
