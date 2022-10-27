@@ -9,7 +9,7 @@ import {View, Button, Text} from 'react-native';
 
 import SearchBar from '../components/SearchBar';
 
-import SearchBarTest from '../components/SearchBarTest';
+// import SearchBarTest from '../components/SearchBarTest';
 
 import FilterButton from '../components/FilterButton';
 // import InfoList from '../components/InfoList';
@@ -48,12 +48,12 @@ const SearchScreen = props => {
 
       {/* Passes the Query state to the Searchbar component and the clearButtonPressed function
       to clear the searchbar with setQuery */}
-      <SearchBarTest
+      {/* <SearchBarTest
         onChange={setQuery}
         query={query}
         clearPressed={clearButtonPressed}
       />
-      <Text>TEMPORARY {query} TEMPOARY</Text>
+      <Text>TEMPORARY {query} TEMPOARY</Text> */}
     </SafeAreaView>
   );
 };

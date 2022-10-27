@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, useWindowDimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
@@ -12,12 +12,16 @@ import SQLite from 'react-native-sqlite-storage';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
 
+import {FlashList} from '@shopify/flash-list';
+
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
 return data set for paragraphs
 */
 
 const Section = ({section, type}) => {
+  const window = useWindowDimensions();
+
   //section prop passed on from browse screen
   const sectionId = section;
   const typeId = type;
@@ -53,8 +57,8 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        // 'Select * from CrimCode where section = ?',
-        'Select * from CCSampleData where section = ?',
+        'Select * from CrimCode where section = ?',
+        // 'Select * from CCSampleData where section = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];
@@ -201,8 +205,12 @@ const Section = ({section, type}) => {
           subsectionHeader={item.subsectionHeader}
           subsectionText={item.subsectionText}
         />
-        <View>
-          <FlatList data={paraFilter} renderItem={renderItemPara} />
+        <View style={{height: 2, width: window.width}}>
+          <FlashList
+            data={paraFilter}
+            renderItem={renderItemPara}
+            estimatedItemSize={79}
+          />
         </View>
       </View>
     );
@@ -233,7 +241,7 @@ const Section = ({section, type}) => {
 
     if (item.paragraph !== null) {
       return (
-        <View>
+        <View style={{height: 200}}>
           <Text
             style={{
               ...styles.paragraph,
@@ -243,7 +251,11 @@ const Section = ({section, type}) => {
             {/*  In{item.index} */}
             {item.paragraph} {item.paragraphText}
           </Text>
-          <FlatList data={subparaData} renderItem={renderSubPara} />
+          <FlashList
+            data={subparaData}
+            renderItem={renderSubPara}
+            estimatedItemSize={79}
+          />
         </View>
       );
     }
@@ -259,7 +271,11 @@ const Section = ({section, type}) => {
               sectionHeader={dbData[0].sectionHeader}
             />
           </View>
-          <FlatList data={subsectionArray} renderItem={renderItemSubsection} />
+          <FlashList
+            data={subsectionArray}
+            renderItem={renderItemSubsection}
+            estimatedItemSize={79}
+          />
         </View>
       </SafeAreaView>
     );
