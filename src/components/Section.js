@@ -53,8 +53,8 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        // 'Select * from CrimCode where section = ?',
-        'Select * from CCSampleData where section = ?',
+        'Select * from CrimCode where section = ?',
+        // 'Select * from CCSampleData where section = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];
