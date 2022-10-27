@@ -151,10 +151,10 @@ const Section = ({section, type}) => {
       return (
         <View>
           <View>
+            <Text style={styles.heading_2}>{subsectionHeader}</Text>
+          </View>
+          <View style={{marginTop: 5}}>
             <Text>
-              {subsectionHeader}
-              {'\n'}
-              {'\n'}
               {subsection} {subsectionText}
             </Text>
           </View>
@@ -199,11 +199,13 @@ const Section = ({section, type}) => {
 
     return (
       <View>
-        <SubsectionHeader
-          subsection={item.subsection}
-          subsectionHeader={item.subsectionHeader}
-          subsectionText={item.subsectionText}
-        />
+        <View style={{marginTop: 20}}>
+          <SubsectionHeader
+            subsection={item.subsection}
+            subsectionHeader={item.subsectionHeader}
+            subsectionText={item.subsectionText}
+          />
+        </View>
         <View>
           <FlatList
             data={paraFilter}
@@ -219,7 +221,7 @@ const Section = ({section, type}) => {
     return (
       <View>
         <Text style={styles.subParagraph}>
-          {item.subparagraph} {item.subParagraphText}
+          {item.subparagraph} {item.subparagraphText}
         </Text>
       </View>
     );
@@ -241,7 +243,7 @@ const Section = ({section, type}) => {
     if (item.paragraph !== null) {
       return (
         <View>
-          <Text style={styles.paragraph}>
+          <Text style={[styles.paragraph]}>
             {/*  In{item.index} */}
             {item.paragraph} {item.paragraphText}
           </Text>
@@ -250,6 +252,14 @@ const Section = ({section, type}) => {
             renderItem={renderSubPara}
             keyExtractor={data => data.index}
           />
+          {/* <VirtualizedList
+            data={subparaData}
+            initialNumToRender={4}
+            renderItem={renderSubPara}
+            keyExtractor={data => data.index}
+            getItemCount={data => data.length}
+            getItem={getItem}
+          /> */}
         </View>
       );
     }
