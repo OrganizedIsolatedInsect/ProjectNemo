@@ -212,7 +212,7 @@ const Section = ({section, type}) => {
     return (
       <View>
         <Text style={styles.subParagraph}>
-          {item.subparagraph} {item.subparagraphText}
+          {item.subparagraph} {item.subParagraphText}
         </Text>
       </View>
     );
