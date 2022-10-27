@@ -1,5 +1,3 @@
 # Contact 
 
-To contact us, please open an new thread on the [Forum](https://www.puresourcecode.com/forum) on [PureSourceCode.com](https://www.puresourcecode.com/).
-
-BLAH BLAH BLAH
+Reach out to our team at BCRCMP_HUB@rcmp-grc.gc.ca. We'd love to hear from you.
