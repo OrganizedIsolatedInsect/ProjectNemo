@@ -1,7 +1,7 @@
 /* BROWSE screen - re-usable screen for browses for just the Criminal Code Legislation
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -27,19 +27,25 @@ const BrowseCCScreen = props => {
 
   const window = useWindowDimensions();
 
-  db.transaction(tx => {
-    tx.executeSql(
-     // 'select * from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
-      'select part, section, sectionHeader from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
-      [],
-      (tx, results) => {
-        let temp = [];
-        for (let i = 0; i < results.rows.length; ++i)
-          temp.push(results.rows.item(i));
-        setDistinctSectionList(temp);
-      },
-    );
-  });
+  useEffect(() => {
+    getDbData();
+  }, []);
+
+  const getDbData = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        // 'select * from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
+        'select part, section, sectionHeader from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
+        [],
+        (tx, results) => {
+          let temp = [];
+          for (let i = 0; i < results.rows.length; ++i)
+            temp.push(results.rows.item(i));
+          setDistinctSectionList(temp);
+        },
+      );
+    });
+  };
 
   const renderList = itemdata => {
     return (
@@ -61,6 +67,7 @@ const BrowseCCScreen = props => {
         Criminal Code of Canada
       </Text>
       <FlashList
+        /* data={CCSampleTest} */
         data={distinctSectionList}
         renderItem={renderList}
         estimatedItemSize={100}
