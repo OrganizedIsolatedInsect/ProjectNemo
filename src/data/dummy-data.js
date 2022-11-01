@@ -1004,30 +1004,25 @@ const CCDATASECTION = [
 
 const CCSampleTest = [
   {
-    part: 'part I',
-    data: [
-      {
-        index: 0,
-        section: '83.3',
-        sectionHeader: 'Attorney Generals consent',
-      },
-      {
-        index: 1,
-        section: '535.0',
-        sectionHeader: 'Inquiry by justice',
-      },
-      {
-        index: 2,
-        section: '536.0',
-        sectionHeader:
-          'Remand by justice to provincial court judge in certain cases',
-      },
-      {
-        index: 3,
-        section: '742.6',
-        sectionHeader: 'Procedure on breach of condition',
-      },
-    ],
+    index: 0,
+    section: '83.3',
+    sectionHeader: 'Attorney Generals consent',
+  },
+  {
+    index: 1,
+    section: '535.0',
+    sectionHeader: 'Inquiry by justice',
+  },
+  {
+    index: 2,
+    section: '536.0',
+    sectionHeader:
+      'Remand by justice to provincial court judge in certain cases',
+  },
+  {
+    index: 3,
+    section: '742.6',
+    sectionHeader: 'Procedure on breach of condition',
   },
 ];
 
