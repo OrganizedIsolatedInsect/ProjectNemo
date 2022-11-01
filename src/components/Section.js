@@ -252,14 +252,6 @@ const Section = ({section, type}) => {
             renderItem={renderSubPara}
             keyExtractor={data => data.index}
           />
-          {/* <VirtualizedList
-            data={subparaData}
-            initialNumToRender={4}
-            renderItem={renderSubPara}
-            keyExtractor={data => data.index}
-            getItemCount={data => data.length}
-            getItem={getItem}
-          /> */}
         </View>
       );
     }
