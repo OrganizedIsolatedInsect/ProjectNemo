@@ -130,6 +130,21 @@ export default StyleSheet.create({
   CCcontent: {
     height: 600,
   },
+  accordionContainerHeader: {
+    borderWidth: 1,
+    padding: 10,
+    marginHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#DCDCDC',
+  },
+  accordionContainer: {
+    borderWidth: 1,
+    padding: 10,
+    marginHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 
   //SEARCHBAR Styling START
   searchView_Styling: {

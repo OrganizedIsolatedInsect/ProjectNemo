@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
