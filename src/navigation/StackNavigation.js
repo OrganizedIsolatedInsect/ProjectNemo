@@ -10,6 +10,8 @@ import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
 import ContentMVAScreen from '../screens/ContentMVAScreen';
 import ExceptionScreen from '../screens/ExceptionScreen';
+import PartsCCScreen from '../screens/PartsCCScreen';
+import SectionsCCScreen from '../screens/SectionsCCScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
 import {SearchIconButton} from '../components/HeaderSearchIconButton';
@@ -25,6 +27,11 @@ const ContentStack = () => {
       <ContentNavigator.Screen
         name="BrowseCCScreen"
         component={BrowseCCScreen}
+      />
+      <ContentNavigator.Screen name="PartsCCScreen" component={PartsCCScreen} />
+      <ContentNavigator.Screen
+        name="SectionsCCScreen"
+        component={SectionsCCScreen}
       />
       <ContentNavigator.Screen
         name="ContentCCScreen"

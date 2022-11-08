@@ -215,7 +215,6 @@ export default StyleSheet.create({
   },
   gridItemMargin: {
     flexDirection: 'row',
-
     marginLeft: 15,
     marginBottom: 10,
   },
@@ -223,6 +222,7 @@ export default StyleSheet.create({
     width: '20%',
   },
   sentenceWrap: {
+    flexDirection: 'row',
     flexWrap: 'wrap',
   },
 });
