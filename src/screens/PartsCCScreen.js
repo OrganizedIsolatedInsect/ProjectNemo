@@ -35,7 +35,6 @@ const PartsCCScreen = props => {
             temp.push(results.rows.item(i));
           }
           setDistinctPartsList(temp);
-          console.log(temp);
         },
       );
     });
@@ -52,7 +51,7 @@ const PartsCCScreen = props => {
           {itemdata.item.heading1label} - {itemdata.item.heading1titletext}
         </Text> */}
         <CrimCodePartsList
-          partsKey={itemdata.item.heading1key}
+          heading1key={itemdata.item.heading1key}
           heading1label={itemdata.item.heading1label}
           heading1titletext={itemdata.item.heading1titletext}
         />

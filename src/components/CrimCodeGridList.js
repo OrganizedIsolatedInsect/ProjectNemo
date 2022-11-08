@@ -27,7 +27,12 @@ export const CrimCodePartsList = props => {
               <Text
                 style={[
                   styles.sentenceWrap,
-                  {marginLeft: 10, width: '70%', flexDirection: 'row', color: colors.primaryText},
+                  {
+                    marginLeft: 10,
+                    width: '70%',
+                    flexDirection: 'row',
+                    color: colors.primaryText,
+                  },
                 ]}>
                 {props.heading1titletext}
               </Text>
@@ -47,25 +52,24 @@ export const CrimCodePartsList = props => {
 
 export const CrimCodeSectionList = props => {
   const navAid = useNavigation();
-
   return (
     <View>
       <Pressable
         onPress={() =>
-          navAid.navigate('ContentCCScreen', {section: props.section})
+          navAid.navigate('ContentCCScreen', {heading2key: props.heading2key})
         }>
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
               <Text style={{textAlign: 'left', color: colors.primaryText}}>
-                {props.section}
+                {props.firstSectionLabel}
               </Text>
               <Text
                 style={[
                   styles.sentenceWrap,
                   {marginLeft: 10, color: colors.primaryText},
                 ]}>
-                {props.sectionHeader}
+                {props.heading2titletext}
               </Text>
             </View>
 
