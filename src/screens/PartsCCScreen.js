@@ -24,10 +24,7 @@ const PartsCCScreen = props => {
   const getDbData = () => {
     db.transaction(tx => {
       tx.executeSql(
-        // 'select * from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
-        //"SELECT DISTINCT heading1label, heading1titletext FROM CCDataV2 WHERE heading1key NOT IN ['115011', '115006']",
         "SELECT DISTINCT heading1label, heading1titletext, heading1key FROM CCDataV2 WHERE heading1key <> '115011' and heading1key <> '115006' ORDER BY heading1key",
-        //'select part, section, sectionHeader from (select * from CrimCode WHERE sectionHeader IS NOT NULL ORDER by section desc, sectionHeader asc) group by section',
         [],
         (_tx, results) => {
           let temp = [];
@@ -43,13 +40,6 @@ const PartsCCScreen = props => {
   const renderList = itemdata => {
     return (
       <View>
-        {/* <Text
-          styles={
-            ({textAlign: 'left', color: colors.primaryText},
-            [styles.gridItemMargin, styles.heading_1])
-          }>
-          {itemdata.item.heading1label} - {itemdata.item.heading1titletext}
-        </Text> */}
         <CrimCodePartsList
           heading1key={itemdata.item.heading1key}
           heading1label={itemdata.item.heading1label}
@@ -60,15 +50,7 @@ const PartsCCScreen = props => {
   };
 
   const FlashListItemSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: '#000',
-        }}
-      />
-    );
+    return <View style={styles.flashListStyling} />;
   };
 
   return (
@@ -86,10 +68,9 @@ const PartsCCScreen = props => {
         </Text>
       </View>
       <FlashList
-        /* data={CCSampleTest} */
         data={distinctPartsList}
         renderItem={renderList}
-        estimatedItemSize={100}
+        estimatedItemSize={123}
         ItemSeparatorComponent={FlashListItemSeparator}
       />
     </View>

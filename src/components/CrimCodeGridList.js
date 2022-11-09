@@ -21,24 +21,16 @@ export const CrimCodePartsList = props => {
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={{textAlign: 'left', color: colors.primaryText}}>
+              <Text style={[styles.heading1labelText]}>
                 {props.heading1label}
               </Text>
-              <Text
-                style={[
-                  styles.sentenceWrap,
-                  {
-                    marginLeft: 10,
-                    width: '70%',
-                    flexDirection: 'row',
-                    color: colors.primaryText,
-                  },
-                ]}>
+              <Text style={styles.heading1TitleText}>
                 {props.heading1titletext}
               </Text>
             </View>
 
             <Icon
+              style={styles.partsIcon}
               name={'arrow-forward-ios'}
               size={20}
               color={colors.primaryText}
@@ -61,21 +53,18 @@ export const CrimCodeSectionList = props => {
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={{textAlign: 'left', color: colors.primaryText}}>
+              <Text style={styles.heading2labelText}>
                 {props.firstSectionLabel}
               </Text>
-              <Text
-                style={[
-                  styles.sentenceWrap,
-                  {marginLeft: 10, color: colors.primaryText},
-                ]}>
+              <Text style={styles.heading2TitleText}>
                 {props.heading2titletext}
               </Text>
             </View>
 
             <Icon
+              style={styles.partsIcon}
               name={'arrow-forward-ios'}
-              size={20}
+              size={18}
               color={colors.primaryText}
             />
           </View>

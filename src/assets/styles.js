@@ -130,6 +130,56 @@ export default StyleSheet.create({
   CCcontent: {
     height: 600,
   },
+  //Criminal Code PARTS/SECTION Screen Styling - Sprint 4
+  heading1labelText: {
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '25%',
+    color: colors.primaryText,
+  },
+  heading1TitleText: {
+    marginLeft: 5,
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '68%',
+    flexDirection: 'row',
+    color: colors.primaryText,
+    flexWrap: 'wrap',
+  },
+  flashListStyling: {
+    height: 1,
+    width: '95%',
+    backgroundColor: colors.primaryText,
+  },
+  heading2labelText: {
+    fontSize: 18,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '20%',
+    color: colors.primaryText,
+  },
+  heading2TitleText: {
+    marginLeft: 5,
+    fontSize: 18,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '68%',
+    flexDirection: 'row',
+    color: colors.primaryText,
+    flexWrap: 'wrap',
+  },
+  partsIcon: {
+    paddingTop: 10,
+  },
+  subtitle: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: colors.primaryText,
+  },
 
   //SEARCHBAR Styling START
   searchView_Styling: {
