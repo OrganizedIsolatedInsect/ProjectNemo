@@ -18,8 +18,6 @@ const SectionsCCScreen = props => {
   const [pagePartTitle, setPagePartTitle] = useState('');
   const [pagePartLabel, setPagePartLabel] = useState('');
 
-  // let pagePartTitle = '';
-  // let pagePartLabel = '';
   const window = useWindowDimensions();
   const heading1KeyParam = props.route.params.heading1key;
 
