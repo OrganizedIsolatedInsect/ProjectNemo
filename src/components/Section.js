@@ -73,38 +73,142 @@ const Section = ({section, type}) => {
   };
 
   for (var i = 0, l = dbData.length; i < l; i++) {
-    const index = dbData[i].field1;
-    const section = dbData[i].sectionlabel;
-    const subsection = dbData[i].subsectionlabel;
-    const subsectionHeader = dbData[i].marginalnote;
-    const subsectionText = dbData[i].subsectiontext;
+    const index = dbData[i].field1; // index
+    const sectionLabel = dbData[i].sectionlabel; // section
+    const subsectionLabel = dbData[i].subsectionlabel; // subsection
+    const marginalNote = dbData[i].marginalnote; // sebsectionHeader
+    const subsectionText = dbData[i].subsectiontext; // subsectionText
+    const sectionKey = dbData[i].sectionkey;
+    const subsectionKey = dbData[i].subsectionkey;
 
     //function to push subsections into subsectionArray
+    /* eslint-disable */
     const pushArray = (
       index,
-      section,
-      subsection,
-      subsectionHeader,
+      sectionLabel,
+      subsectionLabel,
+      marginalNote,
       subsectionText,
+      sectionKey,
+      subsectionKey,
     ) => {
       subsectionArray.push({
         index: index,
-        section: section,
-        subsection: subsection,
-        subsectionHeader: subsectionHeader,
+        sectionLabel: sectionLabel,
+        subsectionLabel: subsectionLabel,
+        marginalNote: marginalNote,
         subsectionText: subsectionText,
+        sectionKey: sectionKey,
+        subsectionKey: subsectionKey,
       });
     };
-
+    /* eslint-enable */
     if (i === 0) {
-      pushArray(index, section, subsection, subsectionHeader, subsectionText);
+      pushArray(
+        index,
+        sectionLabel,
+        subsectionLabel,
+        marginalNote,
+        subsectionText,
+        sectionKey,
+        subsectionKey,
+      );
     } else {
       const prevSubsection = dbData[i - 1].subsectionlabel;
-      if (subsection !== prevSubsection) {
-        pushArray(index, section, subsection, subsectionHeader, subsectionText);
+      if (subsectionLabel !== prevSubsection) {
+        pushArray(
+          index,
+          sectionLabel,
+          subsectionLabel,
+          marginalNote,
+          subsectionText,
+          sectionKey,
+          subsectionKey,
+        );
       }
     }
   }
+
+  const getItem = (data, index) => {
+    return data[index];
+  };
+
+  const renderAccordion = ({item, index}) => {
+    let paraData = dbData.filter(
+      (element, i) => (dbData[i].subsectionkey = item.subsectionKey),
+    );
+
+    console.log(item);
+    const paraFilter = [];
+
+    for (var i = 0, l = paraData.length; i < l; i++) {
+      if (i === 0) {
+        paraFilter.push(paraData[i]);
+      }
+      if (i > 0) {
+        const prevPara = paraData[i - 1].paragraphText;
+
+        if (paraData[i].paragraph !== prevPara) {
+          paraFilter.push(paraData[i]);
+        }
+      }
+    }
+
+    if (index == 0) {
+      return (
+        <View key={index}>
+          <Collapse>
+            <CollapseHeader>
+              <View style={styles.accordionContainerHeader}>
+                <Text>
+                  {item.sectionLabel}
+                  {item.subsectionLabel}
+                  {item.marginalNote}
+                </Text>
+                <Icon name="keyboard-arrow-right" size={20} />
+              </View>
+            </CollapseHeader>
+            <CollapseBody style={styles.accordionContainer}>
+              <View>
+                <Text>
+                  {item.subsectionText} {'\n'}
+                </Text>
+              </View>
+            </CollapseBody>
+          </Collapse>
+        </View>
+      );
+    } else {
+      return (
+        <View key={index}>
+          <Collapse>
+            <CollapseHeader>
+              <View style={styles.accordionContainerHeader}>
+                <Text>
+                  {item.subsectionLabel}
+                  {item.marginalNote}
+                </Text>
+                <Icon name="keyboard-arrow-right" size={20} />
+              </View>
+            </CollapseHeader>
+            <CollapseBody style={styles.accordionContainer}>
+              <View>
+                <Text>{item.subsectionText}</Text>
+              </View>
+            </CollapseBody>
+          </Collapse>
+        </View>
+      );
+    }
+  };
+
+  const renderParagraph = ({item, i}) => {
+    return (
+      <View>
+        <Text>Test</Text>
+      </View>
+    );
+  };
 
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
@@ -113,7 +217,7 @@ const Section = ({section, type}) => {
     if (marked === false) {
       dispatch(
         addBookmark({
-          section: section,
+          sectionLabel: sectionLabel,
           sectionHeader: sectionHeader,
           lawtype: 'CC',
         }),
@@ -122,7 +226,7 @@ const Section = ({section, type}) => {
     if (marked === true) {
       dispatch(
         removeBookmark({
-          section: section,
+          sectionLabel: sectionLabel,
           lawtype: 'CC',
         }),
       );
@@ -131,54 +235,16 @@ const Section = ({section, type}) => {
 
   if (loading === true) {
     return (
-      <ScrollView>
-        {subsectionArray.map((item, i) => {
-          if (i == 0) {
-            return (
-              <View>
-                <Collapse>
-                  <CollapseHeader>
-                    <View style={styles.accordionContainerHeader} key={i}>
-                      <Text>
-                        {item.section}
-                        {item.subsection}
-                        {item.subsectionHeader}
-                      </Text>
-                      <Icon name="keyboard-arrow-right" size={20} />
-                    </View>
-                  </CollapseHeader>
-                  <CollapseBody>
-                    <View style={styles.accordionContainer}>
-                      <Text>{item.subsectionText}</Text>
-                    </View>
-                  </CollapseBody>
-                </Collapse>
-              </View>
-            );
-          } else {
-            return (
-              <View>
-                <Collapse>
-                  <CollapseHeader>
-                    <View style={styles.accordionContainerHeader} key={i}>
-                      <Text>
-                        {item.subsection}
-                        {item.subsectionHeader}
-                      </Text>
-                      <Icon name="keyboard-arrow-right" size={20} />
-                    </View>
-                  </CollapseHeader>
-                  <CollapseBody>
-                    <View style={styles.accordionContainer}>
-                      <Text>{item.subsectionText}</Text>
-                    </View>
-                  </CollapseBody>
-                </Collapse>
-              </View>
-            );
-          }
-        })}
-      </ScrollView>
+      <View>
+        <VirtualizedList
+          data={subsectionArray}
+          initialNumToRender={10}
+          renderItem={renderAccordion}
+          keyExtractor={data => data.index}
+          getItemCount={data => data.length}
+          getItem={getItem}
+        />
+      </View>
     );
   }
 };
