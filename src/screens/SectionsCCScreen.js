@@ -3,12 +3,11 @@
 
 import React, {useState, useEffect} from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import {FlashList} from '@shopify/flash-list';
 
 //USER Imports
 import styles, {colors} from '../assets/styles';
-import {CrimCodeSectionList} from '../components/CrimCodeGridList';
+import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
 
 const SectionsCCScreen = props => {
@@ -19,8 +18,7 @@ const SectionsCCScreen = props => {
   const [pagePartLabel, setPagePartLabel] = useState('');
 
   const window = useWindowDimensions();
-  const heading1KeyParam = props.route.params.heading1key;
-
+  const heading1KeyParam = props.route.params.passingKey;
   useEffect(() => {
     getDbData();
   }, []);
@@ -44,13 +42,16 @@ const SectionsCCScreen = props => {
   };
 
   const renderList = itemdata => {
+    let passingName = 'SectionsCCScreen';
     return (
-      <CrimCodeSectionList
-        heading1key={itemdata.item.heading1key}
-        heading2key={itemdata.item.heading2key}
-        firstSectionLabel={itemdata.item.firstSectionLabel}
-        heading2titletext={itemdata.item.heading2titletext}
-      />
+      <View>
+        <CrimCodeGridList
+          headingkey={itemdata.item.heading2key}
+          currentScreen={passingName}
+          headinglabel={itemdata.item.firstSectionLabel}
+          headingtitletext={itemdata.item.heading2titletext}
+        />
+      </View>
     );
   };
 

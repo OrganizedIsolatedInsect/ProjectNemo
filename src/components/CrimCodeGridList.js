@@ -4,37 +4,35 @@
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //USER IMPORTS
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
+import {ArrowIcon} from '../assets/icons';
 
-export const CrimCodePartsList = props => {
+const CrimCodeGridList = props => {
   const navAid = useNavigation();
-
+  const screenName = props.currentScreen;
   return (
     <View>
       <Pressable
-        onPress={() =>
-          navAid.navigate('SectionsCCScreen', {heading1key: props.heading1key})
-        }>
+        onPress={() => {
+          if (screenName === 'PartsCCScreen') {
+            navAid.navigate('SectionsCCScreen', {passingKey: props.headingkey});
+          } else {
+            navAid.navigate('ContentCCScreen', {passingKey: props.headingkey});
+          }
+        }}>
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={[styles.heading1labelText]}>
-                {props.heading1label}
+              <Text style={[styles.headingLabelText]}>
+                {props.headinglabel}
               </Text>
-              <Text style={styles.heading1TitleText}>
-                {props.heading1titletext}
+              <Text style={styles.headingTitleText}>
+                {props.headingtitletext}
               </Text>
             </View>
-
-            <Icon
-              style={styles.partsIcon}
-              name={'arrow-forward-ios'}
-              size={20}
-              color={colors.primaryText}
-            />
+            <ArrowIcon />
           </View>
         </View>
       </Pressable>
@@ -42,34 +40,4 @@ export const CrimCodePartsList = props => {
   );
 };
 
-export const CrimCodeSectionList = props => {
-  const navAid = useNavigation();
-  return (
-    <View>
-      <Pressable
-        onPress={() =>
-          navAid.navigate('ContentCCScreen', {heading2key: props.heading2key})
-        }>
-        <View>
-          <View style={styles.gridListItem}>
-            <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={styles.heading2labelText}>
-                {props.firstSectionLabel}
-              </Text>
-              <Text style={styles.heading2TitleText}>
-                {props.heading2titletext}
-              </Text>
-            </View>
-
-            <Icon
-              style={styles.partsIcon}
-              name={'arrow-forward-ios'}
-              size={18}
-              color={colors.primaryText}
-            />
-          </View>
-        </View>
-      </Pressable>
-    </View>
-  );
-};
+export default CrimCodeGridList;

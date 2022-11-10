@@ -131,14 +131,14 @@ export default StyleSheet.create({
     height: 600,
   },
   //Criminal Code PARTS/SECTION Screen Styling - Sprint 4
-  heading1labelText: {
+  headingLabelText: {
     fontSize: 15,
     paddingTop: 5,
     paddingBottom: 5,
     width: '25%',
     color: colors.primaryText,
   },
-  heading1TitleText: {
+  headingTitleText: {
     marginLeft: 5,
     fontSize: 15,
     paddingTop: 5,
@@ -152,23 +152,6 @@ export default StyleSheet.create({
     height: 1,
     width: '95%',
     backgroundColor: colors.primaryText,
-  },
-  heading2labelText: {
-    fontSize: 18,
-    paddingTop: 5,
-    paddingBottom: 5,
-    width: '20%',
-    color: colors.primaryText,
-  },
-  heading2TitleText: {
-    marginLeft: 5,
-    fontSize: 18,
-    paddingTop: 5,
-    paddingBottom: 5,
-    width: '68%',
-    flexDirection: 'row',
-    color: colors.primaryText,
-    flexWrap: 'wrap',
   },
   partsIcon: {
     paddingTop: 10,

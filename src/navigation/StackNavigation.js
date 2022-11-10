@@ -20,6 +20,7 @@ const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
 
 const ContentStack = () => {
+  // TODO BrowseCCScreen - Replaced by PartsCCScreen and SectionCCScreen
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />

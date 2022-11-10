@@ -1,15 +1,13 @@
 /* Parts screen - re-usable screen for the Parts List for just the Criminal Code Legislation
  */
-
 import React, {useState, useEffect} from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import {FlashList} from '@shopify/flash-list';
 
 //USER Imports
 //import {CCDATAPARTS, CCDATASECTION, CCSampleTest} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles, {colors} from '../assets/styles';
-import {CrimCodePartsList} from '../components/CrimCodeGridList';
+import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
 
 const PartsCCScreen = props => {
@@ -38,12 +36,14 @@ const PartsCCScreen = props => {
   };
 
   const renderList = itemdata => {
+    let passingName = 'PartsCCScreen';
     return (
       <View>
-        <CrimCodePartsList
-          heading1key={itemdata.item.heading1key}
-          heading1label={itemdata.item.heading1label}
-          heading1titletext={itemdata.item.heading1titletext}
+        <CrimCodeGridList
+          headingkey={itemdata.item.heading1key}
+          currentScreen={passingName}
+          headinglabel={itemdata.item.heading1label}
+          headingtitletext={itemdata.item.heading1titletext}
         />
       </View>
     );
@@ -56,7 +56,6 @@ const PartsCCScreen = props => {
   return (
     <View
       style={[styles.background, styles.container, {height: window.height}]}>
-      {Reactotron.log('PartsCC Render')}
       <View>
         <Text
           style={[
