@@ -1,43 +1,38 @@
-/*  Creates the first List of Criminal Code Parts/Sections to choose from
+/* Creates the first List of Criminal Code Parts/Sections to choose from
  */
 //SYSTEM PACKAGES
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //USER IMPORTS
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
+import {ArrowIcon} from '../assets/icons';
 
 const CrimCodeGridList = props => {
   const navAid = useNavigation();
-
+  const screenName = props.currentScreen;
   return (
     <View>
       <Pressable
-        onPress={() =>
-          navAid.navigate('ContentCCScreen', {section: props.section})
-        }>
+        onPress={() => {
+          if (screenName === 'PartsCCScreen') {
+            navAid.navigate('SectionsCCScreen', {passingKey: props.headingkey});
+          } else {
+            navAid.navigate('ContentCCScreen', {passingKey: props.headingkey});
+          }
+        }}>
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={{textAlign: 'left', color: colors.primaryText}}>
-                {props.section}
+              <Text style={[styles.headingLabelText]}>
+                {props.headinglabel}
               </Text>
-              <Text
-                style={[
-                  styles.sentenceWrap,
-                  {marginLeft: 10, color: colors.primaryText},
-                ]}>
-                {props.sectionHeader}
+              <Text style={styles.headingTitleText}>
+                {props.headingtitletext}
               </Text>
             </View>
-
-            <Icon
-              name={'arrow-forward-ios'}
-              size={20}
-              color={colors.primaryText}
-            />
+            <ArrowIcon />
           </View>
         </View>
       </Pressable>

@@ -1,5 +1,5 @@
 /*Framework for generalizing legislation titles and props for passing*/
-
+// TODO  delete this component.. never used.
 class CriminalCodeItem {
   constructor(
     index,
