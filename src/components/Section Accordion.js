@@ -2,13 +2,14 @@
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, FlatList, VirtualizedList} from 'react-native';
+import {Text, View, FlatList, VirtualizedList, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
 import SQLite from 'react-native-sqlite-storage';
+import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
@@ -222,7 +223,7 @@ const Section = ({section, type}) => {
     return (
       <View>
         <Text style={styles.subParagraph}>
-          {item.subparagraph} {item.subParagraphText}
+          {item.subparagraph} {item.subparagraphText}
         </Text>
       </View>
     );
@@ -262,6 +263,59 @@ const Section = ({section, type}) => {
     return data[index];
   };
 
+  const [collapsedState, setCollapsedState] = useState(true);
+  // Active Infos is the section number (from react-native-collapsible, NOT our database section)
+  // This is to index the section into an array which is used can be used for the isActive state
+  // so that we can target the individual accordion icons
+  const [activeInfos, setActiveInfos] = useState([]);
+
+  const setInfos = infos => {
+    //setting up a active section state
+    setActiveInfos(infos.includes(undefined) ? [] : infos);
+    // setCollapsedState(!collapsedState);
+    setCollapsedState(prevState => !prevState);
+    // console.log('collapsedState:', collapsedState);
+  };
+
+  // prettier-ignore
+  // Props for the render must be in specific order; isActive needs to be the 3rd prop.
+  const renderHeader = (item, _, isActive) => {
+    return (
+      <View style={[styles.gridListItem, styles.accordionContainerHeader]} key={item.index}>
+        <Text>
+          {item.subsectionHeader} {item.marginalNote}
+        </Text>
+        {isActive ? (<Icon name="keyboard-arrow-up" size={20} /> ) : (<Icon name="keyboard-arrow-down" size={20} />)} 
+      </View>
+    );
+  };
+
+  /* eslint-disable */
+  // prettier-ignore
+  const renderContent = item => {
+    return (
+      <View>
+        <Text>
+          {item.subsectionText}
+          {'\n'}
+          {item.paragraphLabel !== null ? (
+            <View>
+              <Text>
+                {item.paragraphLabel}
+                <Text>
+                  {item.paragraphText}
+                </Text>
+              </Text>
+            </View>
+          ) : null}
+          {item.subparagraphLabel} {item.subparagraphText}
+          {item.clauseLabel} {item.clauseText}
+          {item.subclauseLabel} {item.subclauseText}
+        </Text>
+      </View>
+    );
+  };
+
   if (loading === true) {
     return (
       <SafeAreaView>
@@ -272,15 +326,35 @@ const Section = ({section, type}) => {
               sectionHeader={dbData[0].sectionHeader}
             />
           </View>
-          {/* <FlatList data={subsectionArray} renderItem={renderItemSubsection} /> */}
-          <VirtualizedList
+          <Accordion
+            activeSections={activeInfos}
+            //for any default active section
+            sections={subsectionArray}
+            //title and content of accordion
+            touchableComponent={Pressable}
+            //which type of touchable component you want
+            expandMultiple={true}
+            //Do you want to expand mutiple at a time or single at a time
+            renderHeader={renderHeader}
+            //Header Component(View) to render
+            renderContent={renderContent}
+            //Content Component(View) to render
+            duration={100}
+            //Duration for Collapse and expand
+            onChange={setInfos}
+            //setting the state of active sections
+            renderChildrenCollapsed={false}
+            keyExtractor={item => item.index}
+          />
+
+          {/*  <VirtualizedList
             data={subsectionArray}
             initialNumToRender={4}
             renderItem={renderItemSubsection}
             keyExtractor={data => data.index}
             getItemCount={data => data.length}
             getItem={getItem}
-          />
+          /> */}
         </View>
       </SafeAreaView>
     );

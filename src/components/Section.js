@@ -135,10 +135,9 @@ const Section = ({section, type}) => {
 
   const renderAccordion = ({item, index}) => {
     let paraData = dbData.filter(
-      (element, i) => (dbData[i].subsectionkey = item.subsectionKey),
+      (paragraph, i) => dbData[i].subsectionkey == item.subsectionKey,
     );
 
-    console.log(item);
     const paraFilter = [];
 
     for (var i = 0, l = paraData.length; i < l; i++) {
@@ -153,6 +152,8 @@ const Section = ({section, type}) => {
         }
       }
     }
+
+    console.log(item);
 
     if (index == 0) {
       return (
@@ -172,6 +173,8 @@ const Section = ({section, type}) => {
               <View>
                 <Text>
                   {item.subsectionText} {'\n'}
+                  {item.subsectionlabel} {item.subsectiontext}
+                  <FlatList data={paraFilter} renderItem={renderParagraph} />
                 </Text>
               </View>
             </CollapseBody>
@@ -193,7 +196,10 @@ const Section = ({section, type}) => {
             </CollapseHeader>
             <CollapseBody style={styles.accordionContainer}>
               <View>
-                <Text>{item.subsectionText}</Text>
+                <Text>
+                  {item.subsectionText} {'\n'}
+                  <FlatList data={paraFilter} renderItem={renderParagraph} />
+                </Text>
               </View>
             </CollapseBody>
           </Collapse>
@@ -205,7 +211,9 @@ const Section = ({section, type}) => {
   const renderParagraph = ({item, i}) => {
     return (
       <View>
-        <Text>Test</Text>
+        <Text>
+          {item.paragraphLabel} {item.paragraphText}
+        </Text>
       </View>
     );
   };
