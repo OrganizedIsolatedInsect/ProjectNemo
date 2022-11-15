@@ -73,7 +73,7 @@ const Section = ({section, type}) => {
   };
 
   for (var i = 0, l = dbData.length; i < l; i++) {
-    const index = dbData[i].field1; // index
+    const field1 = dbData[i].field1; // index
     const sectionLabel = dbData[i].sectionlabel; // section
     const subsectionLabel = dbData[i].subsectionlabel; // subsection
     const marginalNote = dbData[i].marginalnote; // sebsectionHeader
@@ -84,7 +84,7 @@ const Section = ({section, type}) => {
     //function to push subsections into subsectionArray
     /* eslint-disable */
     const pushArray = (
-      index,
+      field1,
       sectionLabel,
       subsectionLabel,
       marginalNote,
@@ -93,7 +93,7 @@ const Section = ({section, type}) => {
       subsectionKey,
     ) => {
       subsectionArray.push({
-        index: index,
+        field1: field1,
         sectionLabel: sectionLabel,
         subsectionLabel: subsectionLabel,
         marginalNote: marginalNote,
@@ -105,7 +105,7 @@ const Section = ({section, type}) => {
     /* eslint-enable */
     if (i === 0) {
       pushArray(
-        index,
+        field1,
         sectionLabel,
         subsectionLabel,
         marginalNote,
@@ -117,7 +117,7 @@ const Section = ({section, type}) => {
       const prevSubsection = dbData[i - 1].subsectionlabel;
       if (subsectionLabel !== prevSubsection) {
         pushArray(
-          index,
+          field1,
           sectionLabel,
           subsectionLabel,
           marginalNote,
@@ -153,11 +153,9 @@ const Section = ({section, type}) => {
       }
     }
 
-    console.log(item);
-
     if (index == 0) {
       return (
-        <View key={index}>
+        <View>
           <Collapse>
             <CollapseHeader>
               <View style={styles.accordionContainerHeader}>
@@ -172,9 +170,15 @@ const Section = ({section, type}) => {
             <CollapseBody style={styles.accordionContainer}>
               <View>
                 <Text>
-                  {item.subsectionText} {'\n'}
+                  {item.subsectionText}
+                  {'\n'}
                   {item.subsectionlabel} {item.subsectiontext}
-                  <FlatList data={paraFilter} renderItem={renderParagraph} />
+                  <FlatList
+                    data={paraFilter}
+                    keyExtractor={item => item.field1}
+                    listKey={(item2, index) => 'B' + index.toString()}
+                    renderItem={renderParagraph}
+                  />
                 </Text>
               </View>
             </CollapseBody>
@@ -183,7 +187,7 @@ const Section = ({section, type}) => {
       );
     } else {
       return (
-        <View key={index}>
+        <View>
           <Collapse>
             <CollapseHeader>
               <View style={styles.accordionContainerHeader}>
@@ -197,8 +201,14 @@ const Section = ({section, type}) => {
             <CollapseBody style={styles.accordionContainer}>
               <View>
                 <Text>
-                  {item.subsectionText} {'\n'}
-                  <FlatList data={paraFilter} renderItem={renderParagraph} />
+                  {item.subsectionText}
+                  {'\n'}
+                  <FlatList
+                    data={paraFilter}
+                    keyExtractor={item => item.field1}
+                    listKey={(item2, index) => 'B' + index.toString()}
+                    renderItem={renderParagraph}
+                  />
                 </Text>
               </View>
             </CollapseBody>
@@ -208,16 +218,39 @@ const Section = ({section, type}) => {
     }
   };
 
-  const renderParagraph = ({item, i}) => {
+  const renderParagraph = ({item, index}) => {
+    let subParaData = dbData.filter(
+      (subParagraph, i) =>
+        dbData[i].paragraphLabel === item.paragraphLabel &&
+        dbData[i].paragraphText === item.paragraphText &&
+        dbData[i].subparagraphText !== null,
+    );
+
     return (
       <View>
         <Text>
           {item.paragraphLabel} {item.paragraphText}
+          {'\n'}
+          <FlatList
+            data={subParaData}
+            keyExtractor={item => item.field1}
+            listKey={(item3, index) => 'C' + index.toString()}
+            renderItem={renderSubParagraph}
+          />
         </Text>
       </View>
     );
   };
 
+  const renderSubParagraph = ({item, index}) => {
+    return (
+      <View>
+        <Text>
+          {item.subparagraphLabel} {item.subparagraphText}
+        </Text>
+      </View>
+    );
+  };
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
@@ -244,14 +277,22 @@ const Section = ({section, type}) => {
   if (loading === true) {
     return (
       <View>
-        <VirtualizedList
+        <FlatList
+          data={subsectionArray}
+          keyExtractor={(item, index) => index.toString()}
+          listKey={(item, index) => 'A' + index.toString()}
+          renderItem={renderAccordion}
+        />
+
+        {/* <VirtualizedList
           data={subsectionArray}
           initialNumToRender={10}
           renderItem={renderAccordion}
-          keyExtractor={data => data.index}
+          listKey={(item, index) => 'A' + index.toString()}
+          keyExtractor={item => item.field1}
           getItemCount={data => data.length}
           getItem={getItem}
-        />
+        /> */}
       </View>
     );
   }
