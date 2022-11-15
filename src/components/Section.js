@@ -152,70 +152,38 @@ const Section = ({section, type}) => {
         }
       }
     }
+    return (
+      <View>
+        <Collapse>
+          <CollapseHeader>
+            <View style={styles.accordionContainerHeader}>
+              <Text>
+                {index == 0 && <Text>{item.sectionLabel}</Text>}
 
-    if (index == 0) {
-      return (
-        <View>
-          <Collapse>
-            <CollapseHeader>
-              <View style={styles.accordionContainerHeader}>
-                <Text>
-                  {item.sectionLabel}
-                  {item.subsectionLabel}
-                  {item.marginalNote}
-                </Text>
-                <Icon name="keyboard-arrow-right" size={20} />
-              </View>
-            </CollapseHeader>
-            <CollapseBody style={styles.accordionContainer}>
-              <View>
-                <Text>
-                  {item.subsectionText}
-                  {'\n'}
-                  {item.subsectionlabel} {item.subsectiontext}
-                  <FlatList
-                    data={paraFilter}
-                    keyExtractor={item => item.field1}
-                    listKey={(item2, index) => 'B' + index.toString()}
-                    renderItem={renderParagraph}
-                  />
-                </Text>
-              </View>
-            </CollapseBody>
-          </Collapse>
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <Collapse>
-            <CollapseHeader>
-              <View style={styles.accordionContainerHeader}>
-                <Text>
-                  {item.subsectionLabel}
-                  {item.marginalNote}
-                </Text>
-                <Icon name="keyboard-arrow-right" size={20} />
-              </View>
-            </CollapseHeader>
-            <CollapseBody style={styles.accordionContainer}>
-              <View>
-                <Text>
-                  {item.subsectionText}
-                  {'\n'}
-                  <FlatList
-                    data={paraFilter}
-                    keyExtractor={item => item.field1}
-                    listKey={(item2, index) => 'B' + index.toString()}
-                    renderItem={renderParagraph}
-                  />
-                </Text>
-              </View>
-            </CollapseBody>
-          </Collapse>
-        </View>
-      );
-    }
+                {item.subsectionLabel}
+                {item.marginalNote}
+              </Text>
+              <Icon name="keyboard-arrow-right" size={20} />
+            </View>
+          </CollapseHeader>
+          <CollapseBody style={styles.accordionContainer}>
+            <View>
+              <Text>
+                {item.subsectionText}
+                {'\n'}
+                {item.subsectionlabel} {item.subsectiontext}
+                <FlatList
+                  data={paraFilter}
+                  keyExtractor={item => item.field1}
+                  listKey={(item2, index) => 'B' + index.toString()}
+                  renderItem={renderParagraph}
+                />
+              </Text>
+            </View>
+          </CollapseBody>
+        </Collapse>
+      </View>
+    );
   };
 
   const renderParagraph = ({item, index}) => {
