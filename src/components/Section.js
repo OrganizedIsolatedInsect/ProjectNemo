@@ -245,14 +245,14 @@ const Section = ({section, type}) => {
   if (loading === true) {
     return (
       <View>
-        {/*  <FlatList
+        <FlatList
           data={subsectionArray}
           keyExtractor={(item, index) => index.toString()}
           listKey={(item, index) => 'A' + index.toString()}
           renderItem={renderAccordion}
-        /> */}
+        />
 
-        <VirtualizedList
+        {/*  <VirtualizedList
           data={subsectionArray}
           initialNumToRender={10}
           renderItem={renderAccordion}
@@ -260,7 +260,7 @@ const Section = ({section, type}) => {
           keyExtractor={item => item.field1}
           getItemCount={data => data.length}
           getItem={getItem}
-        />
+        /> */}
       </View>
     );
   }
