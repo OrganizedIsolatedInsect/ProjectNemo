@@ -217,13 +217,13 @@ const Section = ({section, type}) => {
           {item.subsectionText}
           {'\n'}
           {item.subsectionlabel} {item.subsectiontext}
-          <FlatList
-            data={paraFilter}
-            keyExtractor={item => item.field1}
-            listKey={(item2, index) => 'B' + index.toString()}
-            renderItem={renderParagraph}
-          />
         </Text>
+        <FlatList
+          data={paraFilter}
+          keyExtractor={item => item.field1}
+          listKey={(item2, index) => 'B' + index.toString()}
+          renderItem={renderParagraph}
+        />
       </View>
     );
   };
@@ -241,13 +241,13 @@ const Section = ({section, type}) => {
         <Text>
           {item.paragraphLabel} {item.paragraphText}
           {'\n'}
-          <FlatList
-            data={subParaData}
-            keyExtractor={item => item.field1}
-            listKey={(item3, index) => 'C' + index.toString()}
-            renderItem={renderSubParagraph}
-          />
         </Text>
+        <FlatList
+          data={subParaData}
+          keyExtractor={item => item.field1}
+          listKey={(item3, index) => 'C' + index.toString()}
+          renderItem={renderSubParagraph}
+        />
       </View>
     );
   };

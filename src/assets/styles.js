@@ -142,8 +142,6 @@ export default StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginHorizontal: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 
   //SEARCHBAR Styling START
