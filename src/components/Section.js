@@ -12,6 +12,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
+import {color} from 'react-native-reanimated';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
@@ -76,6 +77,13 @@ const Section = ({section, type}) => {
     const subsectionText = dbData[i].subsectiontext; // subsectionText
     const sectionKey = dbData[i].sectionkey;
     const subsectionKey = dbData[i].subsectionkey;
+    const prevSectionLabel = '';
+
+    if (i > 0) {
+      prevSectionLabel = dbData[i - 1].sectionlabel;
+    }
+    //create flag to see if this is the first label of a new section
+    const flagShowLabel = sectionLabel === prevSectionLabel;
 
     //function to push subsections into subsectionArray
     /* eslint-disable */
@@ -87,6 +95,7 @@ const Section = ({section, type}) => {
       subsectionText,
       sectionKey,
       subsectionKey,
+      flagShowLabel,
     ) => {
       subsectionArray.push({
         field1: field1,
@@ -96,6 +105,7 @@ const Section = ({section, type}) => {
         subsectionText: subsectionText,
         sectionKey: sectionKey,
         subsectionKey: subsectionKey,
+        flagShowLabel: flagShowLabel,
       });
     };
     /* eslint-enable */
@@ -108,6 +118,7 @@ const Section = ({section, type}) => {
         subsectionText,
         sectionKey,
         subsectionKey,
+        flagShowLabel,
       );
     } else {
       const prevSubsection = dbData[i - 1].subsectionlabel;
@@ -120,6 +131,7 @@ const Section = ({section, type}) => {
           subsectionText,
           sectionKey,
           subsectionKey,
+          flagShowLabel,
         );
       }
     }
@@ -174,15 +186,12 @@ const Section = ({section, type}) => {
   if (index >0) {
     const prevSection = item[index -1].sectionLabel
   } */
-
  
-
-    
     return (
       <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
                 <Text>
-                {index == 0 && (
-                  <Text>{item.sectionLabel}</Text>
+                {item.flagShowLabel === false && (
+                  <Text style={{fontWeight: 'bold', color:'blue'}}>{item.sectionLabel} </Text>
                 )}
                 {item.subsectionLabel}
                 {item.marginalNote}
