@@ -42,7 +42,6 @@ const Section = ({section, type}) => {
   let subsectionArray = [];
 
   useEffect(() => {
-    getDbData(sectionId);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (bookmarkStateId.some(e => e.section == section)) {
       setMarked(true);
@@ -50,6 +49,10 @@ const Section = ({section, type}) => {
       setMarked(false);
     }
   }, [marked, isFocused]);
+
+  useEffect(() => {
+    getDbData(sectionId);
+  }, [sectionId]);
 
   // function to get data from NemoDB
   const getDbData = sectionId => {
@@ -77,7 +80,8 @@ const Section = ({section, type}) => {
     const subsectionText = dbData[i].subsectiontext; // subsectionText
     const sectionKey = dbData[i].sectionkey;
     const subsectionKey = dbData[i].subsectionkey;
-    const prevSectionLabel = '';
+    const sectionText = dbData[i].sectiontext;
+    let prevSectionLabel = '';
 
     if (i > 0) {
       prevSectionLabel = dbData[i - 1].sectionlabel;
@@ -93,6 +97,7 @@ const Section = ({section, type}) => {
       subsectionLabel,
       marginalNote,
       subsectionText,
+      sectionText,
       sectionKey,
       subsectionKey,
       flagShowLabel,
@@ -103,6 +108,7 @@ const Section = ({section, type}) => {
         subsectionLabel: subsectionLabel,
         marginalNote: marginalNote,
         subsectionText: subsectionText,
+        sectionText: sectionText,
         sectionKey: sectionKey,
         subsectionKey: subsectionKey,
         flagShowLabel: flagShowLabel,
@@ -116,6 +122,7 @@ const Section = ({section, type}) => {
         subsectionLabel,
         marginalNote,
         subsectionText,
+        sectionText,
         sectionKey,
         subsectionKey,
         flagShowLabel,
@@ -129,6 +136,7 @@ const Section = ({section, type}) => {
           subsectionLabel,
           marginalNote,
           subsectionText,
+          sectionText,
           sectionKey,
           subsectionKey,
           flagShowLabel,
@@ -223,13 +231,28 @@ const Section = ({section, type}) => {
       }
     }
 
+    if (item.sectionText != null) {
+      return (
+        <View style={styles.accordionContainer}>
+          <Text>{item.sectionText}</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.accordionContainer}>
+          <Text>{item.subsectionText}</Text>
+          <FlatList
+            data={paraFilter}
+            keyExtractor={item => item.field1}
+            listKey={(item2, index) => 'B' + index.toString()}
+            renderItem={renderParagraph}
+          />
+        </View>
+      );
+    }
     return (
       <View style={styles.accordionContainer}>
-        <Text>
-          {item.subsectionText}
-          {'\n'}
-          {item.subsectionlabel} {item.subsectiontext}
-        </Text>
+        <Text>{item.subsectionText}</Text>
         <FlatList
           data={paraFilter}
           keyExtractor={item => item.field1}
