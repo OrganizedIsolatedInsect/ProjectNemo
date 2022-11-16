@@ -58,7 +58,7 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        'Select * from CCDataV2 where sectionlabel = ?',
+        'Select * from CCDataV2 where headingkey = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];
@@ -245,22 +245,22 @@ const Section = ({section, type}) => {
   if (loading === true) {
     return (
       <View>
-        <FlatList
+        {/*  <FlatList
           data={subsectionArray}
           keyExtractor={(item, index) => index.toString()}
           listKey={(item, index) => 'A' + index.toString()}
           renderItem={renderAccordion}
-        />
+        /> */}
 
-        {/*  <VirtualizedList
+        <VirtualizedList
           data={subsectionArray}
-          initialNumToRender={10}
+          initialNumToRender={20}
           renderItem={renderAccordion}
           listKey={(item, index) => 'A' + index.toString()}
           keyExtractor={item => item.field1}
           getItemCount={data => data.length}
           getItem={getItem}
-        /> */}
+        />
       </View>
     );
   }
