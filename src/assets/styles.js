@@ -143,6 +143,39 @@ export default StyleSheet.create({
     padding: 10,
     marginHorizontal: 5,
   },
+  //Criminal Code PARTS/SECTION Screen Styling - Sprint 4
+  headingLabelText: {
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '25%',
+    color: colors.primaryText,
+  },
+  headingTitleText: {
+    marginLeft: 5,
+    fontSize: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    width: '68%',
+    flexDirection: 'row',
+    color: colors.primaryText,
+    flexWrap: 'wrap',
+  },
+  flashListStyling: {
+    height: 1,
+    width: '95%',
+    backgroundColor: colors.primaryText,
+  },
+  partsIcon: {
+    paddingTop: 10,
+  },
+  subtitle: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: colors.primaryText,
+  },
 
   //SEARCHBAR Styling START
   searchView_Styling: {
@@ -228,7 +261,6 @@ export default StyleSheet.create({
   },
   gridItemMargin: {
     flexDirection: 'row',
-
     marginLeft: 15,
     marginBottom: 10,
   },
@@ -236,6 +268,7 @@ export default StyleSheet.create({
     width: '20%',
   },
   sentenceWrap: {
+    flexDirection: 'row',
     flexWrap: 'wrap',
   },
 });

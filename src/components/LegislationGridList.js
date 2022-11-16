@@ -1,4 +1,4 @@
-/*  Creates the first List of Legislation to choose from
+/* Creates the first List of Legislation to choose from
  */
 //SYSTEM PACKAGES
 import React from 'react';
