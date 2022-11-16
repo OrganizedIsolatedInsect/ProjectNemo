@@ -8,11 +8,6 @@ import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
 import SQLite from 'react-native-sqlite-storage';
-import {
-  Collapse,
-  CollapseHeader,
-  CollapseBody,
-} from 'accordion-collapse-react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
@@ -174,6 +169,14 @@ const Section = ({section, type}) => {
   // prettier-ignore
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
+  
+  /* const currentSection = item[0].sectionLabel
+  if (index >0) {
+    const prevSection = item[index -1].sectionLabel
+  } */
+
+ 
+
     
     return (
       <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
