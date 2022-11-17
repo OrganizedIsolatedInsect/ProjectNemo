@@ -145,10 +145,6 @@ const Section = ({section, type}) => {
     }
   }
 
-  const getItem = (data, index) => {
-    return data[index];
-  };
-
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
@@ -255,10 +251,7 @@ const Section = ({section, type}) => {
     } else {
       return (
         <View style={styles.accordionContainer}>
-          <Text>
-            {item.subsectionText}
-            {paraFilter.length}
-          </Text>
+          <Text>{item.subsectionText}</Text>
         </View>
       );
     }
