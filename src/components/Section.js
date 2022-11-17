@@ -225,7 +225,7 @@ const Section = ({section, type}) => {
       if (i > 0) {
         const prevPara = paraData[i - 1].paragraphText;
 
-        if (paraData[i].paragraph !== prevPara) {
+        if (paraData[i].paragraphText !== prevPara) {
           paraFilter.push(paraData[i]);
         }
       }
@@ -237,10 +237,13 @@ const Section = ({section, type}) => {
           <Text>{item.sectionText}</Text>
         </View>
       );
-    } else {
+    } else if (paraFilter.length > 1) {
       return (
         <View style={styles.accordionContainer}>
-          <Text>{item.subsectionText}</Text>
+          <Text>
+            {item.subsectionText}
+            {'\n'}
+          </Text>
           <FlatList
             data={paraFilter}
             keyExtractor={item => item.field1}
@@ -249,18 +252,16 @@ const Section = ({section, type}) => {
           />
         </View>
       );
+    } else {
+      return (
+        <View style={styles.accordionContainer}>
+          <Text>
+            {item.subsectionText}
+            {paraFilter.length}
+          </Text>
+        </View>
+      );
     }
-    return (
-      <View style={styles.accordionContainer}>
-        <Text>{item.subsectionText}</Text>
-        <FlatList
-          data={paraFilter}
-          keyExtractor={item => item.field1}
-          listKey={(item2, index) => 'B' + index.toString()}
-          renderItem={renderParagraph}
-        />
-      </View>
-    );
   };
 
   const renderParagraph = ({item, index}) => {
@@ -272,10 +273,9 @@ const Section = ({section, type}) => {
     );
 
     return (
-      <View>
+      <View style={styles.paragraph}>
         <Text>
           {item.paragraphLabel} {item.paragraphText}
-          {'\n'}
         </Text>
         <FlatList
           data={subParaData}
@@ -289,7 +289,7 @@ const Section = ({section, type}) => {
 
   const renderSubParagraph = ({item, index}) => {
     return (
-      <View>
+      <View style={styles.subParagraph}>
         <Text>
           {item.subparagraphLabel} {item.subparagraphText}
         </Text>
