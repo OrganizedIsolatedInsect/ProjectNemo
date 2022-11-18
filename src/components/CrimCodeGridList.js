@@ -39,8 +39,8 @@ const CrimCodeGridList = props => {
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={[styles.headingLabelText]}>{componentLabel}</Text>
-              <Text style={styles.headingTitleText}>{componentTitle}</Text>
+              <Text style={[styles.componentLabel]}>{componentLabel}</Text>
+              <Text style={styles.componentTitle}>{componentTitle}</Text>
             </View>
             <ArrowIcon />
           </View>
