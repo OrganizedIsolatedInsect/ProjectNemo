@@ -12,7 +12,7 @@ import crimData from '../data/C-46.json';
 
 const ContentCCScreen = props => {
   //pull section number from BrowseCCScreen or BookmarkScreen to send to section component
-  let sectionId = props.route.params.section;
+  let sectionId = props.route.params.passingKey;
 
   let lawType = 'crim code';  //TODO  should change this to "CC"
 
