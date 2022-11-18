@@ -197,8 +197,7 @@ const Section = ({section, type}) => {
                 {item.flagShowLabel === false && (
                   <Text style={{fontWeight: 'bold', color:'blue'}}>{item.sectionLabel} </Text>
                 )}
-                {item.subsectionLabel}
-                {item.marginalNote}
+                {item.subsectionLabel} {item.marginalNote}
                 </Text>     
         {isActive ? (<Icon name="keyboard-arrow-up" size={20} /> ) : (<Icon name="keyboard-arrow-down" size={20} />)} 
       </View>
