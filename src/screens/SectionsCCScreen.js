@@ -26,7 +26,7 @@ const SectionsCCScreen = props => {
   const getDbData = () => {
     db.transaction(tx => {
       tx.executeSql(
-        'select distinct a.heading1key, a.heading1label, a.heading1titletext, a.heading2key, a.heading2titletext, (select b.sectionlabel from CCDataV2 b where b.heading2key=a.heading2key order by sectionkey limit 1) as firstSectionLabel from CCDataV2 a where (a.heading1key = cast(? as integer)) order by a.heading2key',
+        'select distinct a.heading1key, a.heading1label, a.heading1titletext, a.heading2key, a.heading2titletext, (select b.sectionlabel from CCDataV2 b where b.heading2key=a.heading2key order by sectionkey limit 1) as sectionlabel from CCDataV2 a where (a.heading1key = cast(? as integer)) order by a.heading2key',
         [heading1KeyParam],
         (_tx, results) => {
           let temp = [];
@@ -46,10 +46,10 @@ const SectionsCCScreen = props => {
     return (
       <View>
         <CrimCodeGridList
-          headingkey={itemdata.item.heading2key}
+          headingkey={itemdata.item.headingkey}
           currentScreen={passingName}
-          headinglabel={itemdata.item.firstSectionLabel}
-          headingtitletext={itemdata.item.heading2titletext}
+          sectionlabel={itemdata.item.sectionlabel}
+          heading2titletext={itemdata.item.heading2titletext}
         />
       </View>
     );
