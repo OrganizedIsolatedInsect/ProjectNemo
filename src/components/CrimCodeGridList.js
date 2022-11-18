@@ -10,32 +10,28 @@ import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
 
 const CrimCodeGridList = props => {
-
   const navAid = useNavigation();
   const screenName = props.currentScreen;
-  let componentKey= '';
+  let componentKey = '';
   let componentLabel = '';
   let componentTitle = '';
 
   if (screenName === 'PartsCCScreen') {
     componentKey = props.heading1key;
     componentLabel = props.heading1label;
-    componentTitle = props.heading1titletext; 
-
-}
-  else {
+    componentTitle = props.heading1titletext;
+  } else {
     componentKey = props.headingkey;
     componentLabel = props.sectionlabel;
-    componentTitle = props.heading2titletext; 
-  };
+    componentTitle = props.heading2titletext;
+  }
 
   return (
     <View>
       <Pressable
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
-            navAid.navigate('SectionsCCScreen', {passingKey:componentKey});
-
+            navAid.navigate('SectionsCCScreen', {passingKey: componentKey});
           } else {
             navAid.navigate('ContentCCScreen', {passingKey: componentKey});
           }
@@ -43,12 +39,8 @@ const CrimCodeGridList = props => {
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
-              <Text style={[styles.headingLabelText]}>
-                {componentLabel}
-              </Text>
-              <Text style={styles.headingTitleText}>
-                {componentTitle}
-              </Text>
+              <Text style={[styles.headingLabelText]}>{componentLabel}</Text>
+              <Text style={styles.headingTitleText}>{componentTitle}</Text>
             </View>
             <ArrowIcon />
           </View>
