@@ -16,10 +16,6 @@ const PartsCCScreen = props => {
   let pagePartTitle;
   let pagePartLabel;
 
-  console.log('PartsCCScreen');
-
-  const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
-
   useEffect(() => {
     getDbData();
   }, []);
@@ -34,7 +30,6 @@ const PartsCCScreen = props => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
-          setPagePartHeadingTitle(temp[0].heading2titletext);
           setDistinctPartsList(temp);
         },
       );
@@ -60,10 +55,10 @@ const PartsCCScreen = props => {
   };
 
   return (
-    <View
-      style={[styles.background, styles.container, {height: window.height}]}>
+    <View style={[styles.background, {height: window.height}]}>
       <View>
         <PrintTitle
+          pageTitle="Criminal Code of Canada"
           pagePartTitle={pagePartTitle}
           pagePartLabel={pagePartLabel}
         />

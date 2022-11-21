@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, FlatList, VirtualizedList, Pressable} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Text, View, FlatList, Pressable} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
@@ -12,8 +11,15 @@ import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 
 import {AccordionDown, AccordionUp} from '../assets/icons';
 
+// Heading component with props pageTitle, pagePartTitle, pagePartLabel and pagePartHeadingTitle.
+//  ie. pageTitle = Criminal Code of Canada
+//      pagePartTitle = Part IV
+//      pagePartLabel = Offences Against the Adminstration of Law and Justice
+//      pagePartHeadingTitle = Corruption and Disobedience
+import {PrintTitle} from './PrintTitle';
+
 /*
-component is used in content screens, section is sent as prop and then filtered against the json data to
+component is used in content screens, section is sent as prop and then filtered against the data to
 return data set for paragraphs
 */
 
@@ -28,6 +34,8 @@ const Section = ({section, type}) => {
   const [dbData, setDbData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [pagePartTitle, setPagePartTitle] = useState();
+  const [pagePartLabel, setPagePartLabel] = useState();
   const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
 
   //pull state to see if current section exists in bookmarks
@@ -66,6 +74,8 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
+          setPagePartLabel(temp[0].heading1titletext);
+          setPagePartTitle(temp[0].heading1label);
           setPagePartHeadingTitle(temp[0].heading2titletext);
           setLoading(true);
         },
@@ -91,7 +101,6 @@ const Section = ({section, type}) => {
     const flagShowLabel = sectionLabel === prevSectionLabel;
 
     //function to push subsections into subsectionArray
-    /* eslint-disable */
     const pushArray = (
       field1,
       sectionLabel,
@@ -115,7 +124,6 @@ const Section = ({section, type}) => {
         flagShowLabel: flagShowLabel,
       });
     };
-    /* eslint-enable */
     if (i === 0) {
       pushArray(
         field1,
@@ -179,12 +187,10 @@ const Section = ({section, type}) => {
   // so that we can target the individual accordion icons
   const [activeInfos, setActiveInfos] = useState([]);
 
-  const setInfos = infos => {
+  const setInfos = (infos, pagePartTitle, pagePartLabel) => {
     //setting up a active section state
     setActiveInfos(infos.includes(undefined) ? [] : infos);
-    // setCollapsedState(!collapsedState);
     setCollapsedState(prevState => !prevState);
-    // console.log('collapsedState:', collapsedState);
   };
 
   // prettier-ignore
@@ -205,12 +211,10 @@ const Section = ({section, type}) => {
                 {item.subsectionLabel}
                 {item.marginalNote}
                 </Text>
-        {isActive ? (<AccordionUp /> ) : (<AccordionDown />)} 
+        {isActive ? (<AccordionUp /> ) : (<AccordionDown />)}
       </View>
     );
   };
-
-  /* eslint-disable */
 
   const renderContent = (item, index, isActive, sections) => {
     let paraData = dbData.filter(
@@ -289,7 +293,13 @@ const Section = ({section, type}) => {
 
   if (loading === true) {
     return (
-      <View>
+      <SafeAreaView>
+        <PrintTitle
+          pageTitle="Criminal Code of Canada"
+          pagePartTitle={pagePartTitle}
+          pagePartLabel={pagePartLabel}
+          pagePartHeadingTitle={pagePartHeadingTitle}
+        />
         <Accordion
           activeSections={activeInfos}
           //for any default active section
@@ -310,7 +320,7 @@ const Section = ({section, type}) => {
           renderChildrenCollapsed={false}
           renderAsFlatList={true}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 };

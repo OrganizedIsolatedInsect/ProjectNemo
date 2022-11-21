@@ -1,6 +1,3 @@
-/* Sections screen - re-usable screen for the Section List for just the Criminal Code Legislation
- */
-
 import React, {useState, useEffect} from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
@@ -16,11 +13,12 @@ const SectionsCCScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
 
   const [distinctSectionList, setDistinctSectionList] = useState();
-  
+
   const [pagePartTitle, setPagePartTitle] = useState();
   const [pagePartLabel, setPagePartLabel] = useState();
 
   const window = useWindowDimensions();
+
   let heading1KeyParam = props.route.params.passingKey;
 
   // let pagePartTitle = props.route.params.pagePartTitle;
@@ -45,7 +43,6 @@ const SectionsCCScreen = props => {
           }
           setPagePartLabel(temp[0].heading1titletext);
           setPagePartTitle(temp[0].heading1label);
-
           setDistinctSectionList(temp);
         },
       );
@@ -66,37 +63,13 @@ const SectionsCCScreen = props => {
     );
   };
 
-  // const PrintTitle = () => {
-  //   let textReturn;
-  //   if (pagePartTitle != '' && pagePartLabel != null) {
-  //     textReturn =
-  //       'Criminal Code of Canada' +
-  //       '\n' +
-  //       pagePartTitle +
-  //       ' - ' +
-  //       pagePartLabel;
-  //   } else if (pagePartTitle != '' && pagePartLabel == null) {
-  //     textReturn = 'Criminal Code of Canada' + '\n' + pagePartTitle;
-  //   } else {
-  //     'Criminal Code of Canada' + '\n';
-  //   }
-
-  //   return (
-  //     <Text
-  //       style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
-  //       {textReturn}
-  //     </Text>
-  //   );
-  // };
-
   return (
-    <View
-      style={[styles.background, styles.container, {height: window.height}]}>
+    <View style={[styles.background, {height: window.height}]}>
       <View>
         <PrintTitle
+          pageTitle="Criminal Code of Canada"
           pagePartTitle={pagePartTitle}
           pagePartLabel={pagePartLabel}
-          pagePartHeadingTitle={pagePartHeadingTitle}
         />
       </View>
       <FlashList
