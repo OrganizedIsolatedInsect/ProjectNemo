@@ -101,6 +101,7 @@ const Section = ({section, type}) => {
     const flagShowLabel = sectionLabel === prevSectionLabel;
 
     //function to push subsections into subsectionArray
+    /* eslint-disable */
     const pushArray = (
       field1,
       sectionLabel,
@@ -124,6 +125,7 @@ const Section = ({section, type}) => {
         flagShowLabel: flagShowLabel,
       });
     };
+    /* eslint-enable */
     if (i === 0) {
       pushArray(
         field1,
@@ -154,10 +156,6 @@ const Section = ({section, type}) => {
     }
   }
 
-  const getItem = (data, index) => {
-    return data[index];
-  };
-
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
   const dispatchAction = (section, sectionHeader) => {
@@ -187,7 +185,7 @@ const Section = ({section, type}) => {
   // so that we can target the individual accordion icons
   const [activeInfos, setActiveInfos] = useState([]);
 
-  const setInfos = (infos, pagePartTitle, pagePartLabel) => {
+  const setInfos = infos => {
     //setting up a active section state
     setActiveInfos(infos.includes(undefined) ? [] : infos);
     setCollapsedState(prevState => !prevState);
@@ -196,12 +194,6 @@ const Section = ({section, type}) => {
   // prettier-ignore
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
-  
-  /* const currentSection = item[0].sectionLabel
-  if (index >0) {
-    const prevSection = item[index -1].sectionLabel
-  } */
- 
     return (
       <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
                 <Text>
@@ -217,41 +209,56 @@ const Section = ({section, type}) => {
   };
 
   const renderContent = (item, index, isActive, sections) => {
+    //filter data that contains paragraphs based on subsectionKey
     let paraData = dbData.filter(
       (paragraph, i) => dbData[i].subsectionkey == item.subsectionKey,
     );
 
+    //array created to contain paragraphs
     const paraFilter = [];
 
     for (var i = 0, l = paraData.length; i < l; i++) {
       if (i === 0) {
         paraFilter.push(paraData[i]);
       }
+      //compares paragraphText to previous index's paragraphText
       if (i > 0) {
         const prevPara = paraData[i - 1].paragraphText;
 
-        if (paraData[i].paragraph !== prevPara) {
+        if (paraData[i].paragraphText !== prevPara) {
           paraFilter.push(paraData[i]);
         }
       }
     }
 
+    //check if sectionText needs to be rendered
     if (item.sectionText != null) {
       return (
         <View style={styles.accordionContainer}>
           <Text>{item.sectionText}</Text>
         </View>
       );
-    } else {
+    }
+    //check if paragraphs exists
+    else if (paraFilter.length > 1) {
       return (
         <View style={styles.accordionContainer}>
-          <Text>{item.subsectionText}</Text>
+          <Text>
+            {item.subsectionText}
+            {'\n'}
+          </Text>
           <FlatList
             data={paraFilter}
             keyExtractor={item => item.field1}
             listKey={(item2, index) => 'B' + index.toString()}
             renderItem={renderParagraph}
           />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.accordionContainer}>
+          <Text>{item.subsectionText}</Text>
         </View>
       );
     }
@@ -266,10 +273,9 @@ const Section = ({section, type}) => {
     );
 
     return (
-      <View>
+      <View style={styles.paragraph}>
         <Text>
           {item.paragraphLabel} {item.paragraphText}
-          {'\n'}
         </Text>
         <FlatList
           data={subParaData}
@@ -283,7 +289,7 @@ const Section = ({section, type}) => {
 
   const renderSubParagraph = ({item, index}) => {
     return (
-      <View>
+      <View style={styles.subParagraph}>
         <Text>
           {item.subparagraphLabel} {item.subparagraphText}
         </Text>
