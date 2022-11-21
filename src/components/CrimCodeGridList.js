@@ -12,6 +12,7 @@ import {ArrowIcon} from '../assets/icons';
 const CrimCodeGridList = props => {
   const navAid = useNavigation();
   const screenName = props.currentScreen;
+
   let componentKey = '';
   let componentLabel = '';
   let componentTitle = '';
@@ -31,9 +32,14 @@ const CrimCodeGridList = props => {
       <Pressable
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
-            navAid.navigate('SectionsCCScreen', {passingKey: componentKey});
+            navAid.navigate('SectionsCCScreen', {
+              passingKey: componentKey
+            });
           } else {
-            navAid.navigate('ContentCCScreen', {passingKey: componentKey});
+            navAid.navigate('ContentCCScreen', {
+              passingKey: componentKey
+            });
+
           }
         }}>
         <View>
