@@ -12,7 +12,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
-import {color} from 'react-native-reanimated';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
