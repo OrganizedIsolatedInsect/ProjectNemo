@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList, Pressable} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -200,8 +200,7 @@ const Section = ({section, type}) => {
                 {item.flagShowLabel === false && (
                   <Text style={{fontWeight: 'bold', color:'blue'}}>{item.sectionLabel} </Text>
                 )}
-                {item.subsectionLabel}
-                {item.marginalNote}
+                {item.subsectionLabel} {item.marginalNote}
                 </Text>
         {isActive ? (<AccordionUp /> ) : (<AccordionDown />)}
       </View>

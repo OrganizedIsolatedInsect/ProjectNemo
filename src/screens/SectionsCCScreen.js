@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, useWindowDimensions} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 
 //USER Imports
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
 
@@ -20,12 +20,6 @@ const SectionsCCScreen = props => {
   const window = useWindowDimensions();
 
   let heading1KeyParam = props.route.params.passingKey;
-
-  // let pagePartTitle = props.route.params.pagePartTitle;
-  // let pagePartLabel = props.route.params.pagePartLabel;
-  let pagePartHeadingTitle = props.route.params.pagePartHeadingTitle;
-
-  console.log('SectionsCCScreen');
 
   useEffect(() => {
     getDbData();
