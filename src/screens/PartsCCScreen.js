@@ -1,19 +1,24 @@
-/* Parts screen - re-usable screen for the Parts List for just the Criminal Code Legislation
- */
 import React, {useState, useEffect} from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 
-//USER Imports
-//import {CCDATAPARTS, CCDATASECTION, CCSampleTest} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles, {colors} from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
+
+import {PrintTitle} from '../components/PrintTitle';
 
 const PartsCCScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
   const [distinctPartsList, setDistinctPartsList] = useState();
   const window = useWindowDimensions();
+
+  let pagePartTitle;
+  let pagePartLabel;
+
+  console.log('PartsCCScreen');
+
+  const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
 
   useEffect(() => {
     getDbData();
@@ -29,6 +34,7 @@ const PartsCCScreen = props => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
+          setPagePartHeadingTitle(temp[0].heading2titletext);
           setDistinctPartsList(temp);
         },
       );
@@ -57,19 +63,15 @@ const PartsCCScreen = props => {
     <View
       style={[styles.background, styles.container, {height: window.height}]}>
       <View>
-        <Text
-          style={[
-            styles.title,
-            styles.titleMargin,
-            {color: colors.primaryText},
-          ]}>
-          Criminal Code of Canada
-        </Text>
+        <PrintTitle
+          pagePartTitle={pagePartTitle}
+          pagePartLabel={pagePartLabel}
+        />
       </View>
       <FlashList
         data={distinctPartsList}
         renderItem={renderList}
-        estimatedItemSize={123}
+        estimatedItemSize={49}
         ItemSeparatorComponent={FlashListItemSeparator}
       />
     </View>

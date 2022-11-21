@@ -6,13 +6,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
-import Reactotron from 'reactotron-react-native';
-import SQLite from 'react-native-sqlite-storage';
 import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
-import {Item} from 'react-navigation-header-buttons';
-import {color} from 'react-native-reanimated';
+
+import {AccordionDown, AccordionUp} from '../assets/icons';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
@@ -29,6 +27,8 @@ const Section = ({section, type}) => {
   const [marked, setMarked] = useState(false);
   const [dbData, setDbData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
 
   //pull state to see if current section exists in bookmarks
   const bookmarkStateId = useSelector(state => state.bookmarks.sections);
@@ -66,6 +66,7 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
+          setPagePartHeadingTitle(temp[0].heading2titletext);
           setLoading(true);
         },
       );
@@ -203,8 +204,8 @@ const Section = ({section, type}) => {
                 )}
                 {item.subsectionLabel}
                 {item.marginalNote}
-                </Text>     
-        {isActive ? (<Icon name="keyboard-arrow-up" size={20} /> ) : (<Icon name="keyboard-arrow-down" size={20} />)} 
+                </Text>
+        {isActive ? (<AccordionUp /> ) : (<AccordionDown />)} 
       </View>
     );
   };
@@ -250,17 +251,6 @@ const Section = ({section, type}) => {
         </View>
       );
     }
-    return (
-      <View style={styles.accordionContainer}>
-        <Text>{item.subsectionText}</Text>
-        <FlatList
-          data={paraFilter}
-          keyExtractor={item => item.field1}
-          listKey={(item2, index) => 'B' + index.toString()}
-          renderItem={renderParagraph}
-        />
-      </View>
-    );
   };
 
   const renderParagraph = ({item, index}) => {

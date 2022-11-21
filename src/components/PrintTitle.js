@@ -9,14 +9,14 @@ export const PrintTitle = props => {
   let pagePartLabel = props.pagePartLabel;
   let pagePartHeadingTitle = props.pagePartHeadingTitle;
 
-  console.log(pagePartTitle, pagePartLabel, pagePartHeadingTitle);
+  console.log(props.pagePartTitle, pagePartLabel, pagePartHeadingTitle);
 
   return (
     <Text
       style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
       {textReturn}
       {pagePartLabel == null ? (<Text style={styles.title}>{'\n'}{pagePartTitle}</Text>) : null}
-      {pagePartTitle != null && pagePartLabel != null ? (<Text style={styles.title}>{'\n'} {pagePartTitle} - {pagePartLabel}</Text>) : null}
+      {pagePartLabel != null ? (<Text style={styles.title}>{'\n'} {pagePartTitle} - {pagePartLabel}</Text>) : null}
       {pagePartHeadingTitle != null ? (<Text style={styles.body}>{'\n'}{pagePartHeadingTitle}</Text>) : null}
     </Text>
   );

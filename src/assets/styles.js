@@ -139,9 +139,11 @@ export default StyleSheet.create({
     backgroundColor: '#DCDCDC',
   },
   accordionContainer: {
-    borderWidth: 1,
+    // borderWidth: 1,
     padding: 10,
     marginHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   //Criminal Code PARTS/SECTION Screen Styling - Sprint 4
   headingLabelText: {

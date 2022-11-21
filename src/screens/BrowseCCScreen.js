@@ -1,18 +1,6 @@
-/* BROWSE screen - re-usable screen for browses for just the Criminal Code Legislation
- */
-
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  SectionList,
-  FlatList,
-  useWindowDimensions,
-} from 'react-native';
-import Reactotron from 'reactotron-react-native';
+import {View, Text, useWindowDimensions} from 'react-native';
 
-//USER Imports
-import {CCDATAPARTS, CCDATASECTION, CCSampleTest} from '../data/dummy-data'; //for DEVELOPMENT Purposes
 import styles, {colors} from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 
@@ -61,7 +49,6 @@ const BrowseCCScreen = props => {
   return (
     <View
       style={[styles.background, styles.container, {height: window.height}]}>
-      {Reactotron.log('BrowseCC Render')}
       <Text
         style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
         Criminal Code of Canada
