@@ -144,14 +144,14 @@ export default StyleSheet.create({
     marginHorizontal: 5,
   },
   //Criminal Code PARTS/SECTION Screen Styling - Sprint 4
-  headingLabelText: {
+  componentLabel: {
     fontSize: 15,
     paddingTop: 5,
     paddingBottom: 5,
     width: '25%',
     color: colors.primaryText,
   },
-  headingTitleText: {
+  componentTitle: {
     marginLeft: 5,
     fontSize: 15,
     paddingTop: 5,
