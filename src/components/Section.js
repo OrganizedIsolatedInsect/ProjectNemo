@@ -185,12 +185,6 @@ const Section = ({section, type}) => {
   // prettier-ignore
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
-  
-  /* const currentSection = item[0].sectionLabel
-  if (index >0) {
-    const prevSection = item[index -1].sectionLabel
-  } */
- 
     return (
       <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
                 <Text>
@@ -207,16 +201,19 @@ const Section = ({section, type}) => {
   /* eslint-disable */
 
   const renderContent = (item, index, isActive, sections) => {
+    //filter data that contains paragraphs based on subsectionKey
     let paraData = dbData.filter(
       (paragraph, i) => dbData[i].subsectionkey == item.subsectionKey,
     );
 
+    //array created to contain paragraphs
     const paraFilter = [];
 
     for (var i = 0, l = paraData.length; i < l; i++) {
       if (i === 0) {
         paraFilter.push(paraData[i]);
       }
+      //compares paragraphText to previous index's paragraphText
       if (i > 0) {
         const prevPara = paraData[i - 1].paragraphText;
 
@@ -226,13 +223,16 @@ const Section = ({section, type}) => {
       }
     }
 
+    //check if sectionText needs to be rendered
     if (item.sectionText != null) {
       return (
         <View style={styles.accordionContainer}>
           <Text>{item.sectionText}</Text>
         </View>
       );
-    } else if (paraFilter.length > 1) {
+    }
+    //check if paragraphs exists
+    else if (paraFilter.length > 1) {
       return (
         <View style={styles.accordionContainer}>
           <Text>
