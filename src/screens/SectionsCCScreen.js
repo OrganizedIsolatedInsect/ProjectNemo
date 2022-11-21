@@ -43,10 +43,11 @@ const SectionsCCScreen = props => {
 
   const renderList = itemdata => {
     let passingName = 'SectionsCCScreen';
+
     return (
       <View>
         <CrimCodeGridList
-          headingkey={itemdata.item.headingkey}
+          headingkey={itemdata.item.heading2key}
           currentScreen={passingName}
           sectionlabel={itemdata.item.sectionlabel}
           heading2titletext={itemdata.item.heading2titletext}

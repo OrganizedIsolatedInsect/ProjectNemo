@@ -33,13 +33,12 @@ const CrimCodeGridList = props => {
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
             navAid.navigate('SectionsCCScreen', {
-              passingKey: componentKey
+              passingKey: componentKey,
             });
           } else {
             navAid.navigate('ContentCCScreen', {
-              passingKey: componentKey
+              passingKey: componentKey,
             });
-
           }
         }}>
         <View>
