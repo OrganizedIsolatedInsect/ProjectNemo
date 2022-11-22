@@ -1,21 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import styles, {colors} from '../assets/styles';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, FlatList, VirtualizedList, Pressable} from 'react-native';
+import styles from '../assets/styles';
+import {View, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 import Reactotron from 'reactotron-react-native';
-import SQLite from 'react-native-sqlite-storage';
 import Accordion from 'react-native-collapsible/Accordion';
-
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
-import {Item} from 'react-navigation-header-buttons';
+
 import {
   CrimCodeRenderHeader,
   CrimCodeRenderBody,
 } from './CrimCodeRenderSection';
+import {createSubSectionArray} from './functions/CreateSubSectionArray';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
@@ -31,7 +29,7 @@ const Section = ({section, type}) => {
   //set states for bookmark flag, database data, loading
   const [marked, setMarked] = useState(false);
   const [dbData, setDbData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   //pull state to see if current section exists in bookmarks
   const bookmarkStateId = useSelector(state => state.bookmarks.sections);
@@ -69,84 +67,14 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
-          setLoading(true);
+          setLoaded(true);
         },
       );
     });
   };
 
-  for (var i = 0, l = dbData.length; i < l; i++) {
-    const field1 = dbData[i].field1; // index
-    const sectionLabel = dbData[i].sectionlabel; // section
-    const subsectionLabel = dbData[i].subsectionlabel; // subsection
-    const marginalNote = dbData[i].marginalnote; // sebsectionHeader
-    const subsectionText = dbData[i].subsectiontext; // subsectionText
-    const sectionKey = dbData[i].sectionkey;
-    const subsectionKey = dbData[i].subsectionkey;
-    const sectionText = dbData[i].sectiontext;
-    let prevSectionLabel = '';
-
-    if (i > 0) {
-      prevSectionLabel = dbData[i - 1].sectionlabel;
-    }
-    //create flag to see if this is the first label of a new section
-    const flagShowLabel = sectionLabel === prevSectionLabel;
-
-    //function to push subsections into subsectionArray
-    /* eslint-disable */
-    const pushArray = (
-      field1,
-      sectionLabel,
-      subsectionLabel,
-      marginalNote,
-      subsectionText,
-      sectionText,
-      sectionKey,
-      subsectionKey,
-      flagShowLabel,
-    ) => {
-      subsectionArray.push({
-        field1: field1,
-        sectionLabel: sectionLabel,
-        subsectionLabel: subsectionLabel,
-        marginalNote: marginalNote,
-        subsectionText: subsectionText,
-        sectionText: sectionText,
-        sectionKey: sectionKey,
-        subsectionKey: subsectionKey,
-        flagShowLabel: flagShowLabel,
-      });
-    };
-    /* eslint-enable */
-    if (i === 0) {
-      pushArray(
-        field1,
-        sectionLabel,
-        subsectionLabel,
-        marginalNote,
-        subsectionText,
-        sectionText,
-        sectionKey,
-        subsectionKey,
-        flagShowLabel,
-      );
-    } else {
-      const prevSubsection = dbData[i - 1].subsectionlabel;
-      if (subsectionLabel !== prevSubsection) {
-        pushArray(
-          field1,
-          sectionLabel,
-          subsectionLabel,
-          marginalNote,
-          subsectionText,
-          sectionText,
-          sectionKey,
-          subsectionKey,
-          flagShowLabel,
-        );
-      }
-    }
-  }
+  //call function to create array containing subsection data to feed into accordion component
+  subsectionArray = createSubSectionArray(dbData);
 
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
@@ -212,7 +140,7 @@ const Section = ({section, type}) => {
     );
   };
 
-  if (loading === true) {
+  if (loaded === true) {
     return (
       <View>
         <Accordion

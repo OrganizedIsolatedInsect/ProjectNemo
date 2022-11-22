@@ -2,6 +2,12 @@ import React from 'react';
 import styles, {colors} from '../assets/styles';
 import {Text, View, FlatList} from 'react-native';
 
+/* Component to render Criminal Code Sections
+   CrimCodeRender Header shows the section number and name. Takes one variable which is subsectionData, it is the cultivated array of subsections to be rendered
+   CrimCodeRender Body shows paragraphs,subparagraphs, subclauses, takes two variables, dbData is the full array from database filtered by sectionKey and subsectionData, it is the cultivated array of subsections to be rendered
+   
+*/
+
 const CrimCodeRenderHeader = ({subsectionData}) => {
   return (
     <View>
