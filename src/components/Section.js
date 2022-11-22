@@ -12,6 +12,10 @@ import Accordion from 'react-native-collapsible/Accordion';
 
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {Item} from 'react-navigation-header-buttons';
+import {
+  CrimCodeRenderHeader,
+  CrimCodeRenderBody,
+} from './CrimCodeRenderSection';
 
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
@@ -186,13 +190,14 @@ const Section = ({section, type}) => {
   const renderHeader = (item, index, isActive, sections) => {
     return (
       <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
-                <Text>
-                {item.flagShowLabel === false && (
-                  <Text style={{fontWeight: 'bold', color:'blue'}}>{item.sectionLabel} </Text>
-                )}
-                {item.subsectionLabel} {item.marginalNote}
-                </Text>     
-        {isActive ? (<Icon name="keyboard-arrow-up" size={20} /> ) : (<Icon name="keyboard-arrow-down" size={20} />)} 
+                <CrimCodeRenderHeader
+                subsectionData={item}
+                />
+                 {isActive ? (
+        <Icon name="keyboard-arrow-up" size={20} />
+      ) : (
+        <Icon name="keyboard-arrow-down" size={20} />
+      )}
       </View>
     );
   };
@@ -200,90 +205,9 @@ const Section = ({section, type}) => {
   /* eslint-disable */
 
   const renderContent = (item, index, isActive, sections) => {
-    //filter data that contains paragraphs based on subsectionKey
-    let paraData = dbData.filter(
-      (paragraph, i) => dbData[i].subsectionkey == item.subsectionKey,
-    );
-
-    //array created to contain paragraphs
-    const paraFilter = [];
-
-    for (var i = 0, l = paraData.length; i < l; i++) {
-      if (i === 0) {
-        paraFilter.push(paraData[i]);
-      }
-      //compares paragraphText to previous index's paragraphText
-      if (i > 0) {
-        const prevPara = paraData[i - 1].paragraphText;
-
-        if (paraData[i].paragraphText !== prevPara) {
-          paraFilter.push(paraData[i]);
-        }
-      }
-    }
-
-    //check if sectionText needs to be rendered
-    if (item.sectionText != null) {
-      return (
-        <View style={styles.accordionContainer}>
-          <Text>{item.sectionText}</Text>
-        </View>
-      );
-    }
-    //check if paragraphs exists
-    else if (paraFilter.length > 1) {
-      return (
-        <View style={styles.accordionContainer}>
-          <Text>
-            {item.subsectionText}
-            {'\n'}
-          </Text>
-          <FlatList
-            data={paraFilter}
-            keyExtractor={item => item.field1}
-            listKey={(item2, index) => 'B' + index.toString()}
-            renderItem={renderParagraph}
-          />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.accordionContainer}>
-          <Text>{item.subsectionText}</Text>
-        </View>
-      );
-    }
-  };
-
-  const renderParagraph = ({item, index}) => {
-    let subParaData = dbData.filter(
-      (subParagraph, i) =>
-        dbData[i].paragraphLabel === item.paragraphLabel &&
-        dbData[i].paragraphText === item.paragraphText &&
-        dbData[i].subparagraphText !== null,
-    );
-
     return (
-      <View style={styles.paragraph}>
-        <Text>
-          {item.paragraphLabel} {item.paragraphText}
-        </Text>
-        <FlatList
-          data={subParaData}
-          keyExtractor={item => item.field1}
-          listKey={(item3, index) => 'C' + index.toString()}
-          renderItem={renderSubParagraph}
-        />
-      </View>
-    );
-  };
-
-  const renderSubParagraph = ({item, index}) => {
-    return (
-      <View style={styles.subParagraph}>
-        <Text>
-          {item.subparagraphLabel} {item.subparagraphText}
-        </Text>
+      <View style={styles.accordionContainer}>
+        <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
       </View>
     );
   };
