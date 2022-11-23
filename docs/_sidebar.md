@@ -1,11 +1,18 @@
 <!-- docs/_sidebar.md -->
 
-* [HOME](./)
+* [Home](./)
 
-* [Product Brief](./product.md)
+* [Product](./product.md)
 
-    * [Inspiration](./inspiration.md)
+    * [Competitive Reseach](./competitiveresearch.md)
+
+    * [Users](./users.md)
+    * [Research Brief](./researchbrief.md)
 
 * [Development](./development.md)
 
-* [Contact](./contact/index)
+    * [Roadmap](./roadmap.md)
+
+    * [Data Sources](./datasources.md)
+
+* [About](./contact/index)
