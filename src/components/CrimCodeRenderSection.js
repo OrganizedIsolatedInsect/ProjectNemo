@@ -8,12 +8,32 @@ import {Text, View, FlatList} from 'react-native';
    
 */
 
+//function to filter paragraph data into filter array
+const createFilter = (data, filter, dbFieldNameKeyString) => {
+  for (var i = 0, l = data.length; i < l; i++) {
+    if (i === 0) {
+      filter.push(data[i]);
+    }
+    //compares paragraphText to previous index's paragraphText
+    if (i > 0) {
+      let prevPara = data[i - 1][dbFieldNameKeyString];
+      let currentPara = data[i][dbFieldNameKeyString];
+
+      if (currentPara !== prevPara) {
+        filter.push(data[i]);
+      }
+    }
+  }
+};
+
 const CrimCodeRenderHeader = ({subsectionData}) => {
   return (
     <View>
-      <Text style={{fontWeight: 'bold', color: colors.primaryText}}>
+      <Text>
         {subsectionData.flagShowLabel === false && (
-          <Text>{subsectionData.sectionLabel}</Text>
+          <Text style={{fontWeight: 'bold', color: 'blue'}}>
+            {subsectionData.sectionLabel}
+          </Text>
         )}
         {subsectionData.subsectionLabel} {subsectionData.marginalNote}
       </Text>
@@ -28,50 +48,115 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   );
 
   //array created to contain paragraphs
-  const paraFilter = [];
+  let paraFilter = [];
 
-  for (var i = 0, l = paraData.length; i < l; i++) {
-    if (i === 0) {
-      paraFilter.push(paraData[i]);
-    }
-    //compares paragraphText to previous index's paragraphText
-    if (i > 0) {
-      const prevPara = paraData[i - 1].paragraphText;
-
-      if (paraData[i].paragraphText !== prevPara) {
-        paraFilter.push(paraData[i]);
-      }
-    }
-  }
+  createFilter(paraData, paraFilter, 'paragraphKey');
 
   const renderParagraph = ({item, index}) => {
-    let subParaData = dbData.filter(
-      (subParagraph, i) =>
-        dbData[i].paragraphLabel === item.paragraphLabel &&
-        dbData[i].paragraphText === item.paragraphText &&
-        dbData[i].subparagraphText !== null,
+    let subparaData = dbData.filter(
+      (subParagraph, i) => dbData[i].paragraphKey === item.paragraphKey,
     );
 
-    return (
-      <View style={styles.paragraph}>
-        <Text style={{color: colors.primaryText}}>
-          {item.paragraphLabel} {item.paragraphText}
-        </Text>
-        <FlatList
-          data={subParaData}
-          keyExtractor={item => item.field1}
-          listKey={(item3, index) => 'C' + index.toString()}
-          renderItem={renderSubParagraph}
-        />
-      </View>
-    );
+    let subparaFilter = [];
+
+    createFilter(subparaData, subparaFilter, 'subparagraphKey');
+
+    if (subparaFilter.length === 1) {
+      return (
+        <View style={styles.paragraph}>
+          <Text>
+            {item.paragraphLabel} {item.paragraphText}
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.paragraph}>
+          <Text>
+            {item.paragraphLabel} {item.paragraphText}
+          </Text>
+          <FlatList
+            data={subparaFilter}
+            keyExtractor={item => item.field1}
+            listKey={(item3, index) => 'C' + index.toString()}
+            renderItem={rendersubParagraph}
+          />
+        </View>
+      );
+    }
   };
 
-  const renderSubParagraph = ({item, index}) => {
+  const rendersubParagraph = ({item, index}) => {
+    let clauseData = dbData.filter(
+      (clause, i) => dbData[i].subparagraphKey === item.subparagraphKey,
+    );
+
+    let clauseFilter = [];
+
+    createFilter(clauseData, clauseFilter, 'clauseKey');
+
+    if (clauseFilter.length === 1) {
+      <View style={styles.subParagraph}>
+        <Text>
+          {item.subparagraphLabel} {item.subparagraphText}
+        </Text>
+      </View>;
+    } else {
+      return (
+        <View style={styles.subParagraph}>
+          <Text>
+            {item.subparagraphLabel} {item.subparagraphText}
+          </Text>
+          <FlatList
+            data={clauseFilter}
+            keyExtractor={item => item.field1}
+            listKey={(item3, index) => 'C' + index.toString()}
+            renderItem={renderClause}
+          />
+        </View>
+      );
+    }
+  };
+
+  const renderClause = ({item, index}) => {
+    let subclauseData = dbData.filter(
+      (subclause, i) => dbData[i].clauseKey === item.clauseKey,
+    );
+
+    let subclauseFilter = [];
+
+    createFilter(subclauseData, subclauseFilter, 'subclauseKey');
+
+    if (subclauseFilter.length === 1) {
+      return (
+        <View style={styles.subParagraph}>
+          <Text>
+            {item.clauseLabel} {item.clauseText}
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.subParagraph}>
+          <Text>
+            {item.clauseLabel} {item.clauseText}
+          </Text>
+          <FlatList
+            data={subclauseFilter}
+            keyExtractor={item => item.field1}
+            listKey={(item3, index) => 'C' + index.toString()}
+            renderItem={rendersubClause}
+          />
+        </View>
+      );
+    }
+  };
+
+  const rendersubClause = ({item, index}) => {
     return (
       <View style={styles.subParagraph}>
-        <Text style={{color: colors.primaryText}}>
-          {item.subparagraphLabel} {item.subparagraphText}
+        <Text>
+          {item.subclauseLabel} {item.subclauseText}
         </Text>
       </View>
     );
@@ -81,14 +166,14 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   if (subsectionData.sectionText != null) {
     return (
       <View>
-        <Text style={{color: colors.primaryText}}>{subsectionData.sectionText}</Text>
+        <Text>{subsectionData.sectionText}</Text>
       </View>
     );
   } //check if paragraphs exists
   else if (paraFilter.length > 1) {
     return (
       <View>
-        <Text style={{color: colors.primaryText}}>
+        <Text>
           {subsectionData.subsectionText}
           {'\n'}
         </Text>
@@ -103,7 +188,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   } else {
     return (
       <View>
-        <Text style={{color: colors.primaryText}}>{subsectionData.subsectionText}</Text>
+        <Text>{subsectionData.subsectionText}</Text>
       </View>
     );
   }
