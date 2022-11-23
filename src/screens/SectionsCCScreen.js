@@ -1,24 +1,26 @@
-/* Sections screen - re-usable screen for the Section List for just the Criminal Code Legislation
- */
-
 import React, {useState, useEffect} from 'react';
-import {View, Text, useWindowDimensions} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 
 //USER Imports
-import styles, {colors} from '../assets/styles';
+import styles from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
+
+import {PrintTitle} from '../components/PrintTitle';
 
 const SectionsCCScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
 
   const [distinctSectionList, setDistinctSectionList] = useState();
-  const [pagePartTitle, setPagePartTitle] = useState('');
-  const [pagePartLabel, setPagePartLabel] = useState('');
+
+  const [pagePartTitle, setPagePartTitle] = useState();
+  const [pagePartLabel, setPagePartLabel] = useState();
 
   const window = useWindowDimensions();
-  const heading1KeyParam = props.route.params.passingKey;
+
+  let heading1KeyParam = props.route.params.passingKey;
+
   useEffect(() => {
     getDbData();
   }, []);
@@ -56,34 +58,14 @@ const SectionsCCScreen = props => {
     );
   };
 
-  const PrintTitle = () => {
-    let textReturn;
-    if (pagePartTitle != '' && pagePartLabel != null) {
-      textReturn =
-        'Criminal Code of Canada' +
-        '\n' +
-        pagePartTitle +
-        ' - ' +
-        pagePartLabel;
-    } else if (pagePartTitle != '' && pagePartLabel == null) {
-      textReturn = 'Criminal Code of Canada' + '\n' + pagePartTitle;
-    } else {
-      'Criminal Code of Canada' + '\n';
-    }
-
-    return (
-      <Text
-        style={[styles.title, styles.titleMargin, {color: colors.primaryText}]}>
-        {textReturn}
-      </Text>
-    );
-  };
-
   return (
-    <View
-      style={[styles.background, styles.container, {height: window.height}]}>
+    <View style={[styles.background, {height: window.height}]}>
       <View>
-        <PrintTitle />
+        <PrintTitle
+          pageTitle="Criminal Code of Canada"
+          pagePartTitle={pagePartTitle}
+          pagePartLabel={pagePartLabel}
+        />
       </View>
       <FlashList
         data={distinctSectionList}

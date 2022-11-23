@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
 import {View, Pressable} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
-import Reactotron from 'reactotron-react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
+
+import {AccordionDown, AccordionUp} from '../assets/icons';
+
+import {PrintTitle} from './PrintTitle';
 
 import {
   CrimCodeRenderHeader,
@@ -16,7 +20,7 @@ import {
 import {createSubSectionArray} from './CreateSubSectionArray';
 
 /*
-component is used in content screens, section is sent as prop and then filtered against the json data to
+component is used in content screens, section is sent as prop and then filtered against the data to
 return data set for paragraphs
 */
 
@@ -30,6 +34,10 @@ const Section = ({section, type}) => {
   const [marked, setMarked] = useState(false);
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+
+  const [pagePartTitle, setPagePartTitle] = useState();
+  const [pagePartLabel, setPagePartLabel] = useState();
+  const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
 
   //pull state to see if current section exists in bookmarks
   const bookmarkStateId = useSelector(state => state.bookmarks.sections);
@@ -67,6 +75,9 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
+          setPagePartLabel(temp[0].heading1titletext);
+          setPagePartTitle(temp[0].heading1label);
+          setPagePartHeadingTitle(temp[0].heading2titletext);
           setLoaded(true);
         },
       );
@@ -108,9 +119,7 @@ const Section = ({section, type}) => {
   const setInfos = infos => {
     //setting up a active section state
     setActiveInfos(infos.includes(undefined) ? [] : infos);
-    // setCollapsedState(!collapsedState);
     setCollapsedState(prevState => !prevState);
-    // console.log('collapsedState:', collapsedState);
   };
 
   // prettier-ignore
@@ -121,16 +130,10 @@ const Section = ({section, type}) => {
                 <CrimCodeRenderHeader
                 subsectionData={item}
                 />
-                 {isActive ? (
-        <Icon name="keyboard-arrow-up" size={20} />
-      ) : (
-        <Icon name="keyboard-arrow-down" size={20} />
-      )}
+                 {isActive ? (<AccordionUp /> ) : (<AccordionDown />)}
       </View>
     );
   };
-
-  /* eslint-disable */
 
   const renderContent = (item, index, isActive, sections) => {
     return (
@@ -140,9 +143,17 @@ const Section = ({section, type}) => {
     );
   };
 
+
+
   if (loaded === true) {
     return (
-      <View>
+      <SafeAreaView>
+        <PrintTitle
+          pageTitle="Criminal Code of Canada"
+          pagePartTitle={pagePartTitle}
+          pagePartLabel={pagePartLabel}
+          pagePartHeadingTitle={pagePartHeadingTitle}
+        />
         <Accordion
           activeSections={activeInfos}
           //for any default active section
@@ -163,7 +174,7 @@ const Section = ({section, type}) => {
           renderChildrenCollapsed={false}
           renderAsFlatList={true}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 };
