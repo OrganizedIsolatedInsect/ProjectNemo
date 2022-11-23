@@ -66,7 +66,7 @@ const Section = ({section, type}) => {
   const getDbData = sectionId => {
     db.transaction(tx => {
       tx.executeSql(
-        'Select * from CCDataV2 where headingkey = ?',
+        'Select * from CCDataV2 where heading2Key = ?',
         [sectionId],
         (tx, results) => {
           const temp = [];
