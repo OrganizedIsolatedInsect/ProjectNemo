@@ -143,8 +143,6 @@ const Section = ({section, type}) => {
     );
   };
 
-
-
   if (loaded === true) {
     return (
       <SafeAreaView>

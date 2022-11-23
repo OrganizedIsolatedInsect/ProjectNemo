@@ -9,6 +9,9 @@ function createSubSectionArray(dbData) {
     const sectionKey = dbData[i].sectionKey;
     const subsectionKey = dbData[i].subsectionKey;
     const sectionText = dbData[i].sectionText;
+    const paragraphKey = dbData[i].paragraphKey;
+    const subparagraphKey = dbData[i].subparagraphKey;
+    const subclauseKey = dbData[i].subclauseKey;
     let prevSectionLabel = '';
 
     if (i > 0) {
@@ -29,6 +32,9 @@ function createSubSectionArray(dbData) {
       sectionKey,
       subsectionKey,
       flagShowLabel,
+      paragraphKey,
+      subparagraphKey,
+      subclauseKey,
     ) => {
       subsectionArray.push({
         field1: field1,
@@ -40,6 +46,9 @@ function createSubSectionArray(dbData) {
         sectionKey: sectionKey,
         subsectionKey: subsectionKey,
         flagShowLabel: flagShowLabel,
+        paragraphKey: paragraphKey,
+        subparagraphKey: subparagraphKey,
+        subclauseKey: subclauseKey,
       });
     };
     /* eslint-enable */
@@ -54,6 +63,9 @@ function createSubSectionArray(dbData) {
         sectionKey,
         subsectionKey,
         flagShowLabel,
+        paragraphKey,
+        subparagraphKey,
+        subclauseKey,
       );
     } else {
       const prevSubsection = dbData[i - 1].subsectionLabel;
@@ -68,6 +80,9 @@ function createSubSectionArray(dbData) {
           sectionKey,
           subsectionKey,
           flagShowLabel,
+          paragraphKey,
+          subparagraphKey,
+          subclauseKey,
         );
       }
     }
