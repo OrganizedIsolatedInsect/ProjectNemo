@@ -18,13 +18,13 @@ const CrimCodeGridList = props => {
   let componentTitle = '';
 
   if (screenName === 'PartsCCScreen') {
-    componentKey = props.heading1key;
-    componentLabel = props.heading1label;
-    componentTitle = props.heading1titletext;
+    componentKey = props.heading1Key;
+    componentLabel = props.heading1Label;
+    componentTitle = props.heading1TitleText;
   } else {
-    componentKey = props.headingkey;
-    componentLabel = props.sectionlabel;
-    componentTitle = props.heading2titletext;
+    componentKey = props.headingKey;
+    componentLabel = props.sectionLabel;
+    componentTitle = props.heading2TitleText;
   }
 
   return (
