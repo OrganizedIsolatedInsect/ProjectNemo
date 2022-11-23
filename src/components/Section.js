@@ -13,7 +13,8 @@ import {
   CrimCodeRenderHeader,
   CrimCodeRenderBody,
 } from './CrimCodeRenderSection';
-import {createSubSectionArray} from '../functions/CreateSubSectionArray';
+import {createSubSectionArray} from './CreateSubSectionArray';
+
 /*
 component is used in content screens, section is sent as prop and then filtered against the json data to
 return data set for paragraphs
