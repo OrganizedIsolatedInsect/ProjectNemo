@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
@@ -142,8 +141,6 @@ const Section = ({section, type}) => {
       </View>
     );
   };
-
-
 
   if (loaded === true) {
     return (
