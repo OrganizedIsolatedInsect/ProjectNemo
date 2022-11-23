@@ -26,7 +26,7 @@ const CrimCodeRenderHeader = ({subsectionData}) => {
 const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   //filter data that contains paragraphs based on subsectionKey
   let paraData = dbData.filter(
-    (paragraph, i) => dbData[i].subsectionkey == subsectionData.subsectionKey,
+    (paragraph, i) => dbData[i].subsectionKey == subsectionData.subsectionKey,
   );
 
   //array created to contain paragraphs

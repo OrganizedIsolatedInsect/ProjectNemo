@@ -75,9 +75,9 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
-          setPagePartLabel(temp[0].heading1titletext);
-          setPagePartTitle(temp[0].heading1label);
-          setPagePartHeadingTitle(temp[0].heading2titletext);
+          setPagePartLabel(temp[0].heading1TitleText);
+          setPagePartTitle(temp[0].heading1Label);
+          setPagePartHeadingTitle(temp[0].heading2TitleText);
           setLoaded(true);
         },
       );

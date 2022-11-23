@@ -2,17 +2,17 @@ function createSubSectionArray(dbData) {
   let subsectionArray = [];
   for (var i = 0, l = dbData.length; i < l; i++) {
     const field1 = dbData[i].field1; // index
-    const sectionLabel = dbData[i].sectionlabel; // section
-    const subsectionLabel = dbData[i].subsectionlabel; // subsection
-    const marginalNote = dbData[i].marginalnote; // sebsectionHeader
-    const subsectionText = dbData[i].subsectiontext; // subsectionText
-    const sectionKey = dbData[i].sectionkey;
-    const subsectionKey = dbData[i].subsectionkey;
-    const sectionText = dbData[i].sectiontext;
+    const sectionLabel = dbData[i].sectionLabel; // section
+    const subsectionLabel = dbData[i].subsectionLabel; // subsection
+    const marginalNote = dbData[i].marginalNote; // sebsectionHeader
+    const subsectionText = dbData[i].subsectionText; // subsectionText
+    const sectionKey = dbData[i].sectionKey;
+    const subsectionKey = dbData[i].subsectionKey;
+    const sectionText = dbData[i].sectionText;
     let prevSectionLabel = '';
 
     if (i > 0) {
-      prevSectionLabel = dbData[i - 1].sectionlabel;
+      prevSectionLabel = dbData[i - 1].sectionLabel;
     }
     //create flag to see if this is the first label of a new section
     const flagShowLabel = sectionLabel === prevSectionLabel;
@@ -56,7 +56,7 @@ function createSubSectionArray(dbData) {
         flagShowLabel,
       );
     } else {
-      const prevSubsection = dbData[i - 1].subsectionlabel;
+      const prevSubsection = dbData[i - 1].subsectionLabel;
       if (subsectionLabel !== prevSubsection) {
         pushArray(
           field1,
