@@ -23,7 +23,7 @@ const PartsCCScreen = props => {
   const getDbData = () => {
     db.transaction(tx => {
       tx.executeSql(
-        "SELECT DISTINCT heading1label, heading1titletext, heading1key FROM CCDataV2 WHERE heading1key <> '115011' and heading1key <> '115006' ORDER BY heading1key",
+        "SELECT DISTINCT heading1Label, heading1TitleText, heading1Key FROM CCDataV2 WHERE heading1Key <> '115011' and heading1Key <> '115006' ORDER BY heading1Key",
         [],
         (_tx, results) => {
           let temp = [];
@@ -42,10 +42,10 @@ const PartsCCScreen = props => {
     return (
       <View>
         <CrimCodeGridList
-          heading1key={itemdata.item.heading1key}
+          heading1Key={itemdata.item.heading1Key}
           currentScreen={passingName}
-          heading1label={itemdata.item.heading1label}
-          heading1titletext={itemdata.item.heading1titletext}
+          heading1Label={itemdata.item.heading1Label}
+          heading1TitleText={itemdata.item.heading1TitleText}
         />
       </View>
     );
