@@ -1,8 +1,5 @@
-//SYSTEM PACKAGES
 import React from 'react';
-import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-//USER IMPORTS
 import styles, {colors} from '../assets/styles';
 
 let iconSize = 20;
@@ -19,9 +16,9 @@ export const ArrowIcon = () => {
 };
 
 export const AccordionUp = () => {
-  return <Icon name="keyboard-arrow-up" size={iconSize} />;
+  return <Icon name="keyboard-arrow-up" size={iconSize} color={colors.primaryText} />;
 };
 
 export const AccordionDown = () => {
-  return <Icon name="keyboard-arrow-down" size={iconSize} />;
+  return <Icon name="keyboard-arrow-down" size={iconSize} color={colors.primaryText} />;
 };

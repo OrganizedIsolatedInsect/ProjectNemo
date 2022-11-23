@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles from '../assets/styles';
+import styles, { colors } from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';

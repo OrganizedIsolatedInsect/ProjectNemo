@@ -11,11 +11,9 @@ import {Text, View, FlatList} from 'react-native';
 const CrimCodeRenderHeader = ({subsectionData}) => {
   return (
     <View>
-      <Text>
+      <Text style={{fontWeight: 'bold', color: colors.primaryText}}>
         {subsectionData.flagShowLabel === false && (
-          <Text style={{fontWeight: 'bold', color: 'blue'}}>
-            {subsectionData.sectionLabel}
-          </Text>
+          <Text>{subsectionData.sectionLabel}</Text>
         )}
         {subsectionData.subsectionLabel} {subsectionData.marginalNote}
       </Text>
@@ -56,7 +54,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
 
     return (
       <View style={styles.paragraph}>
-        <Text>
+        <Text style={{color: colors.primaryText}}>
           {item.paragraphLabel} {item.paragraphText}
         </Text>
         <FlatList
@@ -72,7 +70,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   const renderSubParagraph = ({item, index}) => {
     return (
       <View style={styles.subParagraph}>
-        <Text>
+        <Text style={{color: colors.primaryText}}>
           {item.subparagraphLabel} {item.subparagraphText}
         </Text>
       </View>
@@ -83,14 +81,14 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   if (subsectionData.sectionText != null) {
     return (
       <View>
-        <Text>{subsectionData.sectionText}</Text>
+        <Text style={{color: colors.primaryText}}>{subsectionData.sectionText}</Text>
       </View>
     );
   } //check if paragraphs exists
   else if (paraFilter.length > 1) {
     return (
       <View>
-        <Text>
+        <Text style={{color: colors.primaryText}}>
           {subsectionData.subsectionText}
           {'\n'}
         </Text>
@@ -105,7 +103,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   } else {
     return (
       <View>
-        <Text>{subsectionData.subsectionText}</Text>
+        <Text style={{color: colors.primaryText}}>{subsectionData.subsectionText}</Text>
       </View>
     );
   }
