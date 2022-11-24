@@ -93,6 +93,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
           {item.subparagraphLabel} {item.subparagraphText}
         </Text>
         {clauseFilter.length > 1 ? (
+
           <FlatList
             data={clauseFilter}
             keyExtractor={item => item.field1}
