@@ -24,6 +24,7 @@ A  manifestation of the current vision and corresponding development focus in sh
 > <li>Definitions</li>
 > <li>Versioning</li>
 > <li>Submit issue</li>
+> <li>Offline operation</li>
 
 > <h3>Later (> 1 year)</h3>
 > <i>Goal: Optimize and finesse product</i>
