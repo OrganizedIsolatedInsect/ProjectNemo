@@ -94,13 +94,16 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
     let clauseFilter = [];
 
     createFilter(clauseData, clauseFilter, 'clauseKey');
+    console.log(clauseFilter.length);
 
     if (clauseFilter.length === 1) {
-      <View style={styles.subParagraph}>
-        <Text>
-          {item.subparagraphLabel} {item.subparagraphText}
-        </Text>
-      </View>;
+      return (
+        <View style={styles.subParagraph}>
+          <Text>
+            {item.subparagraphLabel} {item.subparagraphText}
+          </Text>
+        </View>
+      );
     } else {
       return (
         <View style={styles.subParagraph}>
