@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import styles from '../assets/styles';
+import styles, { colors } from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
@@ -10,8 +9,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 
 import {AccordionDown, AccordionUp} from '../assets/icons';
-
-import {PrintTitle} from './PrintTitle';
 
 import {
   CrimCodeRenderHeader,
@@ -34,10 +31,6 @@ const Section = ({section, type}) => {
   const [marked, setMarked] = useState(false);
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-
-  const [pagePartTitle, setPagePartTitle] = useState();
-  const [pagePartLabel, setPagePartLabel] = useState();
-  const [pagePartHeadingTitle, setPagePartHeadingTitle] = useState();
 
   //pull state to see if current section exists in bookmarks
   const bookmarkStateId = useSelector(state => state.bookmarks.sections);
@@ -75,9 +68,6 @@ const Section = ({section, type}) => {
             temp.push(results.rows.item(i));
           }
           setDbData(temp);
-          setPagePartLabel(temp[0].heading1TitleText);
-          setPagePartTitle(temp[0].heading1Label);
-          setPagePartHeadingTitle(temp[0].heading2TitleText);
           setLoaded(true);
         },
       );
@@ -146,12 +136,6 @@ const Section = ({section, type}) => {
   if (loaded === true) {
     return (
       <SafeAreaView>
-        <PrintTitle
-          pageTitle="Criminal Code of Canada"
-          pagePartTitle={pagePartTitle}
-          pagePartLabel={pagePartLabel}
-          pagePartHeadingTitle={pagePartHeadingTitle}
-        />
         <Accordion
           activeSections={activeInfos}
           //for any default active section

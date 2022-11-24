@@ -4,8 +4,8 @@ import {Text, View, FlatList} from 'react-native';
 
 /* Component to render Criminal Code Sections
    CrimCodeRender Header shows the section number and name. Takes one variable which is subsectionData, it is the cultivated array of subsections to be rendered
-   CrimCodeRender Body shows paragraphs,subparagraphs, subclauses, takes two variables, dbData is the full array from database filtered by sectionKey and subsectionData, it is the cultivated array of subsections to be rendered
-   
+   CrimCodeRender Body shows paragraphs,subparagraphs, subclauses, takes two variables, dbData is the full array from database filtered by sectionKey and subsectionData,
+   it is the cultivated array of subsections to be rendered
 */
 
 //function to filter paragraph data into filter array
@@ -26,14 +26,13 @@ const createFilter = (data, filter, dbFieldNameKeyString) => {
   }
 };
 
+// Accordion Header
 const CrimCodeRenderHeader = ({subsectionData}) => {
   return (
     <View>
-      <Text>
+      <Text style={{fontWeight: 'bold', color: colors.primaryText}}>
         {subsectionData.flagShowLabel === false && (
-          <Text style={{fontWeight: 'bold', color: 'blue'}}>
-            {subsectionData.sectionLabel}
-          </Text>
+          <Text>{subsectionData.sectionLabel}</Text>
         )}
         {subsectionData.subsectionLabel} {subsectionData.marginalNote}
       </Text>
@@ -41,6 +40,7 @@ const CrimCodeRenderHeader = ({subsectionData}) => {
   );
 };
 
+// Accordion Body
 const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   //filter data that contains paragraphs based on subsectionKey
   let paraData = dbData.filter(
@@ -61,29 +61,21 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
 
     createFilter(subparaData, subparaFilter, 'subparagraphKey');
 
-    if (subparaFilter.length === 1) {
-      return (
-        <View style={styles.paragraph}>
-          <Text>
-            {item.paragraphLabel} {item.paragraphText}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.paragraph}>
-          <Text>
-            {item.paragraphLabel} {item.paragraphText}
-          </Text>
+    return (
+      <View style={styles.paragraph}>
+        <Text style={{color: colors.primaryText}}>
+          {item.paragraphLabel} {item.paragraphText}
+        </Text>
+        {subparaFilter.length > 1 ? (
           <FlatList
             data={subparaFilter}
             keyExtractor={item => item.field1}
             listKey={(item3, index) => 'C' + index.toString()}
             renderItem={rendersubParagraph}
           />
-        </View>
-      );
-    }
+        ) : null}
+      </View>
+    );
   };
 
   const rendersubParagraph = ({item, index}) => {
@@ -95,29 +87,22 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
 
     createFilter(clauseData, clauseFilter, 'clauseKey');
 
-    if (clauseFilter.length === 1) {
-      return (
-        <View style={styles.subParagraph}>
-          <Text>
-            {item.subparagraphLabel} {item.subparagraphText}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.subParagraph}>
-          <Text>
-            {item.subparagraphLabel} {item.subparagraphText}
-          </Text>
+    return (
+      <View style={styles.subParagraph}>
+        <Text style={{color: colors.primaryText}}>
+          {item.subparagraphLabel} {item.subparagraphText}
+        </Text>
+        {clauseFilter.length > 1 ? (
+
           <FlatList
             data={clauseFilter}
             keyExtractor={item => item.field1}
             listKey={(item3, index) => 'C' + index.toString()}
             renderItem={renderClause}
           />
-        </View>
-      );
-    }
+        ) : null}
+      </View>
+    );
   };
 
   const renderClause = ({item, index}) => {
@@ -129,35 +114,27 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
 
     createFilter(subclauseData, subclauseFilter, 'subclauseKey');
 
-    if (subclauseFilter.length === 1) {
-      return (
-        <View style={styles.subParagraph}>
-          <Text>
-            {item.clauseLabel} {item.clauseText}
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.subParagraph}>
-          <Text>
-            {item.clauseLabel} {item.clauseText}
-          </Text>
+    return (
+      <View style={styles.subParagraph}>
+        <Text style={{color: colors.primaryText}}>
+          {item.clauseLabel} {item.clauseText}
+        </Text>
+        {subclauseFilter.length > 1 ? (
           <FlatList
             data={subclauseFilter}
             keyExtractor={item => item.field1}
             listKey={(item3, index) => 'C' + index.toString()}
             renderItem={rendersubClause}
           />
-        </View>
-      );
-    }
+        ) : null}
+      </View>
+    );
   };
 
   const rendersubClause = ({item, index}) => {
     return (
       <View style={styles.subParagraph}>
-        <Text>
+        <Text style={{color: colors.primaryText}}>
           {item.subclauseLabel} {item.subclauseText}
         </Text>
       </View>
@@ -168,29 +145,26 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
   if (subsectionData.sectionText != null) {
     return (
       <View>
-        <Text>{subsectionData.sectionText}</Text>
+        <Text style={{color: colors.primaryText}}>
+          {subsectionData.sectionText}
+        </Text>
       </View>
     );
   } //check if paragraphs exists
-  else if (paraFilter.length > 1) {
+  else {
     return (
       <View>
-        <Text>
+        <Text style={{color: colors.primaryText}}>
           {subsectionData.subsectionText}
-          {'\n'}
         </Text>
-        <FlatList
-          data={paraFilter}
-          keyExtractor={item => item.field1}
-          listKey={(item2, index) => 'B' + index.toString()}
-          renderItem={renderParagraph}
-        />
-      </View>
-    );
-  } else {
-    return (
-      <View>
-        <Text>{subsectionData.subsectionText}</Text>
+        {paraFilter.length > 1 ? (
+          <FlatList
+            data={paraFilter}
+            keyExtractor={item => item.field1}
+            listKey={(item2, index) => 'B' + index.toString()}
+            renderItem={renderParagraph}
+          />
+        ) : null}
       </View>
     );
   }

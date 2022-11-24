@@ -1,5 +1,8 @@
 import {StyleSheet} from 'react-native';
 
+const headingFont = 'Lato-Regular';
+const bodyFont = 'NotoSans-Regular';
+
 export const colors = {
   primary: '#7F2025',
   secondary: '#053C5E',
@@ -18,7 +21,7 @@ export default StyleSheet.create({
     backgroundColor: colors.backgroundColoring,
   },
   headerText: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 30,
   },
   headerViewStyle: {
@@ -28,21 +31,21 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 20,
     fontWeight: 'bold',
   },
   heading_1: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 20,
   },
   heading_2: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 16,
     color: colors.primary,
   },
   body: {
-    fontFamily: 'NotoSans-Regular',
+    fontFamily: bodyFont,
     fontSize: 14,
   },
   sectionDivider: {
@@ -88,7 +91,7 @@ export default StyleSheet.create({
     padding: 5,
   },
   buttonActText: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -132,6 +135,11 @@ export default StyleSheet.create({
   },
   accordionContainerHeader: {
     borderWidth: 1,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderTopWidth: 1,
+    // borderEndWidth: 1,
+    // borderColor: '#DCDCDC',
     padding: 10,
     marginHorizontal: 5,
     flexDirection: 'row',
@@ -140,6 +148,10 @@ export default StyleSheet.create({
   },
   accordionContainer: {
     borderWidth: 1,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderBottomWidth: 1,
+    // borderColor: '#DCDCDC',
     padding: 10,
     marginHorizontal: 5,
   },
@@ -170,7 +182,7 @@ export default StyleSheet.create({
     paddingTop: 10,
   },
   subtitle: {
-    fontFamily: 'Lato-Regular',
+    fontFamily: headingFont,
     fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -270,5 +282,13 @@ export default StyleSheet.create({
   sentenceWrap: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  printTitleFormatting: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: colors.primaryText,
+  },
+  headingItalics: {
+    fontStyle: 'italic',
   },
 });
