@@ -135,6 +135,11 @@ export default StyleSheet.create({
   },
   accordionContainerHeader: {
     borderWidth: 1,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderTopWidth: 1,
+    // borderEndWidth: 1,
+    // borderColor: '#DCDCDC',
     padding: 10,
     marginHorizontal: 5,
     flexDirection: 'row',
@@ -143,6 +148,10 @@ export default StyleSheet.create({
   },
   accordionContainer: {
     borderWidth: 1,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderBottomWidth: 1,
+    // borderColor: '#DCDCDC',
     padding: 10,
     marginHorizontal: 5,
   },

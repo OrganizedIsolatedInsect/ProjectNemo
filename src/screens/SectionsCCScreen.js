@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 
-//USER Imports
 import styles from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
@@ -14,12 +13,12 @@ const SectionsCCScreen = props => {
 
   const [distinctSectionList, setDistinctSectionList] = useState();
 
-  const [pagePartTitle, setPagePartTitle] = useState();
-  const [pagePartLabel, setPagePartLabel] = useState();
-
   const window = useWindowDimensions();
 
   let heading1KeyParam = props.route.params.passingKey;
+
+  let pagePartTitle = props.route.params.heading1Label; // Part II
+  let pagePartLabel = props.route.params.heading1TitleText; // Offences Against Public Order
 
   useEffect(() => {
     getDbData();
@@ -35,8 +34,6 @@ const SectionsCCScreen = props => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
-          setPagePartLabel(temp[0].heading1TitleText);
-          setPagePartTitle(temp[0].heading1Label);
           setDistinctSectionList(temp);
         },
       );
@@ -53,6 +50,8 @@ const SectionsCCScreen = props => {
           currentScreen={passingName}
           sectionLabel={itemdata.item.sectionLabel}
           heading2TitleText={itemdata.item.heading2TitleText}
+          heading1Label={itemdata.item.heading1Label}
+          heading1TitleText={itemdata.item.heading1TitleText}
         />
       </View>
     );
