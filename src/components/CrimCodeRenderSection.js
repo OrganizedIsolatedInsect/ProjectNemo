@@ -27,14 +27,15 @@ const createFilter = (data, filter, dbFieldNameKeyString) => {
 };
 
 // Accordion Header
-const CrimCodeRenderHeader = ({subsectionData}) => {
+const CrimCodeRenderHeader = ({subsectionData, isActive, style, props}) => {
   return (
     <View>
-      <Text style={{fontWeight: 'bold', color: colors.primaryText}}>
+      <Text style={{color: colors.primaryText, ...style}}>
         {subsectionData.flagShowLabel === false && (
-          <Text>{subsectionData.sectionLabel}</Text>
+          <Text style={{color: colors.accordionGray}}>{subsectionData.sectionLabel} </Text>
         )}
-        {subsectionData.subsectionLabel} {subsectionData.marginalNote}
+        <Text style={{color: colors.accordionGray}}>{subsectionData.subsectionLabel}</Text>{' '}
+        {subsectionData.marginalNote}
       </Text>
     </View>
   );
@@ -93,7 +94,6 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
           {item.subparagraphLabel} {item.subparagraphText}
         </Text>
         {clauseFilter.length > 1 ? (
-
           <FlatList
             data={clauseFilter}
             keyExtractor={item => item.field1}

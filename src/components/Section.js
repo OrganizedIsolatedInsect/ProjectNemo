@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import styles, { colors } from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
@@ -112,15 +112,21 @@ const Section = ({section, type}) => {
     setCollapsedState(prevState => !prevState);
   };
 
-  // prettier-ignore
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
     return (
-      <View style={[styles.gridListItem, styles.accordionContainerHeader]}>
-                <CrimCodeRenderHeader
-                subsectionData={item}
-                />
-                 {isActive ? (<AccordionUp /> ) : (<AccordionDown />)}
+      <View
+        style={[
+          styles.gridListItem,
+          !isActive
+            ? styles.accordionContainerHeader
+            : styles.accordionContainerHeaderNA,
+        ]}>
+        <CrimCodeRenderHeader
+          subsectionData={item}
+          style={isActive ? {fontWeight: 'bold'} : null}
+        />
+        {isActive ? <AccordionUp /> : <AccordionDown />}
       </View>
     );
   };
