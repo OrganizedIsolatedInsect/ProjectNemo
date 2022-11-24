@@ -94,7 +94,6 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
     let clauseFilter = [];
 
     createFilter(clauseData, clauseFilter, 'clauseKey');
-    console.log(clauseFilter.length);
 
     if (clauseFilter.length === 1) {
       return (
