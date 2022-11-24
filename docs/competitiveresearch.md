@@ -3,13 +3,18 @@ Internal and external products tackling aspects of the same business problem - m
 
 ## Internal tools
 
-### Traffic Enforcment Reference Manual (T.E.R.M.)
+### Traffic Enforcement Reference Manual (T.E.R.M.)
+Explain what this is.
+
 **Strengths:** Not sure...
 
 **Weaknesses:** Published on yearly basis - easily outdated.
 
+<img src="images/POCKET_Term_2022-01.jpg" width="300">&nbsp;
+<img src="images/TERM-product-binder.jpg" width="300">
+
 ### "Cheat Sheets"
-Typically seen for highly procedural calls.
+Typically seen for highly procedural calls, such as break & enters, impaired driving, mental health calls, and domestic offences.
 
 **Strengths:** Often created by users themselves; easily accessible.
 

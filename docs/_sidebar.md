@@ -4,15 +4,13 @@
 
 * [Product](./product.md)
 
-    * [Competitive Reseach](./competitiveresearch.md)
-
-    * [Users](./users.md)
     * [Research Brief](./researchbrief.md)
+    * [Users](./users.md)
+    * [Competitive Reseach](./competitiveresearch.md)
 
 * [Development](./development.md)
 
     * [Roadmap](./roadmap.md)
-
     * [Data Sources](./datasources.md)
 
 * [About](./contact/index)
