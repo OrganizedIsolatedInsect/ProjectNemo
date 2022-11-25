@@ -2,15 +2,17 @@
 
 * [Home](./)
 
-* [Product](./product.md)
+* Product
 
+    * [Product Brief](./product.md)
     * [Research Brief](./researchbrief.md)
     * [Users](./users.md)
     * [Competitive Reseach](./competitiveresearch.md)
 
-* [Development](./development.md)
+* Development
 
-    * [Roadmap](./roadmap.md)
+    * [Roadmap](./roadmap/roadmap.md)
+      * [Feature Log](./roadmap/featurelog.md)
     * [Data Sources](./datasources.md)
 
 * [About](./contact/index)

@@ -4,17 +4,17 @@ Internal and external products tackling aspects of the same business problem - m
 ## Internal tools
 
 ### Traffic Enforcement Reference Manual (T.E.R.M.)
-Explain what this is.
+A physical and electronic document created by [two former police officers](https://termpublications.com/) that summarizes traffic legislation, fine tables, definitions, and workflows. Procured annually by the RCMP and municipal police agencies.
 
-**Strengths:** Not sure...
+**Strengths:** An improvement over reading through all of the legislation.
 
-**Weaknesses:** Published on yearly basis - easily outdated.
+**Weaknesses:** Published on annual basis and easily outdated; manually updated and created and prone to human error; expensive (>$25,000) contract; format (PDF or hardcopy) cumbersome for search and navigation.
 
 <img src="images/POCKET_Term_2022-01.jpg" width="300">&nbsp;
 <img src="images/TERM-product-binder.jpg" width="300">
 
 ### "Cheat Sheets"
-Typically seen for highly procedural calls, such as break & enters, impaired driving, mental health calls, and domestic offences.
+Word or PDF documents that summarize procedures or workflows for officers. Typically seen for highly procedural calls, such as break & enters, impaired driving, mental health calls, and domestic offences.
 
 **Strengths:** Often created by users themselves; easily accessible.
 
@@ -36,26 +36,26 @@ A mobile application developed by an Ontario Provincial Police member. Confirmed
 <img src="images/sb_mva.png" width="150">
 
 ### PoliceKit
-A mobile application ...
+A mobile application "toolkit" designed for Ontario Police officers.
 
 **Strengths:** Turning legislation into tools; user interface design.
 
-**Weaknesses:** Limited content; 
+**Weaknesses:** Limited content (see review on Apple App Store); primarily geared toward Highway Patrol Act.
 
 <img src="images/pk_home.png" width="150">&nbsp;
 <img src="images/pk_accordion_2.png" width="150">&nbsp;
 <img src="images/pk_speed_tool.png" width="150">
 
 ### SCC
-A mobile application ...
+A mobile application providing summaries of Supreme Court decisions.
 
 **Strengths:** User interface design; usability (simplicity).
 
-**Weaknesses:** Only scrapes some types of content; only Supreme Court.
+**Weaknesses:** Only provides Supreme Court summaries, and then only if they're stored in a particular format; very limited functionality.
 
 <img src="images/scc_cases.png" width="150">&nbsp;
 <img src="images/scc_cases_%20crim.png" width="150">
 
-## Others to explore
+## Others to evaluate
 - Pocket Brainbook (LASD)
 - PocketLaw (USA)
