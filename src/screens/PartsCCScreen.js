@@ -8,6 +8,7 @@ import {db} from '../components/Database';
 
 import {PrintTitle} from '../components/PrintTitle';
 
+//This screen is created upon clicking the Crim Code option on the Landing Page.
 const PartsCCScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
   const [distinctPartsList, setDistinctPartsList] = useState();
@@ -20,6 +21,8 @@ const PartsCCScreen = props => {
     getDbData();
   }, []);
 
+  //Retrieving data except the nonPart sections of "Short Title" Section 1 and "Interpretation" Section 2.  Distinct as we are just returning the Part #
+  //Part label, Section #, and Section label.
   const getDbData = () => {
     db.transaction(tx => {
       tx.executeSql(
@@ -36,8 +39,9 @@ const PartsCCScreen = props => {
     });
   };
 
+  //Grabs the styles, props, and actions from the CrimCodeGridList component to be rendered.
   const renderList = itemdata => {
-    let passingName = 'PartsCCScreen';
+    let passingName = 'PartsCCScreen';  //This is to name the screen currently on to be passed to the CrimCodeGridList component to identify how variables are named.
 
     return (
       <View>
@@ -51,10 +55,12 @@ const PartsCCScreen = props => {
     );
   };
 
+  //creates a thin line between Parts items
   const FlashListItemSeparator = () => {
     return <View style={styles.flashListStyling} />;
   };
 
+  //Calls PrintTitle component to style page then calls Flashlist.
   return (
     <View style={[styles.background, {height: window.height}]}>
       <View>
