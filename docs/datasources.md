@@ -10,6 +10,8 @@
 - **Trespass Act**. 
 - **Liquor Control and Licensing Act**.
 - **Mental Health Act**. 
-- **Bylaws**. Not yet sourced - would need to identify bylaw content for every jurisdiction (approximately 189) in British Columbia. [Here](https://www.ubcm.ca/about-ubcm/member-directory) is a list of all B.C. jurisdictions.
-- **Case Law**. Data source not yet confirmed - exploring LexisNexis' Developer API.
+- **Case Law**. Data source not yet confirmed - possibilities for Canadian case law include LexisNexis' Developer API or Compass.Law's case law API.
 - **Internal RCMP policies**. Data source not yet confirmed - exploring internal API (link only works for application development team) or HTML webscraping.
+- **Bylaws**. Not yet sourced - would need to identify bylaw content for every jurisdiction (approximately 189) in British Columbia. [Here](https://www.ubcm.ca/about-ubcm/member-directory) is a list of all B.C. jurisdictions.
+
+*Notes: When implementing proper data pipeline, switch to drawing XML from [Justice Laws GitHub repo](https://github.com/justicecanada/laws-lois-xml). Consider using [XSLT](https://github.com/justicecanada/laws-lois-xml/issues/7) to parse XML to HTML?*
