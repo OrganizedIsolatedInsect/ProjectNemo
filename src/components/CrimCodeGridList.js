@@ -1,4 +1,4 @@
-/* Creates the first List of Criminal Code Parts/Sections to choose from
+/* Creates the first List of Criminal Code Parts/Sections to choose from.  Generisized to account for which screen component is called from.
  */
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
@@ -11,6 +11,7 @@ const CrimCodeGridList = props => {
   const navAid = useNavigation();
   const screenName = props.currentScreen;
 
+  //used for display purposes; initialized dependent upon which screen component was called from.
   let componentKey;
   let componentLabel;
   let componentTitle;
@@ -41,16 +42,17 @@ const CrimCodeGridList = props => {
   // let subclauseLabel;
   // let subclauseText;
 
+  //Determine which screen is calling the component and initialize the appropriate variables to be passed to the destination screen
   if (screenName === 'PartsCCScreen') {
     componentKey = props.heading1Key;
     componentLabel = props.heading1Label;
     componentTitle = props.heading1TitleText;
-  } else {
+  } else {    //SectionCCScreen.js
     componentKey = props.headingKey;
     componentLabel = props.sectionLabel;
     componentTitle = props.heading2TitleText;
   }
-
+  
   return (
     <View>
       <Pressable
