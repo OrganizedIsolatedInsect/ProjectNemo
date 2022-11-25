@@ -4,7 +4,7 @@
 
 * Product
 
-    * [Product Brief](./product.md)
+    * [Product Brief](./productbrief.md)
     * [Research Brief](./researchbrief.md)
     * [Users](./users.md)
     * [Competitive Reseach](./competitiveresearch.md)
