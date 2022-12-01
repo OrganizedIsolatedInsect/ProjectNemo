@@ -204,6 +204,15 @@ export default StyleSheet.create({
     color: colors.primaryText,
   },
 
+    //BOOKMARK STYLING
+    bookmarkPosition: {
+      alignSelf: 'flex-end',
+    },
+    bookmarkRender: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+
   //SEARCHBAR Styling START
   searchView_Styling: {
     flexDirection: 'row',
