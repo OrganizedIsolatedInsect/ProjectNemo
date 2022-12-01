@@ -3,56 +3,61 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
-import {colors} from '../assets/styles';
-
+import styles from '../assets/styles';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
+import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
-const Bookmark = (section, sectionHeader) => {
+const Bookmark = (data, lawType) => {
   const [marked, setMarked] = useState(false); // Preps icon for state chagne
+  const localLawType = lawType;
   const dispatch = useDispatch();
+  const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
+  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrievs list of current bookmarks
 
-  //console.log(section, sectionHeader);
   //switches state of bookmark
   const switchMarks = () => {
     setMarked(!marked);
   };
 
-  const action = (section, sectionHeader) => {
+  const dispatchAction = (data, localLawType) => {
     if (marked === true) {
       dispatch(
         addBookmark({
-          section: section,
-          sectionHeader: sectionHeader,
+          legislationGroup: data,
+          // sectionHeader: sectionHeader,
+          lawType: localLawType,
         }),
       );
     }
     if (marked === false) {
       dispatch(
         removeBookmark({
-          section: section,
+          legislationGroup: data,
+          lawType: localLawType,
         }),
       );
     }
   };
 
   useEffect(() => {
-    action(section, sectionHeader);
-  });
+    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
+    if (bookmarkStateId.some(e => e.bookmarkArray == data) && isFocused) {
+      setMarked(true);
+    } else {
+      setMarked(false);
+    }
+  }, [isFocused]);
 
   return (
     <Pressable
       onPress={() => {
         switchMarks();
+        dispatchAction(data, localLawType);
       }}>
-      <View>
-        <Icon
-          name={marked ? 'bookmark' : 'bookmark-outline'}
-          size={30}
-          style={{color: colors.primary}}
-        />
-      </View>
+      <View>{marked ? <BookmarkMarked /> : <BookmarkUnmarked />}</View>
     </Pressable>
   );
 };

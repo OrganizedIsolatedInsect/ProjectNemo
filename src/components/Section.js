@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import styles, {colors} from '../assets/styles';
-import {View, Pressable} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
 import {useIsFocused} from '@react-navigation/native';
 import Accordion from 'react-native-collapsible/Accordion';
-import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
+import {addBookmark, removeBookmark} from '../redux/bookmarkSlice'; //REMOVE
+import Bookmark from './Bookmark';
 
 import {AccordionDown, AccordionUp} from '../assets/icons';
 
@@ -21,10 +22,10 @@ component is used in content screens, section is sent as prop and then filtered 
 return data set for paragraphs
 */
 
-const Section = ({section, type}) => {
+const Section = ({section, lawType}) => {
   //section prop passed on from browse screen
   const sectionId = section;
-  const typeId = type;
+  const localLawType = lawType;
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   //set states for bookmark flag, database data, loading
@@ -33,24 +34,24 @@ const Section = ({section, type}) => {
   const [loaded, setLoaded] = useState(false);
 
   //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+  //const bookmarkStateId = useSelector(state => state.bookmarks.sections);
 
   //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
+  // const switchMarks = () => {
+  //   setMarked(!marked);
+  // };
 
   //Create array to divide up subsections
   let subsectionArray = [];
 
-  useEffect(() => {
-    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section == section)) {
-      setMarked(true);
-    } else {
-      setMarked(false);
-    }
-  }, [marked, isFocused]);
+  // useEffect(() => {
+  //   // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
+  //   if (bookmarkStateId.some(e => e.section == section)) {
+  //     setMarked(true);
+  //   } else {
+  //     setMarked(false);
+  //   }
+  // }, [marked, isFocused]);
 
   useEffect(() => {
     getDbData(sectionId);
@@ -62,7 +63,7 @@ const Section = ({section, type}) => {
       tx.executeSql(
         'Select * from CCDataV2 where heading2Key = ?',
         [sectionId],
-        (tx, results) => {
+        (_tx, results) => {
           const temp = [];
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
@@ -79,26 +80,26 @@ const Section = ({section, type}) => {
 
   //dispatch add or remove bookmarks based bookmark icon
   //lawtype line required to differentiate in case of duplicate Section values.
-  const dispatchAction = (section, sectionHeader) => {
-    // dispatch based on opposite of flag because marked does not change until the rerender
-    if (marked === false) {
-      dispatch(
-        addBookmark({
-          sectionLabel: sectionLabel,
-          sectionHeader: sectionHeader,
-          lawtype: 'CC',
-        }),
-      );
-    }
-    if (marked === true) {
-      dispatch(
-        removeBookmark({
-          sectionLabel: sectionLabel,
-          lawtype: 'CC',
-        }),
-      );
-    }
-  };
+  // const dispatchAction = (section, sectionHeader) => {
+  //   // dispatch based on opposite of flag because marked does not change until the rerender
+  //   if (marked === false) {
+  //     dispatch(
+  //       addBookmark({
+  //         sectionLabel: sectionLabel,
+  //         sectionHeader: sectionHeader,
+  //         lawtype: 'CC',
+  //       }),
+  //     );
+  //   }
+  //   if (marked === true) {
+  //     dispatch(
+  //       removeBookmark({
+  //         sectionLabel: sectionLabel,
+  //         lawtype: 'CC',
+  //       }),
+  //     );
+  //   }
+  // };
 
   const [collapsedState, setCollapsedState] = useState(true);
   // Active Infos is the section number (from react-native-collapsible, NOT our database section)
@@ -134,6 +135,9 @@ const Section = ({section, type}) => {
   const renderContent = (item, index, isActive, sections) => {
     return (
       <View style={styles.accordionContainer}>
+        <View style={styles.bookmarkPosition}>
+          <Bookmark data={item} lawType={lawType} />
+        </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
       </View>
     );

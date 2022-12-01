@@ -14,7 +14,7 @@ const ContentCCScreen = props => {
   let pagePartLabel = props.route.params.heading1TitleText; // Offences Against Public Order
   let pagePartHeadingTitle = props.route.params.heading2TitleText; // Sedition
 
-  let lawType = 'crim code'; //TODO  should change this to "CC"
+  let lawType = 'CC';
 
   return (
     <SafeAreaView>
@@ -24,7 +24,7 @@ const ContentCCScreen = props => {
         pagePartLabel={pagePartLabel}
         pagePartHeadingTitle={pagePartHeadingTitle}
       />
-      <Section section={sectionId} typeId={lawType} />
+      <Section section={sectionId} lawType={lawType} />
     </SafeAreaView>
   );
 };
