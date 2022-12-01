@@ -14,59 +14,88 @@ const BookmarkScreen = props => {
   const navAid = useNavigation();
 
   //get bookmarks from state redux store
-  const bookmarks = useSelector(state => state.bookmarks);
+  const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
+  console.log('bookmark screen => bookmarks');
+  console.log(bookmarks);
 
   //create array for each section, then loop though bookmarks to parse into arrays
   let MVAArray = [];
   let CCArray = [];
 
-  for (let i = 0; i < bookmarks.sections.length; ++i) {
-    if (bookmarks.sections[i].lawtype == 'MVA') {
-      MVAArray.push(bookmarks.sections[i]);
+  for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
+    if (bookmarks.bookmarkArray[i].lawType == 'MVA') {
+      MVAArray.push(bookmarks.bookmarkArray[i]);
     }
-    if (bookmarks.sections[i].lawtype == 'CC') {
-      CCArray.push(bookmarks.sections[i]);
+    if (bookmarks.bookmarkArray[i].lawType == 'CC') {
+      CCArray.push(bookmarks.bookmarkArray[i]);
     }
   }
 
   const dispatch = useDispatch();
 
+  const renderText = item => {
+    console.log('item');
+    console.log(item);
+    if (item.lawType == 'MVA') {
+      return (
+        <Text style={[styles.body, {color: colors.primaryText}]}>
+          {item.legislationGroup.provision}{' '}
+          {item.legislationGroup.contravention}
+        </Text>
+      );
+    } else if (item.lawType == 'CC') {
+      return (
+        <Text>
+          {item.legislationGroup.sectionLabel}{' '}
+          {item.legislationGroup.subsectionLabel}{' '}
+          {item.legislationGroup.marginalNote}
+        </Text>
+      );
+    }
+  };
+
   //render bookmark links and navigate based on section type
   const renderBookmark = ({item}) => (
-    <View
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    <View style={styles.bookmarkRender}>
       <Pressable
         onPress={() => {
-          if (item.lawtype === 'MVA') {
-            const provisionItem = item.section;
+          if (item.lawType === 'MVA') {
+            const provisionItem = item.legislationGroup.provision;
             navAid.navigate('ContentMVAScreen', {
               provisionId: provisionItem,
             });
           }
-          if (item.lawtype === 'CC') {
-            const sectionId = item.section;
+          if (item.lawType === 'CC') {
+            const passingKey = item.legislationGroup.passingKey;
+            const heading1Label = item.legislationGroup.heading1Label;
+            const heading1TitleText = item.legislationGroup.heading1TitleText;
+            const heading2TitleText = item.legislationGroup.heading2TitleText;
             navAid.navigate('ContentCCScreen', {
-              section: sectionId,
+              props: {
+                params: passingKey,
+                heading1Label,
+                heading1TitleText,
+                heading2TitleText,
+              },
             });
           }
         }}>
-        <Text style={[styles.body, {color: colors.primaryText}]}>
-          {item.section} {item.sectionHeader}
-        </Text>
+        <Text>{renderText(item)}</Text>
       </Pressable>
 
       <Icon
         name="delete"
         size={20}
-        onPress={() => dispatch(removeBookmark({section: item.section}))}
+        onPress={() =>
+          dispatch(removeBookmark({legislationGroup: item.legislationGroup}))
+        }
       />
     </View>
   );
 
   /*Output Section*/
 
-  if (bookmarks.sections.length === 0) {
+  if (bookmarks.bookmarkArray.length === 0) {
     return (
       <View style={styles.centerOnScreen}>
         <Text style={[styles.title, {color: colors.primaryText}]}>

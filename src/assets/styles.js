@@ -208,10 +208,10 @@ export default StyleSheet.create({
   bookmarkPosition: {
     alignSelf: 'flex-end',
   },
-  // bookmarkRender: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  // },
+  bookmarkRender: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 
   //SEARCHBAR Styling START
   searchView_Styling: {
