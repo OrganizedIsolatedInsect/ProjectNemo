@@ -1,119 +1,57 @@
 // Searching using Search Bar Filter in React Native List View
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
-import React, {useState} from 'react';
-import {View, TextInput, Pressable, Text, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  TextInput,
+  Pressable,
+  Text,
+  FlatList,
+  Button,
+  ScrollView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import HighlightText from '@sanar/react-native-highlight-text';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import FilterButton from './FilterButton';
+
 import styles, {colors} from '../assets/styles';
 
-import data from '../data/mvavt_records.json';
-
 // TODO separate the searchbar and list components
-// TODO replace spaces in the search query with '+' (RegEx?)
+//      figure out 'Full Text Search' (FTS4 in SQLite) which will allow us to search across all columns
+//      in a table without needing to hardcode the column names, etc.
 
-const SearchBar = () => {
-  const [query, setQuery] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState(data);
-  const [masterDataSource, setMasterDataSource] = useState(data);
+// SearchBar receives the query value as the state from SearchScreen and the onChange prop
+//      for the onChangeText. Additionally, receives the clearButtonPressed function so that
+//      the Pressable clear button will reset the query state to blank when pressed.
 
-  const navAid = useNavigation();
-
-  const searchFilterFunction = text => {
-    // Check if searched text is not blank
-    if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource
-      // Update FilteredDataSource
-      const newData = masterDataSource.filter(function (item) {
-        const itemData = item.contravention
-          ? item.contravention.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setQuery(text);
-    } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
-      setQuery(text);
-    }
-  };
-
-  const ItemView = ({item}) => {
-    return (
-      // Flat List Item
-      <View>
-        <Text
-          style={[
-            styles.searchResultsFlatList_ItemView,
-            styles.body,
-            {color: colors.primaryText},
-          ]}
-          onPress={() => getItem(item)}>
-          {item.index + 1}
-          {'. '}
-          {/* {item.contravention.toUpperCase()} */}
-          <HighlightText
-            searchWords={[query]}
-            textToHighlight={item.contravention}
-            highlightStyle={styles.searchResultsHighlight}
-          />
-        </Text>
-      </View>
-    );
-  };
-
-  const ItemSeparatorView = () => {
-    return (
-      // Flat List Item Separator
-      <View style={styles.sectionDivider} />
-    );
-  };
-
-  const getItem = item => {
-    // Navigate to the content screen when clicked
-    navAid.navigate('ContentMVAScreen', {paramkey: item});
-  };
-
+const SearchBar = props => {
   return (
     <View>
+      {/* Searchbar component starts here */}
       <View style={styles.searchView_Styling}>
         <TextInput
           style={styles.SearchBar_Styling}
-          onChangeText={text => searchFilterFunction(text)}
-          value={query}
+          // onChangeText={props.onChange}
+          value={props.query}
           underlineColorAndroid="transparent"
           placeholder="Search"
         />
+        {/* Search Icon with styling to position it on the left of the Searchbar */}
         <Icon name="search" size={30} style={styles.searchIcon_styling} />
+        {/* When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query. */}
         <Pressable
-          onPress={() => {
-            setFilteredDataSource(data);
-            setQuery('');
-          }} // When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query.
+          onPress={props.clearPressed}
           android_ripple={styles.closeIcon_ripple_styling}
           style={styles.closeIcon_pressable_styling}>
           <Icon name="close" size={30} style={styles.closeIcon_styling} />
         </Pressable>
       </View>
-      <View style={{height: 640}}>
-        {/* TODO Discussion to be had on options for listing component ie. Scollview, Flatlist, Sectionlist, Flashlist? */}
-        <FlatList
-          data={filteredDataSource}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
-          // initialNumToRender={500}
-        />
-      </View>
+      {/* Searchbar component ends here */}
     </View>
   );
 };

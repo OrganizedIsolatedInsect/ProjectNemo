@@ -27,8 +27,8 @@ const SearchScreen = props => {
     <SafeAreaView style={styles.background}>
       <SearchBar
         query={query}
-        filteredDataSource={filteredDataSource}
-        data={data}
+        // filteredDataSource={filteredDataSource}
+        // data={data}
       />
 
       {/* Implementation of FilterButton Component */}
