@@ -5,43 +5,29 @@
 import React, {useState} from 'react';
 import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View} from 'react-native';
+import {View, TextInput, Button} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import SearchBar from '../components/SearchBar';
-import FilterButton from '../components/FilterButton';
-// import InfoList from '../components/InfoList';
-
-import data from '../data/mvavt_records.json';
+import SearchResults from '../components/SearchResults';
 
 const SearchScreen = props => {
   const [query, setQuery] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState(data);
 
-  const searchFilters = [
-    'Criminal Code',
-    'Motor Vehicle Act',
-    'Motor Vehicle Regulations',
-  ];
+  const submitQuery = query => console.log(query);
 
   return (
     <SafeAreaView style={styles.background}>
-      <SearchBar
-        query={query}
-        filteredDataSource={filteredDataSource}
-        data={data}
-      />
-
-      {/* Implementation of FilterButton Component */}
-      <View style={styles.alignOnRow}>
-        <FilterButton buttonLabel="Criminal Code" />
-        <FilterButton buttonLabel="Motor Vehicle Act" />
-        <FilterButton buttonLabel="Motor Vehicle Regulations" />
-      </View>
-      {/* <InfoList
-        query={query}
-        filteredDataSource={filteredDataSource}
-        // data={data}
-      /> */}
+      {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <TextInput
+          style={styles.SearchBar_Styling}
+          value={query}
+          onChangeText={query => setQuery(query)}
+          underlineColorAndroid="transparent"
+          placeholder="Search"
+        />
+        <Icon name="search" size={45} onPress={query => submitQuery(query)} />
+      </View> */}
+      <SearchResults />
     </SafeAreaView>
   );
 };
