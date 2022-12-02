@@ -1,8 +1,5 @@
-//REMOVE THIS AS REDUNDENT
-
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View, Pressable} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -19,15 +16,13 @@ const Bookmark = props => {
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrievs list of current bookmarks
 
   console.log('bookmark => props');
-  console.log(localData);
-  console.log(props.lawType);
-  console.log(localLawType);
-  console.log(props.passingKey);
+
+  console.log(bookmarkStateId);
 
   useEffect(() => {
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    setFullSomeData(props.data);
-  }, [props.data]);
+    setFullSomeData(localData);
+  }, [localData]);
 
   //switches state of bookmark
   const switchMarks = () => {
@@ -58,10 +53,8 @@ const Bookmark = props => {
       );
     }
   };
-
   useEffect(() => {
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    setFullSomeData(props.data);
     if (
       bookmarkStateId.some(e => e.bookmarkArray == fullSomeData) &&
       isFocused
@@ -76,7 +69,7 @@ const Bookmark = props => {
     <Pressable
       onPress={() => {
         switchMarks();
-        dispatchAction(fullSomeData, localLawType);
+        dispatchAction();
       }}>
       <View>{marked ? <BookmarkMarked /> : <BookmarkUnmarked />}</View>
     </Pressable>
