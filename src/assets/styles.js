@@ -14,7 +14,7 @@ export const colors = {
   highlightBgColor: '#829DAF',
   highlightColor: '#FFFFFF',
   primaryText: '#000000',
-  accordionGray: "#A9A9A9",
+  accordionGray: '#A9A9A9',
 };
 
 export default StyleSheet.create({
@@ -253,6 +253,15 @@ export default StyleSheet.create({
   searchResultsHighlight: {
     color: colors.highlightColor,
     backgroundColor: colors.highlightBgColor,
+  },
+  searchResultsContainer: {
+    // borderWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.accordionGray,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
   // Search Results Flatlist Styling END
 

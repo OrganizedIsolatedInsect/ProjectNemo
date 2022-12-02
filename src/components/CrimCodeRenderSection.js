@@ -185,7 +185,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
             highlightStyle={styles.searchResultsHighlight}
           />
         </Text>
-        {paraFilter.length > 1 ? (
+        {paraFilter.length > 1 || searchResults != null ? (
           <FlatList
             data={paraFilter}
             keyExtractor={item => item.field1}

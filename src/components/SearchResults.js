@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, VirtualizedList, SectionList} from 'react-native';
+import Reactotron from 'reactotron-react-native';
 
 import {
   CrimCodeRenderHeader,
@@ -10,17 +11,27 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = props => {
-  const [searchResults, setSearchResults] = useState('licence');
+const SearchResults = ({searchQueryTerm}) => {
+  const searchTerm = 'vehicle';
+  const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
 
   useEffect(() => {
-    setSearchResults('licence');
+    setSearchResults(searchTerm);
     getDbData(searchResults);
-  }, []);
+  }, [searchTerm]);
 
   let subsectionData = createSubSectionArray(crimCodeDbData);
+
+  const getItem = (data, index) => {
+    return data[index];
+  };
+
+  const searchResultsIndex = [
+    {legislativeTitle: 'Criminal Code', id: 'l1'},
+    {legislativeTitle: 'Motor Vehicle Act', id: 'l2'},
+  ];
 
   // function to get data from NemoDB
   const getDbData = searchResults => {
@@ -56,7 +67,6 @@ const SearchResults = props => {
           for (let i = 0; i < results.rows.length; ++i) {
             mvaTemp.push(results.rows.item(i));
           }
-
           setMvaDbData(mvaTemp);
         },
       );
@@ -66,40 +76,63 @@ const SearchResults = props => {
   return (
     <View>
       <FlatList
-        data={subsectionData}
-        keyExtractor={item => item.field1}
+        data={searchResultsIndex}
+        keyExtractor={data => data.id}
         renderItem={({item}) => {
-          return (
-            <View style={styles.container}>
-              <View style={styles.heading_2}>
-                <CrimCodeRenderHeader
-                  subsectionData={item}
-                  searchResults={searchResults}
-                />
-              </View>
+          if (item.legislativeTitle === 'Criminal Code') {
+            return (
               <View>
-                <CrimCodeRenderBody
-                  subsectionData={item}
-                  dbData={crimCodeDbData}
-                  searchResults={searchResults}
-                />
-                <Text>{'\n'}</Text>
+                <Text style={styles.heading_2}>{item.legislativeTitle}</Text>
+                <View>
+                  <FlatList
+                    style={styles.searchResultsContainer}
+                    data={subsectionData}
+                    keyExtractor={data => data.field1}
+                    renderItem={({item, index}) => {
+                      return (
+                        <View key={index}>
+                          <View style={styles.heading_2}>
+                            <CrimCodeRenderHeader
+                              subsectionData={item}
+                              searchResults={searchResults}
+                            />
+                          </View>
+                          <View>
+                            <CrimCodeRenderBody
+                              subsectionData={item}
+                              dbData={crimCodeDbData}
+                              searchResults={searchResults}
+                            />
+                          </View>
+                        </View>
+                      );
+                    }}
+                  />
+                </View>
               </View>
-            </View>
-          );
-        }}
-      />
-      <FlatList
-        data={mvaDbData}
-        renderItem={({item}) => {
-          return (
-            <View>
-              <ContentMVA
-                provisionId={item.provision}
-                searchResults={searchResults}
-              />
-            </View>
-          );
+            );
+          }
+          if (item.legislativeTitle === 'Motor Vehicle Act') {
+            return (
+              <View>
+                <Text style={styles.heading_2}>{item.legislativeTitle}</Text>
+                <FlatList
+                  data={mvaDbData}
+                  keyExtractor={data => data.index}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View key={index} style={styles.searchResultsContainer}>
+                        <ContentMVA
+                          provisionId={item.provision}
+                          searchResults={searchResults}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              </View>
+            );
+          }
         }}
       />
     </View>
@@ -107,15 +140,3 @@ const SearchResults = props => {
 };
 
 export default SearchResults;
-
-/* SELECT * from CCDataV2
-WHERE heading2TitleText like '%terrorist%'
-or sectionText like '%terrorist%'
-or subsectionText like '%terrorist%'
-or marginalNote like '%terrorist%'
-or paragraphText like '%terrorist%'
-or subparagraphText like '%terrorist%'
-or clauseText like '%terrorist%'
-or subclauseText like '%terrorist%' 
-
-;*/
