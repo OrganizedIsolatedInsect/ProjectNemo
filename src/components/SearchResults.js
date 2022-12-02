@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
-import {View, Text, FlatList, VirtualizedList, SectionList} from 'react-native';
-import Reactotron from 'reactotron-react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  VirtualizedList,
+  SectionList,
+  Pressable,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   CrimCodeRenderHeader,
@@ -13,21 +20,26 @@ import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm}) => {
   const searchTerm = 'vehicle';
+  //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
+
+  const navAid = useNavigation();
 
   useEffect(() => {
     setSearchResults(searchTerm);
     getDbData(searchResults);
   }, [searchTerm]);
 
+  //create subsection for crime code renders
   let subsectionData = createSubSectionArray(crimCodeDbData);
 
   const getItem = (data, index) => {
     return data[index];
   };
 
+  //index to show search results, will be replaced with database table
   const searchResultsIndex = [
     {legislativeTitle: 'Criminal Code', id: 'l1'},
     {legislativeTitle: 'Motor Vehicle Act', id: 'l2'},
@@ -91,19 +103,27 @@ const SearchResults = ({searchQueryTerm}) => {
                     renderItem={({item, index}) => {
                       return (
                         <View key={index}>
-                          <View style={styles.heading_2}>
-                            <CrimCodeRenderHeader
-                              subsectionData={item}
-                              searchResults={searchResults}
-                            />
-                          </View>
-                          <View>
-                            <CrimCodeRenderBody
-                              subsectionData={item}
-                              dbData={crimCodeDbData}
-                              searchResults={searchResults}
-                            />
-                          </View>
+                          <Pressable
+                            onPress={() => {
+                              navAid.navigate('ContentCCScreen', {
+                                passingKey: item.heading2Key,
+                                searchResults: searchResults,
+                              });
+                            }}>
+                            <View style={styles.heading_2}>
+                              <CrimCodeRenderHeader
+                                subsectionData={item}
+                                searchResults={searchResults}
+                              />
+                            </View>
+                            <View>
+                              <CrimCodeRenderBody
+                                subsectionData={item}
+                                dbData={crimCodeDbData}
+                                searchResults={searchResults}
+                              />
+                            </View>
+                          </Pressable>
                         </View>
                       );
                     }}

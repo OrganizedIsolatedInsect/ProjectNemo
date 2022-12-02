@@ -6,6 +6,7 @@ function createSubSectionArray(dbData) {
     const subsectionLabel = dbData[i].subsectionLabel; // subsection
     const marginalNote = dbData[i].marginalNote; // sebsectionHeader
     const subsectionText = dbData[i].subsectionText; // subsectionText
+    const heading2Key = dbData[i].heading2Key;
     const sectionKey = dbData[i].sectionKey;
     const subsectionKey = dbData[i].subsectionKey;
     const sectionText = dbData[i].sectionText;
@@ -28,6 +29,7 @@ function createSubSectionArray(dbData) {
       subsectionLabel,
       marginalNote,
       subsectionText,
+      heading2Key,
       sectionText,
       sectionKey,
       subsectionKey,
@@ -42,6 +44,7 @@ function createSubSectionArray(dbData) {
         subsectionLabel: subsectionLabel,
         marginalNote: marginalNote,
         subsectionText: subsectionText,
+        heading2Key: heading2Key,
         sectionText: sectionText,
         sectionKey: sectionKey,
         subsectionKey: subsectionKey,
@@ -59,6 +62,7 @@ function createSubSectionArray(dbData) {
         subsectionLabel,
         marginalNote,
         subsectionText,
+        heading2Key,
         sectionText,
         sectionKey,
         subsectionKey,
@@ -76,6 +80,7 @@ function createSubSectionArray(dbData) {
           subsectionLabel,
           marginalNote,
           subsectionText,
+          heading2Key,
           sectionText,
           sectionKey,
           subsectionKey,
