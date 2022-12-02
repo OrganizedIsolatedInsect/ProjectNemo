@@ -8,30 +8,28 @@ import {
 } from './CrimCodeRenderSection';
 import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
+import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = props => {
-  const [searchResults, setSearchResults] = useState('');
-  const [dbData, setDbData] = useState([]);
+  const [searchResults, setSearchResults] = useState('licence');
+  const [crimCodeDbData, setCrimCodeDbData] = useState([]);
+  const [mvaDbData, setMvaDbData] = useState([]);
 
   useEffect(() => {
-    setSearchResults('riot');
+    setSearchResults('licence');
     getDbData(searchResults);
   }, []);
 
-  let subsectionData = createSubSectionArray(dbData);
-
-  //console.log(subsectionData);
+  let subsectionData = createSubSectionArray(crimCodeDbData);
 
   // function to get data from NemoDB
   const getDbData = searchResults => {
     const sqlSearch = `%${searchResults}%`;
-
     //each ? requires its only index in the array that passes to the executeSql command
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * from CCDataV2 WHERE heading2TitleText like ? or sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
+        'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
         [
-          sqlSearch,
           sqlSearch,
           sqlSearch,
           sqlSearch,
@@ -41,11 +39,25 @@ const SearchResults = props => {
           sqlSearch,
         ],
         (tx, results) => {
-          const temp = [];
+          const crimCodeTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
-            temp.push(results.rows.item(i));
+            crimCodeTemp.push(results.rows.item(i));
           }
-          setDbData(temp);
+          setCrimCodeDbData(crimCodeTemp);
+        },
+      );
+    });
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * from MVA where sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        (tx, results) => {
+          const mvaTemp = [];
+          for (let i = 0; i < results.rows.length; ++i) {
+            mvaTemp.push(results.rows.item(i));
+          }
+
+          setMvaDbData(mvaTemp);
         },
       );
     });
@@ -60,12 +72,32 @@ const SearchResults = props => {
           return (
             <View style={styles.container}>
               <View style={styles.heading_2}>
-                <CrimCodeRenderHeader subsectionData={item} />
+                <CrimCodeRenderHeader
+                  subsectionData={item}
+                  searchResults={searchResults}
+                />
               </View>
               <View>
-                <CrimCodeRenderBody subsectionData={item} dbData={dbData} />
+                <CrimCodeRenderBody
+                  subsectionData={item}
+                  dbData={crimCodeDbData}
+                  searchResults={searchResults}
+                />
                 <Text>{'\n'}</Text>
               </View>
+            </View>
+          );
+        }}
+      />
+      <FlatList
+        data={mvaDbData}
+        renderItem={({item}) => {
+          return (
+            <View>
+              <ContentMVA
+                provisionId={item.provision}
+                searchResults={searchResults}
+              />
             </View>
           );
         }}
@@ -86,4 +118,4 @@ or subparagraphText like '%terrorist%'
 or clauseText like '%terrorist%'
 or subclauseText like '%terrorist%' 
 
-return <CrimCodeRenderHeader subsectionData={item} />;*/
+;*/

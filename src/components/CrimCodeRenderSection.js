@@ -28,7 +28,13 @@ const createFilter = (data, filter, dbFieldNameKeyString) => {
 };
 
 // Accordion Header
-const CrimCodeRenderHeader = ({subsectionData, isActive, style, props}) => {
+const CrimCodeRenderHeader = ({
+  subsectionData,
+  searchResults,
+  isActive,
+  style,
+  props,
+}) => {
   return (
     <View>
       <Text style={{color: colors.primaryText, ...style}}>
@@ -40,14 +46,18 @@ const CrimCodeRenderHeader = ({subsectionData, isActive, style, props}) => {
         <Text style={{color: colors.accordionGray}}>
           {subsectionData.subsectionLabel}
         </Text>{' '}
-        {subsectionData.marginalNote}
+        <HighlightText
+          searchWords={[searchResults]}
+          textToHighlight={subsectionData.marginalNote}
+          highlightStyle={styles.searchResultsHighlight}
+        />
       </Text>
     </View>
   );
 };
 
 // Accordion Body
-const CrimCodeRenderBody = ({subsectionData, dbData}) => {
+const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
   //filter data that contains paragraphs based on subsectionKey
   let paraData = dbData.filter(
     (paragraph, i) => dbData[i].subsectionKey == subsectionData.subsectionKey,
@@ -70,7 +80,12 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
     return (
       <View style={styles.paragraph}>
         <Text style={{color: colors.primaryText}}>
-          {item.paragraphLabel} {item.paragraphText}
+          {item.paragraphLabel}
+          <HighlightText
+            searchWords={[searchResults]}
+            textToHighlight={item.paragraphText}
+            highlightStyle={styles.searchResultsHighlight}
+          />
         </Text>
         {subparaFilter.length > 1 ? (
           <FlatList
@@ -151,7 +166,11 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
     return (
       <View>
         <Text style={{color: colors.primaryText}}>
-          {subsectionData.sectionText}
+          <HighlightText
+            searchWords={[searchResults]}
+            textToHighlight={subsectionData.sectionText}
+            highlightStyle={styles.searchResultsHighlight}
+          />
         </Text>
       </View>
     );
@@ -160,7 +179,11 @@ const CrimCodeRenderBody = ({subsectionData, dbData}) => {
     return (
       <View>
         <Text style={{color: colors.primaryText}}>
-          {subsectionData.subsectionText}
+          <HighlightText
+            searchWords={[searchResults]}
+            textToHighlight={subsectionData.subsectionText}
+            highlightStyle={styles.searchResultsHighlight}
+          />
         </Text>
         {paraFilter.length > 1 ? (
           <FlatList
