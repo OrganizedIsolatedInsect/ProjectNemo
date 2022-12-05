@@ -15,10 +15,12 @@ const LegislationGridList = props => {
   return (
     <View>
       <Pressable
-        onPress={() => navAid.navigate(props.destination, {paramkey: props})}>
+        onPress={() =>
+          navAid.navigate(props.screenDestination, {paramkey: props})
+        }>
         <View style={styles.gridListItem}>
           <Text style={[styles.heading_1, {color: colors.primaryText}]}>
-            {props.title}
+            {props.legislationTitle}
           </Text>
           <Icon
             name={'arrow-forward-ios'}
