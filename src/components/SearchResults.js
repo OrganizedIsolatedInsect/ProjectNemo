@@ -24,7 +24,11 @@ const SearchResults = ({searchQueryTerm}) => {
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
+  const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
+
+  //remove later
+  const [testString, setTestString] = useState('');
 
   const navAid = useNavigation();
 
@@ -59,10 +63,14 @@ const SearchResults = ({searchQueryTerm}) => {
         ],
         (tx, results) => {
           const crimCodeTemp = [];
+          const searchCountTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
             crimCodeTemp.push(results.rows.item(i));
+            searchCountTemp.push(results.rows.item(i).sectionLabel);
           }
+          setCrimCodeSearchCount(searchCountTemp);
           setCrimCodeDbData(crimCodeTemp);
+          setTestString(crimCodeTemp[0].paragraphText);
         },
       );
     });
@@ -91,6 +99,28 @@ const SearchResults = ({searchQueryTerm}) => {
       });
     });
   };
+
+  const searchCountFilter = crimCodeSearchCount.reduce(function (
+    allSectionLabel,
+    sectionLabel,
+  ) {
+    if (sectionLabel in allSectionLabel) {
+      allSectionLabel[sectionLabel]++;
+    } else {
+      allSectionLabel[sectionLabel] = 1;
+    }
+    return allSectionLabel;
+  },
+  {});
+
+  //Temp for testing, remove later
+  let getIndexArray = testString.split(/[, ,',;,.]+/);
+  let indexArray = testString.split(' ');
+  let getIndex = getIndexArray.indexOf('vehicle');
+  let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
+  returnString = returnString.join(' ');
+
+  console.log(returnString);
 
   return (
     <View>
