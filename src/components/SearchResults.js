@@ -124,7 +124,7 @@ const SearchResults = ({searchQueryTerm}) => {
         data={dbIndex}
         keyExtractor={data => data.legislationId}
         renderItem={({item}) => {
-          if (item.legislationTitle === 'Criminal Code of Canada') {
+          if (item.legislationType === 'CrimCode') {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
@@ -165,7 +165,7 @@ const SearchResults = ({searchQueryTerm}) => {
               </View>
             );
           }
-          if (item.legislationTitle === 'Motor Vehicle Acts + Regulations') {
+          if (item.legislationType === 'MVA') {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
