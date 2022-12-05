@@ -24,6 +24,7 @@ const SearchResults = ({searchQueryTerm}) => {
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
+  const [dbIndex, setDbIndex] = useState([]);
 
   const navAid = useNavigation();
 
@@ -39,16 +40,11 @@ const SearchResults = ({searchQueryTerm}) => {
     return data[index];
   };
 
-  //index to show search results, will be replaced with database table
-  const searchResultsIndex = [
-    {legislativeTitle: 'Criminal Code', id: 'l1'},
-    {legislativeTitle: 'Motor Vehicle Act', id: 'l2'},
-  ];
-
   // function to get data from NemoDB
   const getDbData = searchResults => {
     const sqlSearch = `%${searchResults}%`;
     //each ? requires its only index in the array that passes to the executeSql command
+    //SQL Query for crim code data
     db.transaction(tx => {
       tx.executeSql(
         'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
@@ -70,6 +66,7 @@ const SearchResults = ({searchQueryTerm}) => {
         },
       );
     });
+    //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
         'SELECT * from MVA where sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
@@ -83,18 +80,28 @@ const SearchResults = ({searchQueryTerm}) => {
         },
       );
     });
+    //SQL for legislation index
+    db.transaction(tx => {
+      tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
+        const dbIndexTemp = [];
+        for (let i = 0; i < results.rows.length; ++i) {
+          dbIndexTemp.push(results.rows.item(i));
+        }
+        setDbIndex(dbIndexTemp);
+      });
+    });
   };
 
   return (
     <View>
       <FlatList
-        data={searchResultsIndex}
-        keyExtractor={data => data.id}
+        data={dbIndex}
+        keyExtractor={data => data.legislationId}
         renderItem={({item}) => {
-          if (item.legislativeTitle === 'Criminal Code') {
+          if (item.legislationTitle === 'Criminal Code') {
             return (
               <View>
-                <Text style={styles.heading_2}>{item.legislativeTitle}</Text>
+                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <View>
                   <FlatList
                     style={styles.searchResultsContainer}
@@ -132,10 +139,10 @@ const SearchResults = ({searchQueryTerm}) => {
               </View>
             );
           }
-          if (item.legislativeTitle === 'Motor Vehicle Act') {
+          if (item.legislationTitle === 'Motor Vehicle Act') {
             return (
               <View>
-                <Text style={styles.heading_2}>{item.legislativeTitle}</Text>
+                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
                   data={mvaDbData}
                   keyExtractor={data => data.index}
