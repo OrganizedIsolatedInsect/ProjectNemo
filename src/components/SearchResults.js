@@ -40,10 +40,6 @@ const SearchResults = ({searchQueryTerm}) => {
   //create subsection for crime code renders
   let subsectionData = createSubSectionArray(crimCodeDbData);
 
-  const getItem = (data, index) => {
-    return data[index];
-  };
-
   // function to get data from NemoDB
   const getDbData = searchResults => {
     const sqlSearch = `%${searchResults}%`;
@@ -120,7 +116,7 @@ const SearchResults = ({searchQueryTerm}) => {
   let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
   returnString = returnString.join(' ');
 
-  console.log(returnString);
+  //console.log(returnString);
 
   return (
     <View>
@@ -128,7 +124,7 @@ const SearchResults = ({searchQueryTerm}) => {
         data={dbIndex}
         keyExtractor={data => data.legislationId}
         renderItem={({item}) => {
-          if (item.legislationTitle === 'Criminal Code') {
+          if (item.legislationTitle === 'Criminal Code of Canada') {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
@@ -169,7 +165,7 @@ const SearchResults = ({searchQueryTerm}) => {
               </View>
             );
           }
-          if (item.legislationTitle === 'Motor Vehicle Act') {
+          if (item.legislationTitle === 'Motor Vehicle Acts + Regulations') {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
