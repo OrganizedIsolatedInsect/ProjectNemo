@@ -73,8 +73,8 @@ const SearchResults = ({searchQueryTerm}) => {
     //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * from MVA where sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-        [sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         (tx, results) => {
           const mvaTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
