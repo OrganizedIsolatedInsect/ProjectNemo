@@ -19,7 +19,7 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm}) => {
-  const searchTerm = 'vehicle';
+  const searchTerm = 'unlicensed';
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
@@ -73,8 +73,8 @@ const SearchResults = ({searchQueryTerm}) => {
     //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * from MVA where sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-        [sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         (tx, results) => {
           const mvaTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
@@ -116,7 +116,27 @@ const SearchResults = ({searchQueryTerm}) => {
   let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
   returnString = returnString.join(' ');
 
-  //console.log(returnString);
+  const combinedResults = subsectionData.concat(mvaDbData);
+
+  //sort results into pages
+  const numResultsReturned = 10;
+  let resultsPage = 0;
+
+  let renderArray = [];
+
+  for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
+    const resultsReturned = combinedResults.slice(i, i + numResultsReturned);
+    resultsPage = resultsPage + 1;
+    const pushedResult = {
+      resultsPage: resultsPage,
+      resultsReturned: resultsReturned,
+    };
+    renderArray.push(pushedResult);
+    //console.log(resultsPage);
+    //console.log(resultsReturned);
+  }
+
+  console.log(renderArray);
 
   return (
     <View>
