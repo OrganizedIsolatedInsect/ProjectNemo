@@ -1,7 +1,7 @@
 // Searching using Search Bar Filter in React Native List View
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
-import React from 'react';
+import React, {useState} from 'react';
 import {View, TextInput, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -24,6 +24,10 @@ const SearchBar = props => {
     props.setQuery();
   };
 
+  const submitSearchTerm = () => {
+    props.setSearchTerm(props.query);
+  };
+
   return (
     <View>
       {/* Searchbar component starts here */}
@@ -35,6 +39,7 @@ const SearchBar = props => {
           underlineColorAndroid="transparent"
           placeholder="Search"
           returnKeyType="search"
+          onSubmitEditing={submitSearchTerm}
         />
         {/* Search Icon with styling to position it on the left of the Searchbar */}
         <Icon name="search" size={30} style={styles.searchIcon_styling} />
