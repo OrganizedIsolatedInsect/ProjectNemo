@@ -19,7 +19,7 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm}) => {
-  const searchTerm = 'unlicensed';
+  const searchTerm = 'vehicle';
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
@@ -116,23 +116,30 @@ const SearchResults = ({searchQueryTerm}) => {
   let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
   returnString = returnString.join(' ');
 
+  //add type to dbData
+  subsectionData.forEach(function (data) {
+    data.type = 'CrimCode';
+  });
+  mvaDbData.forEach(function (data) {
+    data.type = 'MVA';
+  });
+
   const combinedResults = subsectionData.concat(mvaDbData);
 
   //sort results into pages
   const numResultsReturned = 10;
   let resultsPage = 0;
-
   let renderArray = [];
 
+  //add page on which result should be in
   for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
     const resultsReturned = combinedResults.slice(i, i + numResultsReturned);
     resultsPage = resultsPage + 1;
-    const pushedResult = {
-      resultsPage: resultsPage,
-      resultsReturned: resultsReturned,
-    };
-    renderArray.push(pushedResult);
-    //console.log(resultsPage);
+    resultsReturned.forEach(function (data) {
+      data.resultsPage = resultsPage;
+    });
+    renderArray.push(resultsReturned);
+
     //console.log(resultsReturned);
   }
 
