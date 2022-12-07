@@ -20,6 +20,7 @@ import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm}) => {
   const searchTerm = 'vehicle';
+  const currentPageNum = 1;
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
@@ -124,95 +125,39 @@ const SearchResults = ({searchQueryTerm}) => {
     data.type = 'MVA';
   });
 
-  const combinedResults = subsectionData.concat(mvaDbData);
+  //const combinedResults = subsectionData.concat(mvaDbData);
+  const combinedResults = subsectionData;
 
   //sort results into pages
   const numResultsReturned = 10;
   let resultsPage = 0;
-  let renderArray = [];
+  let totalSearchArray = [];
 
   //add page on which result should be in
   for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
     const resultsReturned = combinedResults.slice(i, i + numResultsReturned);
     resultsPage = resultsPage + 1;
-    resultsReturned.forEach(function (data) {
-      data.resultsPage = resultsPage;
-    });
-    renderArray.push(resultsReturned);
-
-    //console.log(resultsReturned);
+    const pushedResults = {
+      resultsPage: resultsPage,
+      resultsReturned: resultsReturned,
+    };
+    totalSearchArray.push(pushedResults);
   }
 
-  console.log(renderArray);
+  let renderArray = totalSearchArray.filter(function (el, index) {
+    return el.resultsPage === currentPageNum;
+  });
+
+  //console.log(renderArray);
 
   return (
     <View>
       <FlatList
-        data={dbIndex}
-        keyExtractor={data => data.legislationId}
-        renderItem={({item}) => {
-          if (item.legislationType === 'CrimCode') {
-            return (
-              <View>
-                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
-                <View>
-                  <FlatList
-                    style={styles.searchResultsContainer}
-                    data={subsectionData}
-                    keyExtractor={data => data.field1}
-                    renderItem={({item, index}) => {
-                      return (
-                        <View key={index}>
-                          <Pressable
-                            onPress={() => {
-                              navAid.navigate('ContentCCScreen', {
-                                passingKey: item.heading2Key,
-                                searchResults: searchResults,
-                              });
-                            }}>
-                            <View style={styles.heading_2}>
-                              <CrimCodeRenderHeader
-                                subsectionData={item}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                            <View>
-                              <CrimCodeRenderBody
-                                subsectionData={item}
-                                dbData={crimCodeDbData}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                          </Pressable>
-                        </View>
-                      );
-                    }}
-                  />
-                </View>
-              </View>
-            );
-          }
-          if (item.legislationType === 'MVA') {
-            return (
-              <View>
-                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
-                <FlatList
-                  data={mvaDbData}
-                  keyExtractor={data => data.index}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View key={index} style={styles.searchResultsContainer}>
-                        <ContentMVA
-                          provisionId={item.provision}
-                          searchResults={searchResults}
-                        />
-                      </View>
-                    );
-                  }}
-                />
-              </View>
-            );
-          }
+        data={renderArray}
+        renderItem={({item, index}) => {
+          <View>
+            <Text>{item.resultsPage}</Text>
+          </View>;
         }}
       />
     </View>
