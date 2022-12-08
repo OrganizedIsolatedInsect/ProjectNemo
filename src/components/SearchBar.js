@@ -32,6 +32,7 @@ const SearchBar = props => {
           placeholder="Search"
           returnKeyType="search"
           onSubmitEditing={submitSearchTerm}
+          autoCapitalize="none"
         />
         {/* Search Icon with styling to position it on the left of the Searchbar */}
         <MagnifyingGlass />

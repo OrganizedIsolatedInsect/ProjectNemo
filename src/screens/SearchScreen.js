@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, TextInput, Button} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View} from 'react-native';
 
 import SearchResults from '../components/SearchResults';
 import SearchBar from '../components/SearchBar';
@@ -16,7 +15,22 @@ const SearchScreen = props => {
 
   console.log('Query: ', query);
   console.log('SearchTerm: ', searchTerm);
-  const submitQuery = query => console.log(query);
+
+  const SearchFeatures = () => {
+    return (
+      <View>
+        <View style={styles.alignOnRow}>
+          {/* Implementation of FilterButton Component */}
+          <FilterButton buttonLabel="Criminal Code" />
+          <FilterButton buttonLabel="Motor Vehicle Act" />
+          <FilterButton buttonLabel="Motor Vehicle Regulations" />
+        </View>
+        <View>
+          <SearchResults searchQueryTerm={searchTerm} />
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.background}>
@@ -26,16 +40,8 @@ const SearchScreen = props => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-
-      {/* Implementation of FilterButton Component */}
-      <View style={styles.alignOnRow}>
-        <FilterButton buttonLabel="Criminal Code" />
-        <FilterButton buttonLabel="Motor Vehicle Act" />
-        <FilterButton buttonLabel="Motor Vehicle Regulations" />
-      </View>
-      <View>
-        <SearchResults />
-      </View>
+      {/* If the query is blank, do not show filter buttons or empty search results section */}
+      {searchTerm !== undefined ? <SearchFeatures /> : null}
     </SafeAreaView>
   );
 };

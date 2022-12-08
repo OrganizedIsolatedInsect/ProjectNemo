@@ -19,7 +19,7 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm}) => {
-  const searchTerm = 'vehicle';
+  const searchTerm = searchQueryTerm;
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
@@ -27,15 +27,12 @@ const SearchResults = ({searchQueryTerm}) => {
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
 
-  //remove later
-  const [testString, setTestString] = useState('');
-
   const navAid = useNavigation();
 
   useEffect(() => {
     setSearchResults(searchTerm);
     getDbData(searchResults);
-  }, [searchTerm]);
+  }, [searchTerm, searchResults]);
 
   //create subsection for crime code renders
   let subsectionData = createSubSectionArray(crimCodeDbData);
@@ -66,15 +63,15 @@ const SearchResults = ({searchQueryTerm}) => {
           }
           setCrimCodeSearchCount(searchCountTemp);
           setCrimCodeDbData(crimCodeTemp);
-          setTestString(crimCodeTemp[0].paragraphText);
+          console.log('searchCountTemp: ', searchCountTemp.length);
         },
       );
     });
     //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * from MVA where sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-        [sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         (tx, results) => {
           const mvaTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
@@ -108,15 +105,6 @@ const SearchResults = ({searchQueryTerm}) => {
     return allSectionLabel;
   },
   {});
-
-  //Temp for testing, remove later
-  let getIndexArray = testString.split(/[, ,',;,.]+/);
-  let indexArray = testString.split(' ');
-  let getIndex = getIndexArray.indexOf('vehicle');
-  let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
-  returnString = returnString.join(' ');
-
-  //console.log(returnString);
 
   return (
     <View>
