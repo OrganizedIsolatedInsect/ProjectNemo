@@ -132,6 +132,7 @@ const SearchResults = ({searchQueryTerm}) => {
   const numResultsReturned = 10;
   let resultsPage = 0;
   let totalSearchArray = [];
+  let renderSearchArray = [];
 
   //add page on which result should be in
   for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
@@ -142,22 +143,80 @@ const SearchResults = ({searchQueryTerm}) => {
       resultsReturned: resultsReturned,
     };
     totalSearchArray.push(pushedResults);
+    if (resultsPage == currentPageNum) {
+      renderSearchArray.push(resultsReturned);
+    }
   }
-
-  let renderArray = totalSearchArray.filter(function (el, index) {
-    return el.resultsPage === currentPageNum;
-  });
-
-  //console.log(renderArray);
+  console.log(dbIndex);
 
   return (
     <View>
       <FlatList
-        data={renderArray}
-        renderItem={({item, index}) => {
-          <View>
-            <Text>{item.resultsPage}</Text>
-          </View>;
+        data={dbIndex}
+        keyExtractor={data => data.legislationId}
+        renderItem={({item}) => {
+          if (item.legislationType === 'CrimCode') {
+            return (
+              <View>
+                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
+                <View>
+                  <FlatList
+                    style={styles.searchResultsContainer}
+                    data={subsectionData}
+                    keyExtractor={data => data.field1}
+                    renderItem={({item, index}) => {
+                      return (
+                        <View key={index}>
+                          <Pressable
+                            onPress={() => {
+                              navAid.navigate('ContentCCScreen', {
+                                passingKey: item.heading2Key,
+                                searchResults: searchResults,
+                              });
+                            }}>
+                            <View style={styles.heading_2}>
+                              <CrimCodeRenderHeader
+                                subsectionData={item}
+                                searchResults={searchResults}
+                              />
+                            </View>
+                            <View>
+                              <CrimCodeRenderBody
+                                subsectionData={item}
+                                dbData={crimCodeDbData}
+                                searchResults={searchResults}
+                              />
+                            </View>
+                          </Pressable>
+                        </View>
+                      );
+                    }}
+                  />
+                </View>
+              </View>
+            );
+          }
+          if (item.legislationType === 'MVA') {
+            return (
+              <View>
+                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
+                <FlatList
+                  data={mvaDbData}
+                  keyExtractor={data => data.index}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View key={index} style={styles.searchResultsContainer}>
+                        <ContentMVA
+                          provisionId={item.provision}
+                          searchResults={searchResults}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              </View>
+            );
+          }
         }}
       />
     </View>
