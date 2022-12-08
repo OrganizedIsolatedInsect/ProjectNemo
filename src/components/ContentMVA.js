@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {db} from '../components/Database';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {useIsFocused} from '@react-navigation/native';
+import HighlightText from '@sanar/react-native-highlight-text';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
 
-const ContentMVA = ({provisionId}) => {
-  const provisionID = provisionId;
+const ContentMVA = ({provisionId, searchResults}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [marked, setMarked] = useState(false); //to change marked status of content
@@ -37,17 +37,17 @@ const ContentMVA = ({provisionId}) => {
 
   useEffect(() => {
     setLoading(true);
-    getDbData(provisionID);
+    getDbData(provisionId);
     setLoading(false);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section == provisionID)) {
+    if (bookmarkStateId.some(e => e.section == provisionId)) {
       setMarked(true);
     } else {
       setMarked(false);
     }
-  }, [marked, loading, provisionID]);
+  }, [marked, loading, provisionId]);
 
-  //lookup provisionID on the data table to find the proper row
+  //lookup provisionId on the data table to find the proper row
   // function to get data from NemoDB
   //Issues:  setting setDBData does not appear to work properly in this component so variables set up via temp output
   const getDbData = provID => {
@@ -110,7 +110,11 @@ const ContentMVA = ({provisionId}) => {
               fontWeight: 'bold',
               color: colors.primaryText,
             }}>
-            {contravention}
+            <HighlightText
+              searchWords={[searchResults]}
+              textToHighlight={contravention}
+              highlightStyle={styles.searchResultsHighlight}
+            />
           </Text>
         </View>
         <View style={styles.MVAContentHeadingContainerRight}>
@@ -128,11 +132,20 @@ const ContentMVA = ({provisionId}) => {
       </View>
       <View style={styles.MVAContentSection}>
         <Text style={{...styles.accent_1, color: colors.primaryText}}>
-          {source}, Section {provision}
+          {source}, Section
+          <HighlightText
+            searchWords={[searchResults]}
+            textToHighlight={provision}
+            highlightStyle={styles.searchResultsHighlight}
+          />
         </Text>
         <Text
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
-          {sectionText}
+          <HighlightText
+            searchWords={[searchResults]}
+            textToHighlight={sectionText}
+            highlightStyle={styles.searchResultsHighlight}
+          />
           {'\n'}
         </Text>
         <View style={styles.MVAContentSubsection}>
@@ -141,9 +154,21 @@ const ContentMVA = ({provisionId}) => {
               ...styles.MVAContentSectionText,
               color: colors.primaryText,
             }}>
-            {sectionSubsection}
-            {sectionParagraph}
-            {sectionSubparagraph}
+            <HighlightText
+              searchWords={[searchResults]}
+              textToHighlight={sectionSubsection}
+              highlightStyle={styles.searchResultsHighlight}
+            />
+            <HighlightText
+              searchWords={[searchResults]}
+              textToHighlight={sectionParagraph}
+              highlightStyle={styles.searchResultsHighlight}
+            />
+            <HighlightText
+              searchWords={[searchResults]}
+              textToHighlight={sectionSubparagraph}
+              highlightStyle={styles.searchResultsHighlight}
+            />
             {'\n'}
           </Text>
         </View>

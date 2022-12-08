@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styles from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View} from 'react-native';
+import {View, TextInput, Button} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import SearchResults from '../components/SearchResults';
 import SearchBar from '../components/SearchBar';
 import FilterButton from '../components/FilterButton';
 
@@ -14,6 +16,7 @@ const SearchScreen = props => {
 
   console.log('Query: ', query);
   console.log('SearchTerm: ', searchTerm);
+  const submitQuery = query => console.log(query);
 
   return (
     <SafeAreaView style={styles.background}>
@@ -29,6 +32,9 @@ const SearchScreen = props => {
         <FilterButton buttonLabel="Criminal Code" />
         <FilterButton buttonLabel="Motor Vehicle Act" />
         <FilterButton buttonLabel="Motor Vehicle Regulations" />
+      </View>
+      <View>
+        <SearchResults />
       </View>
     </SafeAreaView>
   );
