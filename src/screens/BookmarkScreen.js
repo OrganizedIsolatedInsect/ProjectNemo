@@ -1,7 +1,7 @@
 import React from 'react';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, Button, FlatList, Pressable} from 'react-native';
+import {Text, View, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {useSelector} from 'react-redux';
@@ -30,7 +30,8 @@ const BookmarkScreen = props => {
       CCArray.push(bookmarks.bookmarkArray[i]);
     }
   }
-
+  console.log('CCArray ');
+  console.log(CCArray);
   const dispatch = useDispatch();
 
   const renderText = item => {
@@ -66,16 +67,10 @@ const BookmarkScreen = props => {
             });
           }
           if (item.lawType === 'CC') {
-            const passingKey = item.legislationGroup.passingKey;
-            const heading1Label = item.legislationGroup.heading1Label;
-            const heading1TitleText = item.legislationGroup.heading1TitleText;
-            const heading2TitleText = item.legislationGroup.heading2TitleText;
+            const passingKey = item.passingKey;
             navAid.navigate('ContentCCScreen', {
               props: {
                 params: passingKey,
-                heading1Label,
-                heading1TitleText,
-                heading2TitleText,
               },
             });
           }
@@ -87,7 +82,14 @@ const BookmarkScreen = props => {
         name="delete"
         size={20}
         onPress={() =>
-          dispatch(removeBookmark({legislationGroup: item.legislationGroup}))
+          dispatch(
+            removeBookmark({
+              legislationGroup: item.legislationGroup,
+              passingKey: item.passingKey,
+              lawType: item.lawType,
+              indexOfList: item.indexOfList,
+            }),
+          )
         }
       />
     </View>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Pressable} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -8,70 +8,79 @@ import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
 const Bookmark = props => {
   const [marked, setMarked] = useState(false); // Preps icon for state chagne
-  const [fullSomeData, setFullSomeData] = useState([]);
+  const [fullSomeData, setFullSomeData] = useState();
   const localLawType = props.lawType;
+  const localPassKey = props.passingKey;
   const localData = props.data;
+  const localIndex = props.accordionIndex;
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrievs list of current bookmarks
 
-  console.log('bookmark => props');
+  const checkBookmarkArray = () => {
+    const checkBool = bookmarkStateId.some(
+      e =>
+        e.legislationGroup === fullSomeData &&
+        e.lawType === localLawType &&
+        e.passingKey === localPassKey &&
+        e.indexOfList === localIndex,
+    );
+    console.log('checkBool');
+    console.log(checkBool);
+    return checkBool;
+  };
 
-  console.log(bookmarkStateId);
+  useEffect(() => {
+    setFullSomeData(localData);
+  }, [localData]);
 
   useEffect(() => {
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    setFullSomeData(localData);
-  }, [localData]);
+    if (checkBookmarkArray() === true) {
+      console.log('return true');
+      console.log(fullSomeData);
+      setMarked(true);
+    } else {
+      console.log('return false');
+      setMarked(false);
+    }
+  }, [fullSomeData]);
 
   //switches state of bookmark
   const switchMarks = () => {
     setMarked(!marked);
   };
 
-  const dispatchAction = () => {
-    if (marked === true) {
+  const dispatchAction = (bmData, bmKey, lawT, accIndex) => {
+    if (marked === false) {
       dispatch(
         addBookmark({
-          legislationGroup: {
-            data: fullSomeData,
-            passingKey: props.passingKey,
-            heading1Label: props.heading1Label,
-            heading1TitleText: props.heading1TitleText,
-            heading2TitleText: props.heading2TitleText,
-          },
-          lawType: localLawType,
+          legislationGroup: bmData,
+          passingKey: bmKey,
+          lawType: lawT,
+          indexOfList: accIndex,
         }),
       );
     }
-    if (marked === false) {
+    if (marked === true) {
       dispatch(
         removeBookmark({
-          legislationGroup: fullSomeData,
-          lawType: localLawType,
+          legislationGroup: bmData,
+          passingKey: bmKey,
+          lawType: lawT,
+          indexOfList: accIndex,
         }),
       );
     }
   };
-  useEffect(() => {
-    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (
-      bookmarkStateId.some(e => e.bookmarkArray == fullSomeData) &&
-      isFocused
-    ) {
-      setMarked(true);
-    } else {
-      setMarked(false);
-    }
-  }, [isFocused]);
 
   return (
     <Pressable
       onPress={() => {
         switchMarks();
-        dispatchAction();
+        dispatchAction(fullSomeData, localPassKey, localLawType, localIndex);
       }}>
-      <View>{marked ? <BookmarkMarked /> : <BookmarkUnmarked />}</View>
+      <View>{marked === true ? <BookmarkMarked /> : <BookmarkUnmarked />}</View>
     </Pressable>
   );
 };

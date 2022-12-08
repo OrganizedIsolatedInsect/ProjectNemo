@@ -86,18 +86,17 @@ const Section = ({section, lawType}) => {
     );
   };
 
-  const renderContent = (item, index, isActive, sections) => {
+  const renderContent = (item, index, isActive, sections, marked) => {
     return (
       <View style={styles.accordionContainer}>
         <View style={styles.bookmarkPosition}>
           {/* Bookmark parameters include a callback to the previous parts/section layers for titles, labels for passing into the ContentCCSCreen */}
           <Bookmark
             data={item}
-            passingKey={dbData[0].heading2Key}
-            heading1Label={dbData[0].heading1Label}
-            heading1TitleText={dbData[0].heading1TitleText}
-            heading2TitleText={dbData[0].heading2TitleText}
+            passingKey={item.paragraphKey}
             lawType={localLawType}
+            setMarked={marked}
+            accordionIndex={index}
           />
         </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
