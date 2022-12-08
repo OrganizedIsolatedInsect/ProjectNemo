@@ -90,7 +90,7 @@ const Section = ({section, lawType}) => {
     return (
       <View style={styles.accordionContainer}>
         <View style={styles.bookmarkPosition}>
-          {/* Bookmark parameters include a callback to the previous parts/section layers for titles, labels for passing into the ContentCCSCreen */}
+          {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
           <Bookmark
             data={item}
             passingKey={item.paragraphKey}

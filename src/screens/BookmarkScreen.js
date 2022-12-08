@@ -35,8 +35,6 @@ const BookmarkScreen = props => {
   const dispatch = useDispatch();
 
   const renderText = item => {
-    console.log('item');
-    console.log(item);
     if (item.lawType == 'MVA') {
       return (
         <Text style={[styles.body, {color: colors.primaryText}]}>
@@ -49,7 +47,7 @@ const BookmarkScreen = props => {
         <Text>
           {item.legislationGroup.sectionLabel}{' '}
           {item.legislationGroup.subsectionLabel}{' '}
-          {item.legislationGroup.marginalNote}
+          {item.legislationGroup.marginalNote} {item.index}
         </Text>
       );
     }
@@ -67,10 +65,10 @@ const BookmarkScreen = props => {
             });
           }
           if (item.lawType === 'CC') {
-            const passingKey = item.passingKey;
+            const functionPassingKey = item.passingKey;
             navAid.navigate('ContentCCScreen', {
               props: {
-                params: passingKey,
+                params: functionPassingKey,
               },
             });
           }
@@ -80,17 +78,19 @@ const BookmarkScreen = props => {
 
       <Icon
         name="delete"
-        size={20}
-        onPress={() =>
+        size={40} //TO DO - Fix this
+        onPress={() => {
           dispatch(
             removeBookmark({
-              legislationGroup: item.legislationGroup,
+              // legislationGroup: item.legislationGroup,
               passingKey: item.passingKey,
               lawType: item.lawType,
-              indexOfList: item.indexOfList,
+              // index: item.index,
+              // id: item.index,
+              //indexOfList: item.indexOfList,
             }),
-          )
-        }
+          );
+        }}
       />
     </View>
   );
@@ -118,13 +118,21 @@ const BookmarkScreen = props => {
           {MVAArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Motor Vehicle Act</Text>
-              <FlatList data={MVAArray} renderItem={renderBookmark} />
+              <FlatList
+                data={MVAArray}
+                renderItem={renderBookmark}
+                keyExtractor={item => item.index}
+              />
             </View>
           )}
           {CCArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Criminal Code of Canada</Text>
-              <FlatList data={CCArray} renderItem={renderBookmark} />
+              <FlatList
+                data={CCArray}
+                renderItem={renderBookmark}
+                keyExtractor={item => item.index}
+              />
             </View>
           )}
         </View>

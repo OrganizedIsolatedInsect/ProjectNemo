@@ -17,22 +17,24 @@ const Bookmark = props => {
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrievs list of current bookmarks
 
+  useEffect(() => {
+    setFullSomeData(localData);
+  }, [localData]);
+
   const checkBookmarkArray = () => {
+    //const checkBool = bookmarkStateId.includes(fullSomeData) && isFocused;
     const checkBool = bookmarkStateId.some(
       e =>
-        e.legislationGroup === fullSomeData &&
+        // e.legislationGroup == fullSomeData &&
         e.lawType === localLawType &&
         e.passingKey === localPassKey &&
-        e.indexOfList === localIndex,
+        e.indexOfList === localIndex &&
+        isFocused,
     );
     console.log('checkBool');
     console.log(checkBool);
     return checkBool;
   };
-
-  useEffect(() => {
-    setFullSomeData(localData);
-  }, [localData]);
 
   useEffect(() => {
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
@@ -44,7 +46,7 @@ const Bookmark = props => {
       console.log('return false');
       setMarked(false);
     }
-  }, [fullSomeData]);
+  }, [fullSomeData, isFocused]);
 
   //switches state of bookmark
   const switchMarks = () => {
@@ -71,6 +73,7 @@ const Bookmark = props => {
           indexOfList: accIndex,
         }),
       );
+      switchMarks();
     }
   };
 
@@ -80,7 +83,13 @@ const Bookmark = props => {
         switchMarks();
         dispatchAction(fullSomeData, localPassKey, localLawType, localIndex);
       }}>
-      <View>{marked === true ? <BookmarkMarked /> : <BookmarkUnmarked />}</View>
+      <View>
+        {marked === true && isFocused ? (
+          <BookmarkMarked />
+        ) : (
+          <BookmarkUnmarked />
+        )}
+      </View>
     </Pressable>
   );
 };

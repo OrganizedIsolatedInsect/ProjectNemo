@@ -16,10 +16,10 @@ const bookmarkSlice = createSlice({
     removeBookmark: (state, action) => {
       state.bookmarkArray = state.bookmarkArray.filter(
         bookmarkArray =>
-          bookmarkArray.legislationGroup !== action.payload.legislationGroup &&
+          //bookmarkArray.legislationGroup !== action.payload.legislationGroup,
           bookmarkArray.passingKey !== action.payload.passingKey &&
-          bookmarkArray.lawType !== action.payload.lawType &&
-          bookmarkArray.indexOfList !== action.payload.indexOfList,
+          bookmarkArray.lawType !== action.payload.lawType,
+        //   bookmarkArray.indexOfList !== action.payload.indexOfList,
       );
     },
   },
