@@ -1,17 +1,18 @@
-import React from 'react';
-import styles, {colors} from '../assets/styles';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
-import {useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch} from 'react-redux';
-
+import styles, {colors} from '../assets/styles';
 import {removeBookmark} from '../redux/bookmarkSlice';
+import {DeleteIcon, LargeBookmarkIcon} from '../assets/icons';
 
 const BookmarkScreen = props => {
   const navAid = useNavigation();
+  const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
+  const dispatch = useDispatch();
 
   //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
@@ -22,38 +23,50 @@ const BookmarkScreen = props => {
   let MVAArray = [];
   let CCArray = [];
 
-  for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
-    if (bookmarks.bookmarkArray[i].lawType == 'MVA') {
-      MVAArray.push(bookmarks.bookmarkArray[i]);
+  //created as function so it can be re-run during delete function
+  const splitBookmarks = () => {
+    console.log('in splitbookmarks');
+    console.log(bookmarks);
+    MVAArray = [];
+    CCArray = [];
+    for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
+      if (bookmarks.bookmarkArray[i].lawType === 'MVA') {
+        MVAArray.push(bookmarks.bookmarkArray[i]);
+      }
+      if (bookmarks.bookmarkArray[i].lawType === 'CC') {
+        CCArray.push(bookmarks.bookmarkArray[i]);
+      }
     }
-    if (bookmarks.bookmarkArray[i].lawType == 'CC') {
-      CCArray.push(bookmarks.bookmarkArray[i]);
+    console.log('CCArray ');
+    console.log(CCArray);
+  };
+
+  useEffect(() => {
+    if (bookmarks.bookmarkArray.length > 0) {
+      splitBookmarks();
     }
-  }
-  console.log('CCArray ');
-  console.log(CCArray);
-  const dispatch = useDispatch();
+  }, [bookmarks, isFocused]);
 
   const renderText = item => {
-    if (item.lawType == 'MVA') {
+    if (item.lawType === 'MVA') {
       return (
         <Text style={[styles.body, {color: colors.primaryText}]}>
           {item.legislationGroup.provision}{' '}
           {item.legislationGroup.contravention}
         </Text>
       );
-    } else if (item.lawType == 'CC') {
+    } else if (item.lawType === 'CC') {
       return (
         <Text>
           {item.legislationGroup.sectionLabel}{' '}
           {item.legislationGroup.subsectionLabel}{' '}
-          {item.legislationGroup.marginalNote} {item.index}
+          {item.legislationGroup.marginalNote}
         </Text>
       );
     }
   };
 
-  //render bookmark links and navigate based on section type
+  //render bookmark links and navigate based on section type.  Includes pressable
   const renderBookmark = ({item}) => (
     <View style={styles.bookmarkRender}>
       <Pressable
@@ -75,39 +88,32 @@ const BookmarkScreen = props => {
         }}>
         <Text>{renderText(item)}</Text>
       </Pressable>
-
-      <Icon
-        name="delete"
-        size={40} //TO DO - Fix this
+      <Pressable
         onPress={() => {
+          console.log(item.passingKey);
+          console.log(item.lawType);
           dispatch(
             removeBookmark({
-              // legislationGroup: item.legislationGroup,
               passingKey: item.passingKey,
               lawType: item.lawType,
-              // index: item.index,
-              // id: item.index,
-              //indexOfList: item.indexOfList,
+              // indexofList: item.indexofList,
             }),
           );
-        }}
-      />
+        }}>
+        <DeleteIcon />
+      </Pressable>
     </View>
   );
 
   /*Output Section*/
-
+  splitBookmarks();
   if (bookmarks.bookmarkArray.length === 0) {
     return (
       <View style={styles.centerOnScreen}>
         <Text style={[styles.title, {color: colors.primaryText}]}>
           No Bookmarks Currently
         </Text>
-        <Icon
-          name="collections-bookmark"
-          size={200}
-          style={{color: colors.primaryText}}
-        />
+        <LargeBookmarkIcon />
       </View>
     );
   } else {
@@ -121,7 +127,7 @@ const BookmarkScreen = props => {
               <FlatList
                 data={MVAArray}
                 renderItem={renderBookmark}
-                keyExtractor={item => item.index}
+                keyExtractor={item => item.field1}
               />
             </View>
           )}
@@ -131,7 +137,7 @@ const BookmarkScreen = props => {
               <FlatList
                 data={CCArray}
                 renderItem={renderBookmark}
-                keyExtractor={item => item.index}
+                keyExtractor={item => item.field1}
               />
             </View>
           )}

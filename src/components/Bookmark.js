@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Pressable} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -7,7 +7,7 @@ import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
 const Bookmark = props => {
-  const [marked, setMarked] = useState(false); // Preps icon for state chagne
+  const [marked, setMarked] = useState(false);
   const [fullSomeData, setFullSomeData] = useState();
   const localLawType = props.lawType;
   const localPassKey = props.passingKey;
@@ -15,35 +15,32 @@ const Bookmark = props => {
   const localIndex = props.accordionIndex;
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
-  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrievs list of current bookmarks
+  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
 
+  //reloads the data state anytime new data is moved into the component.
   useEffect(() => {
     setFullSomeData(localData);
   }, [localData]);
 
+  //function to check to see if items exist in the bookmark redux
+  // e.legislationGroup == fullSomeData was removed as it interfered with the evaluation.  Tried to compare [object] to {}.
   const checkBookmarkArray = () => {
-    //const checkBool = bookmarkStateId.includes(fullSomeData) && isFocused;
     const checkBool = bookmarkStateId.some(
       e =>
-        // e.legislationGroup == fullSomeData &&
         e.lawType === localLawType &&
         e.passingKey === localPassKey &&
         e.indexOfList === localIndex &&
         isFocused,
     );
-    console.log('checkBool');
-    console.log(checkBool);
     return checkBool;
   };
 
+  // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
+  //isFocused is used to force the bookmark to refresh when user tabs back to accordion screen.
   useEffect(() => {
-    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
     if (checkBookmarkArray() === true) {
-      console.log('return true');
-      console.log(fullSomeData);
       setMarked(true);
     } else {
-      console.log('return false');
       setMarked(false);
     }
   }, [fullSomeData, isFocused]);
@@ -53,6 +50,7 @@ const Bookmark = props => {
     setMarked(!marked);
   };
 
+  //calls the redux methods for adding/remove from the redux store.  "marked" is opposite of logic because of the way react-native handles the use effect state changes.
   const dispatchAction = (bmData, bmKey, lawT, accIndex) => {
     if (marked === false) {
       dispatch(
@@ -77,6 +75,7 @@ const Bookmark = props => {
     }
   };
 
+  //render portion to implement the bookmark icon in the appropriate place.
   return (
     <Pressable
       onPress={() => {
