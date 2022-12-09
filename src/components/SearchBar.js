@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, TextInput, Pressable} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {useNavigation} from '@react-navigation/native';
 
 import {MagnifyingGlass, CloseIcon} from '../assets/icons';
@@ -21,30 +23,38 @@ const SearchBar = props => {
     props.setSearchTerm(props.query);
   };
 
+  const searchBarFocused = () => {
+    props.setSearchBarFocused(true);
+  };
+
+  const searchBarBlurred = () => {
+    props.setSearchBarFocused(false);
+  };
+
   return (
-    <View>
-      <View style={styles.searchView_Styling}>
-        <TextInput
-          style={styles.SearchBar_Styling}
-          onChangeText={props.setQuery}
-          value={props.query}
-          underlineColorAndroid="transparent"
-          placeholder="Search"
-          returnKeyType="search"
-          onSubmitEditing={submitSearchTerm}
-          autoCapitalize="none"
-        />
-        {/* Search Icon with styling to position it on the left of the Searchbar */}
-        <MagnifyingGlass />
-        {/* When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query. */}
-        <Pressable
-          onPress={clearPressed}
-          android_ripple={styles.closeIcon_ripple_styling}
-          style={styles.closeIcon_pressable_styling}>
-          <CloseIcon />
-        </Pressable>
-      </View>
-    </View>
+    <SafeAreaView style={styles.searchView_Styling}>
+      <TextInput
+        style={styles.SearchBar_Styling}
+        onChangeText={props.setQuery}
+        value={props.query}
+        underlineColorAndroid="transparent"
+        placeholder="Search"
+        returnKeyType="search"
+        onSubmitEditing={submitSearchTerm}
+        autoCapitalize="none"
+        onFocus={searchBarFocused}
+        onBlur={searchBarBlurred}
+      />
+      {/* Search Icon with styling to position it on the left of the Searchbar */}
+      <MagnifyingGlass />
+      {/* When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query. */}
+      <Pressable
+        onPress={clearPressed}
+        android_ripple={styles.closeIcon_ripple_styling}
+        style={styles.closeIcon_pressable_styling}>
+        <CloseIcon />
+      </Pressable>
+    </SafeAreaView>
   );
 };
 

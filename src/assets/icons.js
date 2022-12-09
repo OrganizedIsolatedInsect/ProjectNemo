@@ -34,11 +34,25 @@ export const AccordionDown = () => {
 // Criminal Code Content Screen Icons
 
 // SearchBar Icons
-export const MagnifyingGlass = () => {
-  return <Icon name="search" size={30} style={styles.searchIcon_styling} />;
+export const MagnifyingGlass = props => {
+  return (
+    <Icon
+      name="search"
+      size={iconSize + 10}
+      style={{...styles.searchIcon_styling}}
+      {...props}
+    />
+  );
 };
 
-export const CloseIcon = () => {
-  return <Icon name="close" size={30} style={styles.closeIcon_styling} />;
+export const CloseIcon = props => {
+  return (
+    <Icon
+      name="close"
+      size={iconSize + 10}
+      style={styles.closeIcon_styling}
+      {...props}
+    />
+  );
 };
 // SearchBar Icons
