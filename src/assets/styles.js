@@ -76,21 +76,34 @@ export default StyleSheet.create({
   innerContainerRight: {
     alignItems: 'flex-end',
   },
-  buttonContainer: {
+
+  buttonParentContainer: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 10,
+    padding: 3,
     marginHorizontal: 8,
-    marginBottom: 10,
+    marginBottom: 12,
+    marginTop: 5,
     justifyContent: 'flex-start',
   },
-  buttonAct: {
+
+  buttonContainer: {
     borderRadius: 25,
-    borderColor: colors.primary,
-    borderWidth: 1,
-    width: 120,
-    padding: 5,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    borderWidth: 0.5,
+    borderColor: 'light-grey',
   },
+
+  buttonAct: {
+    height: 40,
+    width: 120,
+    borderRadius: 25,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   buttonActText: {
     fontFamily: headingFont,
     fontSize: 17,
@@ -309,6 +322,6 @@ export default StyleSheet.create({
 
   //Android Ripple color
   AndroidRiplePressable: {
-    color: '#E6E6E6',
+    color: '#e6e6e6e6',
   },
 });

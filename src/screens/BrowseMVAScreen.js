@@ -66,46 +66,52 @@ const BrowseMVAScreen = props => {
 
   return (
     <View style={styles.background}>
-      <View style={styles.buttonContainer}>
+      <View style={styles.buttonParentContainer}>
         {/* ACT BUTTON */}
-
-        <Pressable
-          style={{
-            ...styles.buttonAct,
-            backgroundColor: ShowActButton
-              ? colors.primary
-              : colors.backgroundColoring,
-          }}
-          onPress={() => onPressActHandler()}>
-          <Text
+        <View style={styles.buttonContainer}>
+          <Pressable
             style={{
-              ...styles.buttonActText,
-              color: ShowActButton ? colors.neutral : colors.fontColoring,
+              ...styles.buttonAct,
+              backgroundColor: ShowActButton
+                ? colors.primary
+                : colors.backgroundColoring,
+            }}
+            onPress={() => onPressActHandler()}
+            android_ripple={{
+              color: 'black',
             }}>
-            Act
-          </Text>
-        </Pressable>
+            <Text
+              style={{
+                ...styles.buttonActText,
+                color: ShowActButton ? colors.neutral : colors.fontColoring,
+              }}>
+              Act
+            </Text>
+          </Pressable>
+        </View>
         <View>
-          <Text> </Text>
+          <Text>   </Text>
         </View>
         {/* REGULATIONS BUTTON */}
-
-        <Pressable
-          style={{
-            ...styles.buttonAct,
-            backgroundColor: ShowRegButton
-              ? colors.primary
-              : colors.backgroundColoring,
-          }}
-          onPress={() => onPressRegHandler()}>
-          <Text
+        <View style={styles.buttonContainer}>
+          <Pressable
             style={{
-              ...styles.buttonActText,
-              color: ShowRegButton ? colors.neutral : colors.fontColoring,
-            }}>
-            Regulations
-          </Text>
-        </Pressable>
+              ...styles.buttonAct,
+              backgroundColor: ShowRegButton
+                ? colors.primary
+                : colors.backgroundColoring,
+            }}
+            onPress={() => onPressRegHandler()}
+            android_ripple={{color: 'black'}}>
+            <Text
+              style={{
+                ...styles.buttonActText,
+                color: ShowRegButton ? colors.neutral : colors.fontColoring,
+              }}>
+              Regulations
+            </Text>
+          </Pressable>
+        </View>
       </View>
       <View>
         {/* Start of SectionList
@@ -123,6 +129,7 @@ const BrowseMVAScreen = props => {
                     provisionId: item.provision,
                   })
                 }
+                android_ripple={{color: styles.AndroidRiplePressable}}
                 style={styles.innerContainer}>
                 <View style={styles.innerContainerLeft}>
                   <Text

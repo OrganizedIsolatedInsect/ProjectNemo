@@ -50,7 +50,8 @@ const BookmarkScreen = props => {
               section: sectionId,
             });
           }
-        }}>
+        }}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <Text style={[styles.body, {color: colors.primaryText}]}>
           {item.section} {item.sectionHeader}
         </Text>

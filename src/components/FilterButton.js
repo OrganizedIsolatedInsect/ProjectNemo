@@ -21,7 +21,8 @@ const FilterButton = ({buttonLabel, searchFilters}) => {
             ? colors.primary
             : colors.backgroundColoring,
         }}
-        onPress={buttonPressed}>
+        onPress={buttonPressed}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <Text
           style={{
             ...styles.buttonActText,
