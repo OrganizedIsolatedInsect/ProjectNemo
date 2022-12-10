@@ -14,10 +14,15 @@ const bookmarkSlice = createSlice({
       state.bookmarkArray.push(action.payload);
     },
     removeBookmark: (state, action) => {
+      // state.bookmarkArray = 'this is a test';
+      const reduxPassKey = action.payload.passingKey;
+      const reduxLawType = action.payload.lawType;
+      console.log(state.bookmarkArray);
+      console.log('redux ' + reduxPassKey);
+      console.log('redux ' + reduxLawType);
       state.bookmarkArray = state.bookmarkArray.filter(
-        bookmarkArray =>
-          bookmarkArray.passingKey !== action.payload.passingKey &&
-          bookmarkArray.lawType !== action.payload.lawType,
+        item =>
+          item.passingKey !== reduxPassKey && item.lawType !== reduxLawType,
       );
     },
   },

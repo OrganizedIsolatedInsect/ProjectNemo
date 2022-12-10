@@ -96,7 +96,7 @@ const BookmarkScreen = props => {
             removeBookmark({
               passingKey: item.passingKey,
               lawType: item.lawType,
-              // indexofList: item.indexofList,
+              field1: item.field1,
             }),
           );
         }}>
@@ -124,11 +124,7 @@ const BookmarkScreen = props => {
           {MVAArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Motor Vehicle Act</Text>
-              <FlatList
-                data={MVAArray}
-                renderItem={renderBookmark}
-                keyExtractor={item => item.field1}
-              />
+              <FlatList data={MVAArray} renderItem={renderBookmark} />
             </View>
           )}
           {CCArray.length > 0 && (
