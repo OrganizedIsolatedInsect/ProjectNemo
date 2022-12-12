@@ -1,4 +1,7 @@
 {
   "name": "ProjectNemo",
-  "displayName": "ProjectNemo"
+  "displayName": "ProjectNemo",
+  "android": {
+    "softwareKeyboardLayoutMode": "pan",
+    }
 }
