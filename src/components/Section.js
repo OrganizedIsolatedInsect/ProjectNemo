@@ -93,7 +93,7 @@ const Section = ({section, lawType}) => {
           {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
           <Bookmark
             data={item}
-            passingKey={item.paragraphKey}
+            passingKey={item.field1}
             lawType={localLawType}
             setMarked={marked}
             accordionIndex={index}

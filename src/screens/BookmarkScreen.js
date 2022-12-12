@@ -9,11 +9,12 @@ import styles, {colors} from '../assets/styles';
 import {removeBookmark} from '../redux/bookmarkSlice';
 import {DeleteIcon, LargeBookmarkIcon} from '../assets/icons';
 
-const BookmarkScreen = props => {
+const BookmarkScreen = () => {
   const navAid = useNavigation();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const dispatch = useDispatch();
-
+  // console.log('props');
+  // console.log(props);
   //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
   console.log('bookmark screen => bookmarks');
@@ -133,7 +134,7 @@ const BookmarkScreen = props => {
               <FlatList
                 data={CCArray}
                 renderItem={renderBookmark}
-                keyExtractor={item => item.field1}
+                keyExtractor={item => item.index}
               />
             </View>
           )}
