@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
-import {
-  View,
-  Text,
-  FlatList,
-  VirtualizedList,
-  SectionList,
-  Pressable,
-} from 'react-native';
+import {View, Text, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {
@@ -18,13 +11,15 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = ({searchQueryTerm}) => {
+const SearchResults = ({searchQueryTerm, currentPageNum}) => {
   const searchTerm = 'vehicle';
-  const currentPageNum = 1;
+  currentPageNum = 1;
+
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
+
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
 
@@ -36,7 +31,7 @@ const SearchResults = ({searchQueryTerm}) => {
   useEffect(() => {
     setSearchResults(searchTerm);
     getDbData(searchResults);
-  }, [searchTerm]);
+  }, [searchTerm, currentPageNum]);
 
   //create subsection for crime code renders
   let subsectionData = createSubSectionArray(crimCodeDbData);
@@ -125,14 +120,15 @@ const SearchResults = ({searchQueryTerm}) => {
     data.type = 'MVA';
   });
 
-  //const combinedResults = subsectionData.concat(mvaDbData);
-  const combinedResults = subsectionData;
+  const combinedResults = subsectionData.concat(mvaDbData);
+  //const combinedResults = subsectionData;
 
   //sort results into pages
   const numResultsReturned = 10;
   let resultsPage = 0;
   let totalSearchArray = [];
   let renderSearchArray = [];
+  let renderSearchNavArray = [];
 
   //add page on which result should be in
   for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
@@ -144,76 +140,74 @@ const SearchResults = ({searchQueryTerm}) => {
     };
     totalSearchArray.push(pushedResults);
     if (resultsPage == currentPageNum) {
-      renderSearchArray.push(resultsReturned);
+      renderSearchArray = resultsReturned;
     }
   }
-  console.log(dbIndex);
+
+  for (let i = 1; i <= resultsPage; i++) {
+    renderSearchNavArray.push(i);
+  }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text>
+        Page {currentPageNum} of {resultsPage}
+      </Text>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        {renderSearchNavArray.map(item => {
+          return (
+            <Pressable
+              onPress={() => {
+                navAid.push('SearchScreen', {
+                  currentPageNum: item,
+                  searchQueryTerm: searchTerm,
+                });
+              }}>
+              <Text>[{item}]</Text>
+            </Pressable>
+          );
+        })}
+      </View>
       <FlatList
-        data={dbIndex}
-        keyExtractor={data => data.legislationId}
-        renderItem={({item}) => {
-          if (item.legislationType === 'CrimCode') {
+        data={renderSearchArray}
+        renderItem={({item, index}) => {
+          if (item.type === 'MVA') {
             return (
-              <View>
-                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
+              <View key={index}>
                 <View>
-                  <FlatList
-                    style={styles.searchResultsContainer}
-                    data={subsectionData}
-                    keyExtractor={data => data.field1}
-                    renderItem={({item, index}) => {
-                      return (
-                        <View key={index}>
-                          <Pressable
-                            onPress={() => {
-                              navAid.navigate('ContentCCScreen', {
-                                passingKey: item.heading2Key,
-                                searchResults: searchResults,
-                              });
-                            }}>
-                            <View style={styles.heading_2}>
-                              <CrimCodeRenderHeader
-                                subsectionData={item}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                            <View>
-                              <CrimCodeRenderBody
-                                subsectionData={item}
-                                dbData={crimCodeDbData}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                          </Pressable>
-                        </View>
-                      );
-                    }}
+                  <ContentMVA
+                    provisionId={item.provision}
+                    searchResults={searchResults}
                   />
                 </View>
               </View>
             );
           }
-          if (item.legislationType === 'MVA') {
+
+          if (item.type === 'CrimCode') {
             return (
-              <View>
-                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
-                <FlatList
-                  data={mvaDbData}
-                  keyExtractor={data => data.index}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View key={index} style={styles.searchResultsContainer}>
-                        <ContentMVA
-                          provisionId={item.provision}
-                          searchResults={searchResults}
-                        />
-                      </View>
-                    );
-                  }}
-                />
+              <View key={index}>
+                <Pressable
+                  onPress={() => {
+                    navAid.navigate('ContentCCScreen', {
+                      passingKey: item.heading2Key,
+                      searchResults: searchResults,
+                    });
+                  }}>
+                  <View style={styles.heading_2}>
+                    <CrimCodeRenderHeader
+                      subsectionData={item}
+                      searchResults={searchResults}
+                    />
+                  </View>
+                  <View>
+                    <CrimCodeRenderBody
+                      subsectionData={item}
+                      dbData={crimCodeDbData}
+                      searchResults={searchResults}
+                    />
+                  </View>
+                </Pressable>
               </View>
             );
           }

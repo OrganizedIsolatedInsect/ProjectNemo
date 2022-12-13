@@ -24,7 +24,11 @@ const ContentStack = () => {
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
-      <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
+      <ContentNavigator.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        initialParams={{currentPageNum: 1}}
+      />
       <ContentNavigator.Screen
         name="BrowseCCScreen"
         component={BrowseCCScreen}
