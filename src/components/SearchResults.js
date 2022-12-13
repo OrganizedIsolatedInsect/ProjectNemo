@@ -13,7 +13,6 @@ import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm, currentPageNum}) => {
   const searchTerm = 'vehicle';
-  currentPageNum = 1;
 
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
@@ -163,7 +162,7 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
                   searchQueryTerm: searchTerm,
                 });
               }}>
-              <Text>[{item}]</Text>
+              <Text key={item}>[{item}]</Text>
             </Pressable>
           );
         })}

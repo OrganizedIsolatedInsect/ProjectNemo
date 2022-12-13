@@ -15,6 +15,8 @@ const SearchScreen = props => {
 
   const submitQuery = query => console.log(query);
 
+  console.log(props.route.params.currentPageNum);
+
   return (
     <SafeAreaView style={styles.background}>
       {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
@@ -27,7 +29,7 @@ const SearchScreen = props => {
         />
         <Icon name="search" size={45} onPress={query => submitQuery(query)} />
       </View> */}
-      <SearchResults />
+      <SearchResults currentPageNum={props.route.params.currentPageNum} />
     </SafeAreaView>
   );
 };
