@@ -97,6 +97,7 @@ const BookmarkScreen = () => {
             removeBookmark({
               passingKey: item.passingKey,
               lawType: item.lawType,
+              legislationGroup: item.legislationGroup,
               field1: item.field1,
             }),
           );

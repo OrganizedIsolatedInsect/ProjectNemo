@@ -92,11 +92,11 @@ const Section = ({section, lawType}) => {
         <View style={styles.bookmarkPosition}>
           {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
           <Bookmark
-            data={item}
-            passingKey={item.field1}
+            data={item.field1}
+            // passingKey={item.field1}
             lawType={localLawType}
             setMarked={marked}
-            accordionIndex={index}
+            // accordionIndex={index}
           />
         </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />

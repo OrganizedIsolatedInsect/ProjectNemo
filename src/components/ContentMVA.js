@@ -8,6 +8,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
+import Bookmark from './Bookmark';
 
 const ContentMVA = ({provisionId}) => {
   const provisionID = provisionId;
@@ -26,21 +27,23 @@ const ContentMVA = ({provisionId}) => {
   const [sectionSubsection, setSectionSubsection] = useState('');
   const [sectionParagraph, setSectionParagraph] = useState('');
   const [sectionSubparagraph, setSectionSubparagraph] = useState('');
+  const [array, setArray] = useState([]);
 
   //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray);
+  const localLawType = 'MVA';
 
   //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
+  // const switchMarks = () => {
+  //   setMarked(!marked);
+  // };
 
   useEffect(() => {
     setLoading(true);
     getDbData(provisionID);
     setLoading(false);
     // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section == provisionID)) {
+    if (bookmarkStateId.some(e => e.bookmarkArray.legislationGroup == array) && isFocused) {
       setMarked(true);
     } else {
       setMarked(false);
@@ -71,34 +74,43 @@ const ContentMVA = ({provisionId}) => {
             setSectionSubsection(temp[0].sectionSubsection);
             setSectionParagraph(temp[0].sectionParagraph);
             setSectionSubparagraph(temp[0].sectionSubparagraph);
+           //setDbData(temp);
+            setArray(oldArray => [
+              ...oldArray,
+              {
+                provision: temp[0].provision,
+                contravention: temp[0].contravention,
+              },
           }
         },
       );
     });
   };
 
-  //dispatch add or remove bookmarks based bookmark icon
-  //Requires Lawtype to differentiate the source of the bookmark
-  const dispatchAction = () => {
-    // dispatch based on opposite of flag because marked does not change until the rerender
-    if (marked === false) {
-      dispatch(
-        addBookmark({
-          lawtype: 'MVA',
-          section: provision,
-          sectionHeader: contravention,
-        }),
-      );
-    }
-    if (marked === true) {
-      dispatch(
-        removeBookmark({
-          lawtype: 'MVA',
-          section: provision,
-        }),
-      );
-    }
-  };
+  // //dispatch add or remove bookmarks based bookmark icon
+  // //Requires Lawtype to differentiate the source of the bookmark
+  // const dispatchAction = () => {
+  //   // dispatch based on opposite of flag because marked does not change until the rerender
+  //   if (marked === false) {
+  //     dispatch(
+  //       addBookmark({
+  //         lawtype: localLawType,
+  //         legislationGroup: {
+  //           provision: provision,
+  //           contravention: contravention,
+  //         },
+  //       }),
+  //     );
+  //   }
+  //   if (marked === true) {
+  //     dispatch(
+  //       removeBookmark({
+  //         lawtype: localLawType,
+  //         legislationGroup: provision,
+  //       }),
+  //     );
+  //   }
+  // };
 
   return (
     <ScrollView style={styles.background}>
@@ -115,14 +127,21 @@ const ContentMVA = ({provisionId}) => {
         </View>
         <View style={styles.MVAContentHeadingContainerRight}>
           {/* Bookmark Icon and actions */}
-          <Icon
+          {/* <Icon
             name={marked ? 'bookmark' : 'bookmark-outline'}
             size={30}
             onPress={() => {
               switchMarks();
               dispatchAction();
             }}
+            
             style={{color: colors.primary}}
+          /> */}
+          <Bookmark
+            data={array}
+            passingKey={provision}
+            lawType={localLawType}
+            setMarked={marked}
           />
         </View>
       </View>

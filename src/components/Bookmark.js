@@ -12,7 +12,6 @@ const Bookmark = props => {
   const localLawType = props.lawType;
   const localPassKey = props.passingKey;
   const localData = props.data;
-  const localIndex = props.accordionIndex;
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
@@ -25,13 +24,10 @@ const Bookmark = props => {
   //function to check to see if items exist in the bookmark redux
   // e.legislationGroup == fullSomeData was removed as it interfered with the evaluation.  Tried to compare [object] to {}.
   const checkBookmarkArray = () => {
-    const checkBool = bookmarkStateId.some(
-      e =>
-        e.lawType === localLawType &&
-        e.passingKey === localPassKey &&
-        e.indexOfList === localIndex &&
-        isFocused,
-    );
+    const checkBool =
+      bookmarkStateId.some(
+        e => e.lawType == localLawType && e.passingKey == localPassKey,
+      ) && isFocused;
     return checkBool;
   };
 
@@ -51,14 +47,13 @@ const Bookmark = props => {
   };
 
   //calls the redux methods for adding/remove from the redux store.  "marked" is opposite of logic because of the way react-native handles the use effect state changes.
-  const dispatchAction = (bmData, bmKey, lawT, accIndex) => {
+  const dispatchAction = (bmData, bmKey, lawT) => {
     if (marked === false) {
       dispatch(
         addBookmark({
           legislationGroup: bmData,
-          passingKey: bmKey,
+          // passingKey: bmKey,
           lawType: lawT,
-          indexOfList: accIndex,
         }),
       );
     }
@@ -66,9 +61,8 @@ const Bookmark = props => {
       dispatch(
         removeBookmark({
           legislationGroup: bmData,
-          passingKey: bmKey,
+          // passingKey: bmKey,
           lawType: lawT,
-          indexOfList: accIndex,
         }),
       );
       switchMarks();
@@ -80,7 +74,7 @@ const Bookmark = props => {
     <Pressable
       onPress={() => {
         switchMarks();
-        dispatchAction(fullSomeData, localPassKey, localLawType, localIndex);
+        dispatchAction(fullSomeData, localPassKey, localLawType);
       }}>
       <View>
         {marked === true && isFocused ? (
