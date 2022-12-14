@@ -8,13 +8,18 @@ import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
 const Bookmark = props => {
   const [marked, setMarked] = useState(false);
-  const [fullSomeData, setFullSomeData] = useState();
+  const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
+  //const [array, setArray] = useState([]);
   const localLawType = props.lawType;
-  const localPassKey = props.passingKey;
-  const localData = props.data;
+  const localPassKey = props.passingKey; //can be marginNoteKey from CC or provision from MVA
+  const localData = props.data; //needs this data to pass through redux for rendering purposes.
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
+
+  // Notes for development.  Only pass thefields you need through the redux.  Do not pass an entire array of data.
+
+  //CHECK WHY BOOKMARK IS INPUTING 2 BOOKMARKS ON THE BOOKMARK SCREEN OF THE SAME ITEM
 
   //reloads the data state anytime new data is moved into the component.
   useEffect(() => {
@@ -22,11 +27,10 @@ const Bookmark = props => {
   }, [localData]);
 
   //function to check to see if items exist in the bookmark redux
-  // e.legislationGroup == fullSomeData was removed as it interfered with the evaluation.  Tried to compare [object] to {}.
   const checkBookmarkArray = () => {
     const checkBool =
       bookmarkStateId.some(
-        e => e.lawType == localLawType && e.passingKey == localPassKey,
+        e => e.lawType === localLawType && e.passingKey === localPassKey,
       ) && isFocused;
     return checkBool;
   };
@@ -52,7 +56,7 @@ const Bookmark = props => {
       dispatch(
         addBookmark({
           legislationGroup: bmData,
-          // passingKey: bmKey,
+          passingKey: bmKey,
           lawType: lawT,
         }),
       );
@@ -60,8 +64,7 @@ const Bookmark = props => {
     if (marked === true) {
       dispatch(
         removeBookmark({
-          legislationGroup: bmData,
-          // passingKey: bmKey,
+          passingKey: bmKey,
           lawType: lawT,
         }),
       );

@@ -14,20 +14,12 @@ const bookmarkSlice = createSlice({
       state.bookmarkArray.push(action.payload);
     },
     removeBookmark: (state, action) => {
-      // state.bookmarkArray = 'this is a test';
-      const itemGroup = action.payload;
-      const reduxPassKey = itemGroup.passingKey;
-      const reduxLawType = itemGroup.lawType;
-      const reduxLegGroup = itemGroup.legislationGroup;
-      console.log(state.bookmarkArray);
-      console.log('redux ' + reduxPassKey);
-      console.log('redux ' + reduxLawType);
-      console.log(reduxLegGroup);
       state.bookmarkArray = state.bookmarkArray.filter(
         item =>
-          item.passingKey !== reduxPassKey &&
-          item.lawType !== reduxLawType &&
-          item.legislationGroup !== reduxLegGroup,
+          !(
+            item.passingKey === action.payload.passingKey &&
+            item.lawType === action.payload.lawType
+          ),
       );
     },
   },

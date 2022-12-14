@@ -13,23 +13,16 @@ const BookmarkScreen = () => {
   const navAid = useNavigation();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const dispatch = useDispatch();
-  // console.log('props');
-  // console.log(props);
+
   //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
-  console.log('bookmark screen => bookmarks');
-  console.log(bookmarks);
 
   //create array for each section, then loop though bookmarks to parse into arrays
   let MVAArray = [];
   let CCArray = [];
 
-  //created as function so it can be re-run during delete function
+  //created as function so it can be re-run during delete function - used to populate it's own flatlist.
   const splitBookmarks = () => {
-    console.log('in splitbookmarks');
-    console.log(bookmarks);
-    MVAArray = [];
-    CCArray = [];
     for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
       if (bookmarks.bookmarkArray[i].lawType === 'MVA') {
         MVAArray.push(bookmarks.bookmarkArray[i]);
@@ -38,8 +31,6 @@ const BookmarkScreen = () => {
         CCArray.push(bookmarks.bookmarkArray[i]);
       }
     }
-    console.log('CCArray ');
-    console.log(CCArray);
   };
 
   useEffect(() => {
@@ -48,6 +39,7 @@ const BookmarkScreen = () => {
     }
   }, [bookmarks, isFocused]);
 
+  //actual render of the text part of the bookmark
   const renderText = item => {
     if (item.lawType === 'MVA') {
       return (
@@ -79,10 +71,9 @@ const BookmarkScreen = () => {
             });
           }
           if (item.lawType === 'CC') {
-            const functionPassingKey = item.passingKey;
             navAid.navigate('ContentCCScreen', {
               props: {
-                params: functionPassingKey,
+                params: item.passingKey, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
               },
             });
           }
@@ -91,14 +82,10 @@ const BookmarkScreen = () => {
       </Pressable>
       <Pressable
         onPress={() => {
-          console.log(item.passingKey);
-          console.log(item.lawType);
           dispatch(
             removeBookmark({
               passingKey: item.passingKey,
               lawType: item.lawType,
-              legislationGroup: item.legislationGroup,
-              field1: item.field1,
             }),
           );
         }}>
@@ -126,7 +113,11 @@ const BookmarkScreen = () => {
           {MVAArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Motor Vehicle Act</Text>
-              <FlatList data={MVAArray} renderItem={renderBookmark} />
+              <FlatList
+                data={MVAArray}
+                renderItem={renderBookmark}
+                // keyExtractor={item => item.index}
+              />
             </View>
           )}
           {CCArray.length > 0 && (
@@ -135,7 +126,7 @@ const BookmarkScreen = () => {
               <FlatList
                 data={CCArray}
                 renderItem={renderBookmark}
-                keyExtractor={item => item.index}
+                // keyExtractor={item => item.index}
               />
             </View>
           )}
