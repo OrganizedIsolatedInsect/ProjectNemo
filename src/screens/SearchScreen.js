@@ -1,35 +1,65 @@
-/*
- * Search Screen including Results
- */
-
-import React, {useState} from 'react';
-import styles from '../assets/styles';
+import React, {useState, useEffect} from 'react';
+import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, TextInput, Button} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View, Text} from 'react-native';
+import {MagnifyingGlass} from '../assets/icons';
 
 import SearchResults from '../components/SearchResults';
+import SearchBar from '../components/SearchBar';
+import FilterButton from '../components/FilterButton';
 
 const SearchScreen = props => {
-  const [query, setQuery] = useState('');
+  // query state returns onChangeText (each character passed into the text box)
+  const [query, setQuery] = useState();
+  // searchTerm state returns onSubmitEditing prop (the whole term that is submitted)
+  const [searchTerm, setSearchTerm] = useState();
 
-  const submitQuery = query => console.log(query);
+  const [searchBarFocused, setSearchBarFocused] = useState(false);
 
-  console.log(props.route.params.currentPageNum);
+  console.log('Query: ', query);
+  console.log('SearchTerm: ', searchTerm);
+  console.log('searchBarFocused: ', searchBarFocused);
+
+  const SearchFeatures = () => {
+    return (
+      <View>
+        <View style={styles.alignOnRow}>
+          {/* Implementation of FilterButton Component */}
+          <FilterButton buttonLabel="Criminal Code" />
+          <FilterButton buttonLabel="Motor Vehicle Act" />
+          <FilterButton buttonLabel="Motor Vehicle Regulations" />
+        </View>
+        <View>
+          <SearchResults searchQueryTerm={searchTerm} />
+        </View>
+      </View>
+    );
+  };
+
+  const SearchPlaceholder = () => {
+    return (
+      <View style={styles.centerOnScreen}>
+        <MagnifyingGlass size={150} style={{}} />
+        <Text style={[styles.heading_1]}>Search legislation</Text>
+      </View>
+    );
+  };
 
   return (
-    <SafeAreaView style={styles.background}>
-      {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TextInput
-          style={styles.SearchBar_Styling}
-          value={query}
-          onChangeText={query => setQuery(query)}
-          underlineColorAndroid="transparent"
-          placeholder="Search"
-        />
-        <Icon name="search" size={45} onPress={query => submitQuery(query)} />
-      </View> */}
-      <SearchResults currentPageNum={props.route.params.currentPageNum} />
+    <SafeAreaView style={{flex: 1}}>
+      <SearchBar
+        query={query}
+        setQuery={setQuery}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        searchBarFocused={searchBarFocused}
+        setSearchBarFocused={setSearchBarFocused}
+      />
+      {/* If the query is blank, do not show filter buttons or empty search results section */}
+      {searchTerm !== undefined ? <SearchFeatures /> : null}
+      {searchBarFocused === false && searchTerm === undefined ? (
+        <SearchPlaceholder />
+      ) : null}
     </SafeAreaView>
   );
 };

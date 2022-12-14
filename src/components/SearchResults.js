@@ -22,9 +22,6 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
 
-  //remove later
-  const [testString, setTestString] = useState('');
-
   const navAid = useNavigation();
 
   useEffect(() => {
@@ -61,13 +58,15 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
           }
           setCrimCodeSearchCount(searchCountTemp);
           setCrimCodeDbData(crimCodeTemp);
-          setTestString(crimCodeTemp[0].paragraphText);
+          console.log('searchCountTemp: ', searchCountTemp.length);
         },
       );
     });
     //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
         [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         (tx, results) => {
