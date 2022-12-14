@@ -1,10 +1,9 @@
 //CONSTANTS
 
 //Law types to pass into appropriate screens.
-export const CCDATA = 'CC';
-export const MVADATA = 'MVA';
+export const CRIMCODESOURCE = 'CC';
+export const MVASOURCE = 'MVA';
 
 //Sizes
 
 export const ICONSIZE = 20;
-

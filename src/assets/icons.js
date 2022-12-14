@@ -50,7 +50,7 @@ export const BookmarkUnmarked = () => {
 };
 
 export const DeleteIcon = () => {
-  return <Icon name="delete" size={DEVSIZE} />;
+  return <Icon name="delete" size={ICONSIZE} />;
 };
 
 export const LargeBookmarkIcon = () => {

@@ -19,7 +19,7 @@ const bookmarkSlice = createSlice({
           !(
             item.passingKey === action.payload.passingKey &&
             item.lawType === action.payload.lawType
-          ),
+          ), //passingkey: for CC it's "marginNoteKey", for MVA it's "provision"
       );
     },
   },

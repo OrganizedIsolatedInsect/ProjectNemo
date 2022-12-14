@@ -23,6 +23,8 @@ const BookmarkScreen = () => {
 
   //created as function so it can be re-run during delete function - used to populate it's own flatlist.
   const splitBookmarks = () => {
+    MVAArray = [];
+    CCArray = [];
     for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
       if (bookmarks.bookmarkArray[i].lawType === 'MVA') {
         MVAArray.push(bookmarks.bookmarkArray[i]);
@@ -113,21 +115,13 @@ const BookmarkScreen = () => {
           {MVAArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Motor Vehicle Act</Text>
-              <FlatList
-                data={MVAArray}
-                renderItem={renderBookmark}
-                // keyExtractor={item => item.index}
-              />
+              <FlatList data={MVAArray} renderItem={renderBookmark} />
             </View>
           )}
           {CCArray.length > 0 && (
             <View>
               <Text style={styles.heading_2}>Criminal Code of Canada</Text>
-              <FlatList
-                data={CCArray}
-                renderItem={renderBookmark}
-                // keyExtractor={item => item.index}
-              />
+              <FlatList data={CCArray} renderItem={renderBookmark} />
             </View>
           )}
         </View>

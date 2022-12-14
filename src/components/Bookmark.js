@@ -9,17 +9,12 @@ import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 const Bookmark = props => {
   const [marked, setMarked] = useState(false);
   const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
-  //const [array, setArray] = useState([]);
   const localLawType = props.lawType;
   const localPassKey = props.passingKey; //can be marginNoteKey from CC or provision from MVA
   const localData = props.data; //needs this data to pass through redux for rendering purposes.
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
-
-  // Notes for development.  Only pass thefields you need through the redux.  Do not pass an entire array of data.
-
-  //CHECK WHY BOOKMARK IS INPUTING 2 BOOKMARKS ON THE BOOKMARK SCREEN OF THE SAME ITEM
 
   //reloads the data state anytime new data is moved into the component.
   useEffect(() => {
@@ -30,7 +25,7 @@ const Bookmark = props => {
   const checkBookmarkArray = () => {
     const checkBool =
       bookmarkStateId.some(
-        e => e.lawType === localLawType && e.passingKey === localPassKey,
+        e => e.lawType === localLawType && e.passingKey === localPassKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
       ) && isFocused;
     return checkBool;
   };
@@ -43,7 +38,7 @@ const Bookmark = props => {
     } else {
       setMarked(false);
     }
-  }, [fullSomeData, isFocused]);
+  }, [fullSomeData, marked, isFocused]);
 
   //switches state of bookmark
   const switchMarks = () => {
@@ -55,8 +50,8 @@ const Bookmark = props => {
     if (marked === false) {
       dispatch(
         addBookmark({
-          legislationGroup: bmData,
-          passingKey: bmKey,
+          legislationGroup: bmData, //adds all data for output purposes on BookmarkScreen.js,
+          passingKey: bmKey, //for CC it's marginNoteKey, for MVA it's provision
           lawType: lawT,
         }),
       );
@@ -64,11 +59,10 @@ const Bookmark = props => {
     if (marked === true) {
       dispatch(
         removeBookmark({
-          passingKey: bmKey,
+          passingKey: bmKey, //for CC it's marginNoteKey, for MVA it's provision
           lawType: lawT,
         }),
       );
-      switchMarks();
     }
   };
 

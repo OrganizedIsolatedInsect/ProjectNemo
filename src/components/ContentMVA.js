@@ -1,9 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {db} from '../components/Database';
-import {useIsFocused} from '@react-navigation/native';
 
 import styles, {colors} from '../assets/styles';
 import Bookmark from './Bookmark';
@@ -56,7 +54,7 @@ const ContentMVA = ({provisionId}) => {
             setSectionSubsection(temp[0].sectionSubsection);
             setSectionParagraph(temp[0].sectionParagraph);
             setSectionSubparagraph(temp[0].sectionSubparagraph);
-            setDbData(temp);
+            setDbData(temp); //to prepare for page rebuild render to remove hardcoded states
             setArray({
               provision: temp[0].provision,
               contravention: temp[0].contravention,
