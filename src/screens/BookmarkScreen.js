@@ -1,82 +1,110 @@
-import React from 'react';
-import styles, {colors} from '../assets/styles';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text, View, Button, FlatList, Pressable} from 'react-native';
+import {Text, View, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
-import {useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch} from 'react-redux';
-
+import styles, {colors} from '../assets/styles';
 import {removeBookmark} from '../redux/bookmarkSlice';
+import {DeleteIcon, LargeBookmarkIcon} from '../assets/icons';
 
-const BookmarkScreen = props => {
+const BookmarkScreen = () => {
   const navAid = useNavigation();
+  const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
+  const dispatch = useDispatch();
 
   //get bookmarks from state redux store
-  const bookmarks = useSelector(state => state.bookmarks);
+  const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
 
   //create array for each section, then loop though bookmarks to parse into arrays
   let MVAArray = [];
   let CCArray = [];
 
-  for (let i = 0; i < bookmarks.sections.length; ++i) {
-    if (bookmarks.sections[i].lawtype == 'MVA') {
-      MVAArray.push(bookmarks.sections[i]);
+  //created as function so it can be re-run during delete function - used to populate it's own flatlist.
+  const splitBookmarks = () => {
+    MVAArray = [];
+    CCArray = [];
+    for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
+      if (bookmarks.bookmarkArray[i].lawType === 'MVA') {
+        MVAArray.push(bookmarks.bookmarkArray[i]);
+      }
+      if (bookmarks.bookmarkArray[i].lawType === 'CC') {
+        CCArray.push(bookmarks.bookmarkArray[i]);
+      }
     }
-    if (bookmarks.sections[i].lawtype == 'CC') {
-      CCArray.push(bookmarks.sections[i]);
+  };
+
+  useEffect(() => {
+    if (bookmarks.bookmarkArray.length > 0) {
+      splitBookmarks();
     }
-  }
+  }, [bookmarks, isFocused]);
 
-  const dispatch = useDispatch();
+  //actual render of the text part of the bookmark
+  const renderText = item => {
+    if (item.lawType === 'MVA') {
+      return (
+        <Text style={[styles.body, {color: colors.primaryText}]}>
+          {item.legislationGroup.provision}{' '}
+          {item.legislationGroup.contravention}
+        </Text>
+      );
+    } else if (item.lawType === 'CC') {
+      return (
+        <Text>
+          {item.legislationGroup.sectionLabel}{' '}
+          {item.legislationGroup.subsectionLabel}{' '}
+          {item.legislationGroup.marginalNote}
+        </Text>
+      );
+    }
+  };
 
-  //render bookmark links and navigate based on section type
+  //render bookmark links and navigate based on section type.  Includes pressable
   const renderBookmark = ({item}) => (
-    <View
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    <View style={styles.bookmarkRender}>
       <Pressable
         onPress={() => {
-          if (item.lawtype === 'MVA') {
-            const provisionItem = item.section;
+          if (item.lawType === 'MVA') {
+            const provisionItem = item.legislationGroup.provision;
             navAid.navigate('ContentMVAScreen', {
               provisionId: provisionItem,
             });
           }
-          if (item.lawtype === 'CC') {
-            const sectionId = item.section;
+          if (item.lawType === 'CC') {
             navAid.navigate('ContentCCScreen', {
-              section: sectionId,
+              props: {
+                params: item.passingKey, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
+              },
             });
           }
         }}>
-        <Text style={[styles.body, {color: colors.primaryText}]}>
-          {item.section} {item.sectionHeader}
-        </Text>
+        <Text>{renderText(item)}</Text>
       </Pressable>
-
-      <Icon
-        name="delete"
-        size={20}
-        onPress={() => dispatch(removeBookmark({section: item.section}))}
-      />
+      <Pressable
+        onPress={() => {
+          dispatch(
+            removeBookmark({
+              passingKey: item.passingKey,
+              lawType: item.lawType,
+            }),
+          );
+        }}>
+        <DeleteIcon />
+      </Pressable>
     </View>
   );
 
   /*Output Section*/
-
-  if (bookmarks.sections.length === 0) {
+  splitBookmarks();
+  if (bookmarks.bookmarkArray.length === 0) {
     return (
       <View style={styles.centerOnScreen}>
         <Text style={[styles.title, {color: colors.primaryText}]}>
           No Bookmarks Currently
         </Text>
-        <Icon
-          name="collections-bookmark"
-          size={200}
-          style={{color: colors.primaryText}}
-        />
+        <LargeBookmarkIcon />
       </View>
     );
   } else {

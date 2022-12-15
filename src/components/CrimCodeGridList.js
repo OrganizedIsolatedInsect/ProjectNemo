@@ -27,7 +27,7 @@ const CrimCodeGridList = props => {
   // let subsectionKey;
   // let subsectionLabel;
   // let subsectionText;
-  // let marginalNoteKey;
+  let marginalNoteKey;
   // let marginalNote;
   // let paragraphKey;
   // let paragraphLabel;
@@ -47,12 +47,13 @@ const CrimCodeGridList = props => {
     componentKey = props.heading1Key;
     componentLabel = props.heading1Label;
     componentTitle = props.heading1TitleText;
-  } else {    //SectionCCScreen.js
-    componentKey = props.headingKey;
+  } else {
+    //SectionCCScreen.js
+    componentKey = props.headingKey; //this is coming from sectionCCSCreen heading2Key..
     componentLabel = props.sectionLabel;
     componentTitle = props.heading2TitleText;
   }
-  
+
   return (
     <View>
       <Pressable

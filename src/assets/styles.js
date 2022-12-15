@@ -14,7 +14,7 @@ export const colors = {
   highlightBgColor: '#829DAF',
   highlightColor: '#FFFFFF',
   primaryText: '#000000',
-  accordionGray: "#A9A9A9",
+  accordionGray: '#A9A9A9',
 };
 
 export default StyleSheet.create({
@@ -202,6 +202,15 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: colors.primaryText,
+  },
+
+  //BOOKMARK STYLING
+  bookmarkPosition: {
+    alignSelf: 'flex-end',
+  },
+  bookmarkRender: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   //SEARCHBAR Styling START
