@@ -49,7 +49,7 @@ const SearchBar = props => {
       <MagnifyingGlass />
       {/* When the 'Close Icon' is pressed, this will clear the contents of the Searchbar and reset the query. */}
       <Pressable
-        onPress={clearPressed}
+        /* onPress={clearPressed} */
         android_ripple={styles.closeIcon_ripple_styling}
         style={styles.closeIcon_pressable_styling}>
         <CloseIcon />

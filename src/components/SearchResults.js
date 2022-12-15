@@ -11,15 +11,25 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = ({searchQueryTerm, currentPageNum}) => {
-  const searchTerm = 'vehicle';
+const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
+  //const searchTerm = 'vehicle';
+  let searchTerm = '';
+  console.log('new search', newSearchTerm);
+
+  if (newSearchTerm != null) {
+    searchTerm = newSearchTerm;
+  }
+  if (newSearchTerm == null) {
+    searchTerm = passedSearchTerm;
+  }
+
+  console.log(searchTerm);
 
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
 
-  const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
 
   const navAid = useNavigation();
@@ -56,17 +66,15 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
             crimCodeTemp.push(results.rows.item(i));
             searchCountTemp.push(results.rows.item(i).sectionLabel);
           }
-          setCrimCodeSearchCount(searchCountTemp);
+
           setCrimCodeDbData(crimCodeTemp);
-          console.log('searchCountTemp: ', searchCountTemp.length);
+          //console.log('searchCountTemp: ', searchCountTemp.length);
         },
       );
     });
     //SQL query for MVA fine data
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
         [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
         (tx, results) => {
@@ -90,25 +98,12 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
     });
   };
 
-  const searchCountFilter = crimCodeSearchCount.reduce(function (
-    allSectionLabel,
-    sectionLabel,
-  ) {
-    if (sectionLabel in allSectionLabel) {
-      allSectionLabel[sectionLabel]++;
-    } else {
-      allSectionLabel[sectionLabel] = 1;
-    }
-    return allSectionLabel;
-  },
-  {});
-
   //Temp for testing, remove later
-  let getIndexArray = testString.split(/[, ,',;,.]+/);
+  /* let getIndexArray = testString.split(/[, ,',;,.]+/);
   let indexArray = testString.split(' ');
   let getIndex = getIndexArray.indexOf('vehicle');
   let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
-  returnString = returnString.join(' ');
+  returnString = returnString.join(' '); */
 
   //add type to dbData
   subsectionData.forEach(function (data) {
@@ -158,7 +153,7 @@ const SearchResults = ({searchQueryTerm, currentPageNum}) => {
               onPress={() => {
                 navAid.push('SearchScreen', {
                   currentPageNum: item,
-                  searchQueryTerm: searchTerm,
+                  searchTerm: searchTerm,
                 });
               }}>
               <Text key={item}>[{item}]</Text>

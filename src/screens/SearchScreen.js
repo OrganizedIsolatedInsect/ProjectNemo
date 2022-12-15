@@ -9,16 +9,25 @@ import SearchBar from '../components/SearchBar';
 import FilterButton from '../components/FilterButton';
 
 const SearchScreen = props => {
+  const passedPageNum = props.route.params.currentPageNum;
+  const passedSearchTerm = props.route.params.searchTerm;
   // query state returns onChangeText (each character passed into the text box)
   const [query, setQuery] = useState();
   // searchTerm state returns onSubmitEditing prop (the whole term that is submitted)
   const [searchTerm, setSearchTerm] = useState();
-
   const [searchBarFocused, setSearchBarFocused] = useState(false);
 
-  console.log('Query: ', query);
+  /*  console.log('Query: ', query);
   console.log('SearchTerm: ', searchTerm);
-  console.log('searchBarFocused: ', searchBarFocused);
+  console.log('searchBarFocused: ', searchBarFocused); */
+  //console.log(props.route.params.currentPageNum);
+  //console.log(props.route.params.searchTerm);
+
+  /*  useEffect(() => {
+    if (passedSearchTerm != null) {
+      setSearchTerm(passedSearchTerm);
+    }
+  }, [searchTerm, passedPageNum]); */
 
   const SearchFeatures = () => {
     return (
@@ -30,7 +39,11 @@ const SearchScreen = props => {
           <FilterButton buttonLabel="Motor Vehicle Regulations" />
         </View>
         <View>
-          <SearchResults searchQueryTerm={searchTerm} />
+          <SearchResults
+            currentPageNum={passedPageNum}
+            newSearchTerm={searchTerm}
+            passedSearchTerm={passedSearchTerm}
+          />
         </View>
       </View>
     );
@@ -58,7 +71,7 @@ const SearchScreen = props => {
       {/* If the query is blank, do not show filter buttons or empty search results section */}
       {searchTerm !== undefined ? <SearchFeatures /> : null}
       {searchBarFocused === false && searchTerm === undefined ? (
-        <SearchPlaceholder />
+        <SearchFeatures />
       ) : null}
     </SafeAreaView>
   );
