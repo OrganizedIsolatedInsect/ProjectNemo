@@ -56,9 +56,9 @@ const SearchScreen = props => {
       />
       {/* If the query is blank, do not show filter buttons or empty search results section */}
       {searchTerm !== undefined ? <SearchFeatures /> : null}
-      {searchBarFocused === false && searchTerm === undefined ? (
+      {/* {searchBarFocused === false && searchTerm === undefined ? (
         <SearchFeatures />
-      ) : null}
+      ) : null} */}
     </SafeAreaView>
   );
 };

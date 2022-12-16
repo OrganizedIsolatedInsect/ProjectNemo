@@ -175,23 +175,21 @@ const SearchResults = ({searchTerm, currentPageNum}) => {
         renderItem={({item, index}) => {
           if (item.type === 'MVA') {
             return (
-              <View key={index}>
-                <View>
-                  {item.header === true ? (
-                    <Text style={styles.heading_2}>Motor Vehicle Act</Text>
-                  ) : null}
-                  <ContentMVA
-                    provisionId={item.provision}
-                    searchResults={searchResults}
-                  />
-                </View>
+              <View key={item.index}>
+                {item.header === true ? (
+                  <Text style={styles.heading_2}>Motor Vehicle Act</Text>
+                ) : null}
+                <ContentMVA
+                  provisionId={item.provision}
+                  searchResults={searchResults}
+                />
               </View>
             );
           }
 
           if (item.type === 'CrimCode') {
             return (
-              <View key={index}>
+              <View key={item.field1}>
                 {item.header === true ? (
                   <Text style={styles.heading_2}>Criminal Code of Canada</Text>
                 ) : null}
