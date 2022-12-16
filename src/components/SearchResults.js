@@ -138,7 +138,6 @@ const SearchResults = ({searchTerm, currentPageNum}) => {
     totalSearchArray.push(pushedResults);
     if (resultsPage === currentPageNum) {
       renderSearchArray = resultsReturned;
-      console.log(renderSearchArray);
     }
   }
 
