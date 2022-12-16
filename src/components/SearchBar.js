@@ -21,6 +21,7 @@ const SearchBar = props => {
   // Pass the actual searched term back to the search screen and results
   const submitSearchTerm = () => {
     props.setSearchTerm(props.query);
+    props.setPageNum(1);
   };
 
   const searchBarFocused = () => {

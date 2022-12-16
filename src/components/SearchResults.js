@@ -11,20 +11,9 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
-  //const searchTerm = 'vehicle';
-  let searchTerm = '';
-  console.log('new search', newSearchTerm);
+//SearchResults takes two props, the search term to to highlight and the current page it should render
 
-  if (newSearchTerm != null) {
-    searchTerm = newSearchTerm;
-  }
-  if (newSearchTerm == null) {
-    searchTerm = passedSearchTerm;
-  }
-
-  console.log(searchTerm);
-
+const SearchResults = ({searchTerm, currentPageNum}) => {
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
@@ -105,7 +94,7 @@ const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
   let returnString = indexArray.slice(getIndex - 5, getIndex + 6);
   returnString = returnString.join(' '); */
 
-  //add type to dbData
+  //add type to dbData in order to choose what to render/filter
   subsectionData.forEach(function (data) {
     data.type = 'CrimCode';
   });
@@ -114,7 +103,6 @@ const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
   });
 
   const combinedResults = subsectionData.concat(mvaDbData);
-  //const combinedResults = subsectionData;
 
   //sort results into pages
   const numResultsReturned = 10;
@@ -147,7 +135,11 @@ const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
         Page {currentPageNum} of {resultsPage}
       </Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        {renderSearchNavArray.map(item => {
+        {renderSearchNavArray.map((item, index) => {
+          {
+            //create uniqure variable for rendering of list of result page Numbers
+            var key = 'r' + index;
+          }
           return (
             <Pressable
               onPress={() => {
@@ -156,7 +148,7 @@ const SearchResults = ({newSearchTerm, passedSearchTerm, currentPageNum}) => {
                   searchTerm: searchTerm,
                 });
               }}>
-              <Text key={item}>[{item}]</Text>
+              <Text key={key}>[{item}]</Text>
             </Pressable>
           );
         })}

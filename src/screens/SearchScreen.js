@@ -10,12 +10,13 @@ import FilterButton from '../components/FilterButton';
 
 const SearchScreen = props => {
   const passedPageNum = props.route.params.currentPageNum;
-  const passedSearchTerm = props.route.params.searchTerm;
+
   // query state returns onChangeText (each character passed into the text box)
   const [query, setQuery] = useState();
   // searchTerm state returns onSubmitEditing prop (the whole term that is submitted)
-  const [searchTerm, setSearchTerm] = useState();
+  const [searchTerm, setSearchTerm] = useState(props.route.params.searchTerm);
   const [searchBarFocused, setSearchBarFocused] = useState(false);
+  const [pageNum, setPageNum] = useState(props.route.params.currentPageNum);
 
   /*  console.log('Query: ', query);
   console.log('SearchTerm: ', searchTerm);
@@ -39,11 +40,7 @@ const SearchScreen = props => {
           <FilterButton buttonLabel="Motor Vehicle Regulations" />
         </View>
         <View>
-          <SearchResults
-            currentPageNum={passedPageNum}
-            newSearchTerm={searchTerm}
-            passedSearchTerm={passedSearchTerm}
-          />
+          <SearchResults currentPageNum={pageNum} searchTerm={searchTerm} />
         </View>
       </View>
     );
@@ -67,6 +64,7 @@ const SearchScreen = props => {
         setSearchTerm={setSearchTerm}
         searchBarFocused={searchBarFocused}
         setSearchBarFocused={setSearchBarFocused}
+        setPageNum={setPageNum}
       />
       {/* If the query is blank, do not show filter buttons or empty search results section */}
       {searchTerm !== undefined ? <SearchFeatures /> : null}
