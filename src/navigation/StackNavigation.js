@@ -14,10 +14,26 @@ import PartsCCScreen from '../screens/PartsCCScreen';
 import SectionsCCScreen from '../screens/SectionsCCScreen';
 import SearchScreen from '../screens/SearchScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
+import LaunchScreen from '../screens/LaunchScreen';
 import {SearchIconButton} from '../components/HeaderSearchIconButton';
+import AppNavigator from '../navigation/TabNavigation';
 
 const BookMarkNavigator = createStackNavigator();
 const ContentNavigator = createStackNavigator();
+const LaunchNavigator = createStackNavigator();
+
+const LaunchStack = () => {
+  return (
+    <LaunchNavigator.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {backgroundColor: '#881E07'},
+      }}>
+      <LaunchNavigator.Screen name="LaunchScreen" component={LaunchScreen} />
+      <LaunchNavigator.Screen name="AppNavigator" component={AppNavigator} />
+    </LaunchNavigator.Navigator>
+  );
+};
 
 const ContentStack = () => {
   // TODO BrowseCCScreen - Replaced by PartsCCScreen and SectionCCScreen
@@ -82,6 +98,6 @@ const screenOptionStyle = {
   // },
 };
 
-export {ContentStack, BookMarkStack};
+export {ContentStack, BookMarkStack, LaunchStack};
 
 //Remove Header Back Button:   https://infinitbility.com/how-to-remove-back-button-in-react-navigation/
