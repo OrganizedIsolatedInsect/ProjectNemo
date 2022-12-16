@@ -114,17 +114,35 @@ const SearchResults = ({searchTerm, currentPageNum}) => {
   //add page on which result should be in
   for (let i = 0; i < combinedResults.length; i += numResultsReturned) {
     const resultsReturned = combinedResults.slice(i, i + numResultsReturned);
+
+    //loop though results to see if entry needs header for sorting
+    for (const index in resultsReturned) {
+      if (index == 0) {
+        resultsReturned[index].header = true;
+      }
+      if (index > 0) {
+        const prevType = resultsReturned[index - 1].type;
+        if (resultsReturned[index].type != prevType) {
+          resultsReturned[index].header = true;
+        } else {
+          resultsReturned[index].header = false;
+        }
+      }
+    }
+
     resultsPage = resultsPage + 1;
     const pushedResults = {
       resultsPage: resultsPage,
       resultsReturned: resultsReturned,
     };
     totalSearchArray.push(pushedResults);
-    if (resultsPage == currentPageNum) {
+    if (resultsPage === currentPageNum) {
       renderSearchArray = resultsReturned;
+      console.log(renderSearchArray);
     }
   }
 
+  //create array for navigation from one results page to another
   for (let i = 1; i <= resultsPage; i++) {
     renderSearchNavArray.push(i);
   }
@@ -160,6 +178,9 @@ const SearchResults = ({searchTerm, currentPageNum}) => {
             return (
               <View key={index}>
                 <View>
+                  {item.header === true ? (
+                    <Text style={styles.heading_2}>Motor Vehicle Act</Text>
+                  ) : null}
                   <ContentMVA
                     provisionId={item.provision}
                     searchResults={searchResults}
@@ -172,6 +193,9 @@ const SearchResults = ({searchTerm, currentPageNum}) => {
           if (item.type === 'CrimCode') {
             return (
               <View key={index}>
+                {item.header === true ? (
+                  <Text style={styles.heading_2}>Criminal Code of Canada</Text>
+                ) : null}
                 <Pressable
                   onPress={() => {
                     navAid.navigate('ContentCCScreen', {

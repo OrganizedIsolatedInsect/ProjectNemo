@@ -18,18 +18,6 @@ const SearchScreen = props => {
   const [searchBarFocused, setSearchBarFocused] = useState(false);
   const [pageNum, setPageNum] = useState(props.route.params.currentPageNum);
 
-  /*  console.log('Query: ', query);
-  console.log('SearchTerm: ', searchTerm);
-  console.log('searchBarFocused: ', searchBarFocused); */
-  //console.log(props.route.params.currentPageNum);
-  //console.log(props.route.params.searchTerm);
-
-  /*  useEffect(() => {
-    if (passedSearchTerm != null) {
-      setSearchTerm(passedSearchTerm);
-    }
-  }, [searchTerm, passedPageNum]); */
-
   const SearchFeatures = () => {
     return (
       <View>
