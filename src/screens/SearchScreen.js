@@ -55,7 +55,7 @@ const SearchScreen = props => {
         setPageNum={setPageNum}
       />
       {/* If the query is blank, do not show filter buttons or empty search results section */}
-      {searchTerm !== undefined ? <SearchFeatures /> : null}
+      {searchTerm !== undefined ? <SearchFeatures /> : <SearchPlaceholder />}
       {/* {searchBarFocused === false && searchTerm === undefined ? (
         <SearchFeatures />
       ) : null} */}
