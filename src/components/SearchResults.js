@@ -105,10 +105,10 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   },
   {});
 
+  //filter MVA database data into regulation and non regulation
   const mvaRegulationRenderData = mvaDbData.filter(
     data => data.source === 'Motor Vehicle Act Regulations',
   );
-
   const mvaRenderData = mvaDbData.filter(
     data => data.source === 'Motor Vehicle Act',
   );

@@ -15,10 +15,12 @@ const SearchScreen = props => {
   const [searchTerm, setSearchTerm] = useState();
   const [searchBarFocused, setSearchBarFocused] = useState(false);
 
+  //set states for filters
   const [crimCodeFilter, setCrimCodeFilter] = useState(false);
   const [mvaFilter, setMvaFilter] = useState(false);
   const [mvaRegulationFilter, setMvaRegulationFilter] = useState(false);
 
+  //create array to pass to search results component
   const filterArray = [
     {
       type: 'Criminal Code',
