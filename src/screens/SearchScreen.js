@@ -21,12 +21,6 @@ const SearchScreen = props => {
   const SearchFeatures = () => {
     return (
       <View>
-        <View style={styles.alignOnRow}>
-          {/* Implementation of FilterButton Component */}
-          <FilterButton buttonLabel="Criminal Code" />
-          <FilterButton buttonLabel="Motor Vehicle Act" />
-          <FilterButton buttonLabel="Motor Vehicle Regulations" />
-        </View>
         <View>
           <SearchResults currentPageNum={pageNum} searchTerm={searchTerm} />
         </View>
