@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import {View, Pressable, Text} from 'react-native';
 import styles, {colors} from '../assets/styles';
 
-const FilterButton = ({buttonLabel, searchFilters}) => {
-  const [filtered, setFiltered] = useState(true);
-
+const FilterButton = props => {
+  const filtered = props.filterState;
+  const buttonLabel = props.buttonLabel;
   // searchFilters.map(item);
 
   const buttonPressed = () => {
-    setFiltered(!filtered);
-    console.log(buttonLabel, ':', !filtered);
+    props.setFilter(!props.filterState);
   };
 
   return (
@@ -18,14 +17,14 @@ const FilterButton = ({buttonLabel, searchFilters}) => {
         style={{
           ...styles.buttonAct,
           backgroundColor: filtered
-            ? colors.primary
-            : colors.backgroundColoring,
+            ? colors.backgroundColoring
+            : colors.primary,
         }}
         onPress={buttonPressed}>
         <Text
           style={{
             ...styles.buttonActText,
-            color: filtered ? colors.neutral : colors.primaryText,
+            color: filtered ? colors.primaryText : colors.neutral,
           }}>
           {buttonLabel}
         </Text>

@@ -13,24 +13,53 @@ const SearchScreen = props => {
   const [query, setQuery] = useState();
   // searchTerm state returns onSubmitEditing prop (the whole term that is submitted)
   const [searchTerm, setSearchTerm] = useState();
-
   const [searchBarFocused, setSearchBarFocused] = useState(false);
 
-  console.log('Query: ', query);
-  console.log('SearchTerm: ', searchTerm);
-  console.log('searchBarFocused: ', searchBarFocused);
+  const [crimCodeFilter, setCrimCodeFilter] = useState(false);
+  const [mvaFilter, setMvaFilter] = useState(false);
+  const [mvaRegulationFilter, setMvaRegulationFilter] = useState(false);
+
+  const filterArray = [
+    {
+      type: 'Criminal Code',
+      filterState: crimCodeFilter,
+    },
+    {
+      type: 'Motor Vehicle Act',
+      filterState: mvaFilter,
+    },
+    {
+      type: 'Motor Vehicle Regulations',
+      filterState: mvaRegulationFilter,
+    },
+  ];
 
   const SearchFeatures = () => {
     return (
       <View>
         <View style={styles.alignOnRow}>
           {/* Implementation of FilterButton Component */}
-          <FilterButton buttonLabel="Criminal Code" />
-          <FilterButton buttonLabel="Motor Vehicle Act" />
-          <FilterButton buttonLabel="Motor Vehicle Regulations" />
+          <FilterButton
+            buttonLabel="Criminal Code"
+            setFilter={setCrimCodeFilter}
+            filterState={crimCodeFilter}
+          />
+          <FilterButton
+            buttonLabel="Motor Vehicle Act"
+            setFilter={setMvaFilter}
+            filterState={mvaFilter}
+          />
+          <FilterButton
+            buttonLabel="Motor Vehicle Regulations"
+            setFilter={setMvaRegulationFilter}
+            filterState={mvaRegulationFilter}
+          />
         </View>
         <View>
-          <SearchResults searchQueryTerm={searchTerm} />
+          <SearchResults
+            searchQueryTerm={searchTerm}
+            filterArray={filterArray}
+          />
         </View>
       </View>
     );
@@ -57,7 +86,9 @@ const SearchScreen = props => {
       />
       {/* If the query is blank, do not show filter buttons or empty search results section */}
       {searchTerm !== undefined ? <SearchFeatures /> : null}
-      {searchBarFocused === false && searchTerm === undefined ? <SearchPlaceholder /> : null}
+      {searchBarFocused === false && searchTerm === undefined ? (
+        <SearchPlaceholder />
+      ) : null}
     </SafeAreaView>
   );
 };

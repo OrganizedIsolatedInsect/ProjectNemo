@@ -18,7 +18,7 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = ({searchQueryTerm}) => {
+const SearchResults = ({searchQueryTerm, filterArray}) => {
   const searchTerm = searchQueryTerm;
   //set states for search dbData
   const [searchResults, setSearchResults] = useState(searchTerm);
@@ -63,7 +63,6 @@ const SearchResults = ({searchQueryTerm}) => {
           }
           setCrimCodeSearchCount(searchCountTemp);
           setCrimCodeDbData(crimCodeTemp);
-          console.log('searchCountTemp: ', searchCountTemp.length);
         },
       );
     });
@@ -106,13 +105,28 @@ const SearchResults = ({searchQueryTerm}) => {
   },
   {});
 
+  const mvaRegulationRenderData = mvaDbData.filter(
+    data => data.source === 'Motor Vehicle Act Regulations',
+  );
+
+  const mvaRenderData = mvaDbData.filter(
+    data => data.source === 'Motor Vehicle Act',
+  );
+
   return (
     <View>
       <FlatList
         data={dbIndex}
         keyExtractor={data => data.legislationId}
         renderItem={({item}) => {
-          if (item.legislationType === 'CrimCode') {
+          if (
+            item.legislationType === 'CrimCode' &&
+            filterArray.some(
+              legislation =>
+                legislation.type === 'Criminal Code' &&
+                legislation.filterState === false,
+            )
+          ) {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
@@ -153,12 +167,48 @@ const SearchResults = ({searchQueryTerm}) => {
               </View>
             );
           }
-          if (item.legislationType === 'MVA') {
+          if (
+            item.legislationType === 'MVA' &&
+            filterArray.some(
+              legislation =>
+                legislation.type === 'Motor Vehicle Regulations' &&
+                legislation.filterState === false,
+            )
+          ) {
             return (
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
-                  data={mvaDbData}
+                  data={mvaRegulationRenderData}
+                  keyExtractor={data => data.index}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View key={index} style={styles.searchResultsContainer}>
+                        <ContentMVA
+                          provisionId={item.provision}
+                          searchResults={searchResults}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              </View>
+            );
+          }
+
+          if (
+            item.legislationType === 'MVA' &&
+            filterArray.some(
+              legislation =>
+                legislation.type === 'Motor Vehicle Act' &&
+                legislation.filterState === false,
+            )
+          ) {
+            return (
+              <View>
+                <Text style={styles.heading_2}>{item.legislationTitle}</Text>
+                <FlatList
+                  data={mvaRenderData}
                   keyExtractor={data => data.index}
                   renderItem={({item, index}) => {
                     return (
