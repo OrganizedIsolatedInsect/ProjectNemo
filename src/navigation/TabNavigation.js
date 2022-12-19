@@ -11,7 +11,7 @@ import {colors} from '../assets/styles';
 const BottomTab = createBottomTabNavigator();
 
 export const AppNavigator = () => {
-  //Changes style of the Icon to show a line on topa`1
+  //Changes style of the Icon to show a line on top
   const CustomTabButton = props => (
     <Pressable
       {...props}
