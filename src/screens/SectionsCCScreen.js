@@ -49,8 +49,8 @@ const SectionsCCScreen = props => {
     return (
       <View>
         <CrimCodeGridList
-          headingKey={itemdata.item.heading2Key}
-          currentScreen={passingName}
+          heading2Key={itemdata.item.heading2Key}
+          prevScreen={passingName}
           sectionLabel={itemdata.item.sectionLabel}
           heading2TitleText={itemdata.item.heading2TitleText}
           heading1Label={itemdata.item.heading1Label}

@@ -4,10 +4,12 @@ import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {db} from './Database';
 import Accordion from 'react-native-collapsible/Accordion';
+import {useSelector} from 'react-redux';
 
 import Bookmark from './Bookmark';
 import {AccordionDown, AccordionUp} from '../assets/icons';
-
+import {PrintTitle} from '../components/PrintTitle';
+import {CRIMCODETITLE} from '../assets/constants';
 import {
   CrimCodeRenderHeader,
   CrimCodeRenderBody,
@@ -19,19 +21,35 @@ component is used in content screens, section is sent as prop and then filtered 
 return data set for paragraphs
 */
 
-const Section = ({section, lawType}) => {
-  //section prop passed on from browse screen
+const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
+  //section prop passed on from browse screen = heading2Key
   const sectionId = section;
   const localLawType = lawType;
   //set states for database data, loading
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-
+  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
   //Create array to divide up subsections
   let subsectionArray = [];
 
+  const checkInBookmark = () => {
+    let checkBool = false;
+    try {
+      checkBool = bookmarkStateId.some(
+        e =>
+          e.lawType === localLawType &&
+          e.legislationGroup.marginalNoteKey === marginalNoteKey, //check to see if the marginalnotekey exists in the bookmarks
+      );
+    } catch {
+      console.log('error in checking');
+    }
+    return checkBool;
+  };
+
   useEffect(() => {
     getDbData(sectionId);
+    if (prevScreen === 'BookmarkScreen' && checkInBookmark() === true) {
+    }
   }, [sectionId]);
 
   // function to get data from NemoDB
@@ -93,7 +111,8 @@ const Section = ({section, lawType}) => {
           {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
           <Bookmark
             data={item}
-            passingKey={item.marginalNoteKey} //CC data only
+            marginalNoteKey={item.marginalNoteKey} //CC data only
+            heading2Key={item.heading2Key}
             lawType={localLawType}
             setMarked={marked}
           />
@@ -102,10 +121,15 @@ const Section = ({section, lawType}) => {
       </View>
     );
   };
-
   if (loaded === true) {
     return (
       <SafeAreaView>
+        <PrintTitle
+          pageTitle={CRIMCODETITLE}
+          pagePartTitle={dbData[0].heading1TitleText}
+          pagePartLabel={dbData[0].heading1Label}
+          pagePartHeadingTitle={dbData[0].heading2TitleText}
+        />
         <Accordion
           activeSections={activeInfos}
           //for any default active section
