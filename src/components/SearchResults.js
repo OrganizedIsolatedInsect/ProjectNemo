@@ -40,29 +40,31 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   }, [searchQueryTerm]);
 
   useEffect(() => {
-    //create subsection for crime code renders
-    let subsectionData = createSubSectionArray(crimCodeDbData);
-    setSubsectionData(subsectionData);
+    const transformData = async () => {
+      //create subsection for crime code renders
+      var subsectionData = await createSubSectionArray(crimCodeDbData);
 
-    //filter MVA database data into regulation and non regulation
-    const mvaRegulationRenderData = mvaDbData.filter(
-      data => data.source === 'Motor Vehicle Act Regulations',
-    );
-    setMvaRegulationRenderData(mvaRegulationRenderData);
-    const mvaRenderData = mvaDbData.filter(
-      data => data.source === 'Motor Vehicle Act',
-    );
-    setMvaRenderData(mvaRenderData);
+      //filter MVA database data into regulation and non regulation
+      var mvaRegulationRenderData = await mvaDbData.filter(
+        data => data.source === 'Motor Vehicle Act Regulations',
+      );
+      var mvaRenderData = await mvaDbData.filter(
+        data => data.source === 'Motor Vehicle Act',
+      );
+      setSubsectionData(subsectionData);
+      setMvaRegulationRenderData(mvaRegulationRenderData);
+      setMvaRenderData(mvaRenderData);
+    };
+
+    transformData();
   }, [mvaDbData, crimCodeDbData]);
 
   useEffect(() => {
-    /*   setTimeout(() => {
+    setTimeout(() => {
       setIsLoading(false);
-    }, 2000); */
-    setIsLoading(false);
+    }, 1500);
+    /* setIsLoading(false); */
   }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
-
-  console.log(isloading);
 
   // function to get data from NemoDB
   const getDbData = searchResults => {
@@ -134,9 +136,8 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
 
   if (isloading === true) {
     return (
-      <View>
-        <Text>Loading</Text>
-        <ActivityIndicator />
+      <View style={styles.spinnerContainer}>
+        <ActivityIndicator size={'large'} />
       </View>
     );
   }

@@ -316,4 +316,5 @@ export default StyleSheet.create({
   headingItalics: {
     fontStyle: 'italic',
   },
+  spinnerContainer: {flex: 1, justifyContent: 'center', padding: 150},
 });
