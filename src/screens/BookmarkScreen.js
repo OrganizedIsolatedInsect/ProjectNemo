@@ -33,8 +33,6 @@ const BookmarkScreen = () => {
         CCArray.push(bookmarks.bookmarkArray[i]);
       }
     }
-    // console.log('ccarray');
-    // console.log(CCArray);
   };
 
   useEffect(() => {

@@ -50,10 +50,6 @@ const Bookmark = props => {
 
   //calls the redux methods for adding/remove from the redux store.  "marked" is opposite of logic because of the way react-native handles the use effect state changes.
   const dispatchAction = (bmData, bmKey, lawT, mNoteKey) => {
-    console.log(bmData);
-    console.log(bmKey);
-    console.log(lawT);
-    console.log(mNoteKey);
     if (marked === false) {
       dispatch(
         addBookmark({
