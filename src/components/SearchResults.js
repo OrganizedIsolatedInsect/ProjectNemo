@@ -7,6 +7,7 @@ import {
   VirtualizedList,
   SectionList,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -19,23 +20,46 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm, filterArray}) => {
-  const searchTerm = searchQueryTerm;
   //set states for search dbData
-  const [searchResults, setSearchResults] = useState(searchTerm);
+  const [searchResults, setSearchResults] = useState(searchQueryTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
+  const [subsectionData, setSubsectionData] = useState([]);
+  const [mvaRegulationRenderData, setMvaRegulationRenderData] = useState([]);
+  const [mvaRenderData, setMvaRenderData] = useState([]);
+  const [isloading, setIsLoading] = useState(true);
 
   const navAid = useNavigation();
 
   useEffect(() => {
-    setSearchResults(searchTerm);
+    setIsLoading(true);
+    setSearchResults(searchQueryTerm);
     getDbData(searchResults);
-  }, [searchTerm, searchResults]);
+  }, [searchQueryTerm]);
 
-  //create subsection for crime code renders
-  let subsectionData = createSubSectionArray(crimCodeDbData);
+  useEffect(() => {
+    //create subsection for crime code renders
+    let subsectionData = createSubSectionArray(crimCodeDbData);
+    setSubsectionData(subsectionData);
+
+    //filter MVA database data into regulation and non regulation
+    const mvaRegulationRenderData = mvaDbData.filter(
+      data => data.source === 'Motor Vehicle Act Regulations',
+    );
+    setMvaRegulationRenderData(mvaRegulationRenderData);
+    const mvaRenderData = mvaDbData.filter(
+      data => data.source === 'Motor Vehicle Act',
+    );
+    setMvaRenderData(mvaRenderData);
+  }, [mvaDbData, crimCodeDbData]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
+
+  console.log(isloading);
 
   // function to get data from NemoDB
   const getDbData = searchResults => {
@@ -105,13 +129,14 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   },
   {});
 
-  //filter MVA database data into regulation and non regulation
-  const mvaRegulationRenderData = mvaDbData.filter(
-    data => data.source === 'Motor Vehicle Act Regulations',
-  );
-  const mvaRenderData = mvaDbData.filter(
-    data => data.source === 'Motor Vehicle Act',
-  );
+  if (isloading === true) {
+    return (
+      <View>
+        <Text>Loading</Text>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <View>
