@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {db} from './Database';
 import Accordion from 'react-native-collapsible/Accordion';
-import {useSelector} from 'react-redux';
 
 import Bookmark from './Bookmark';
 import {AccordionDown, AccordionUp} from '../assets/icons';
@@ -28,28 +27,12 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
   //set states for database data, loading
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
   //Create array to divide up subsections
   let subsectionArray = [];
-
-  const checkInBookmark = () => {
-    let checkBool = false;
-    try {
-      checkBool = bookmarkStateId.some(
-        e =>
-          e.lawType === localLawType &&
-          e.legislationGroup.marginalNoteKey === marginalNoteKey, //check to see if the marginalnotekey exists in the bookmarks
-      );
-    } catch {
-      console.log('error in checking');
-    }
-    return checkBool;
-  };
+  let idx;
 
   useEffect(() => {
     getDbData(sectionId);
-    if (prevScreen === 'BookmarkScreen' && checkInBookmark() === true) {
-    }
   }, [sectionId]);
 
   // function to get data from NemoDB
@@ -72,7 +55,9 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
 
   //call function to create array containing subsection data to feed into accordion component
   subsectionArray = createSubSectionArray(dbData);
-
+  idx = subsectionArray.findIndex(
+    obj => obj.marginalNoteKey === marginalNoteKey,
+  );
   const [collapsedState, setCollapsedState] = useState(true);
   // Active Infos is the section number (from react-native-collapsible, NOT our database section)
   // This is to index the section into an array which is used can be used for the isActive state
@@ -80,10 +65,27 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
   const [activeInfos, setActiveInfos] = useState([]);
 
   const setInfos = infos => {
+    console.log(infos);
+    infos === undefined ? (infos = -1) : infos;
     //setting up a active section state
-    setActiveInfos(infos.includes(undefined) ? [] : infos);
+    setActiveInfos(infos.includes(undefined) ? [] : infos); //OLD VERSION
     setCollapsedState(prevState => !prevState);
   };
+
+  useEffect(() => {
+    console.log(idx);
+    let localArray = activeInfos;
+    console.log('local array ' + localArray);
+    if (
+      prevScreen === 'BookmarkScreen' && //coming from bookmark screen
+      idx !== null && //bookmark position is not null
+      idx > -1 && //bookmark position is not less than 0
+      activeInfos.indexOf(idx) < 0 //bookmark position does not already exist in actionInfos array
+    ) {
+      setActiveInfos(activeInfos => [...activeInfos, idx]);
+      console.log('here');
+    }
+  }, [idx]);
 
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
@@ -121,7 +123,9 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
       </View>
     );
   };
+
   if (loaded === true) {
+    console.log('activeInfos ' + activeInfos);
     return (
       <SafeAreaView>
         <PrintTitle
