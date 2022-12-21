@@ -56,6 +56,9 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   }, [mvaDbData, crimCodeDbData]);
 
   useEffect(() => {
+    /*   setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); */
     setIsLoading(false);
   }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
 
