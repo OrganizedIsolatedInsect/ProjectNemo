@@ -55,6 +55,7 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
 
   //call function to create array containing subsection data to feed into accordion component
   subsectionArray = createSubSectionArray(dbData);
+  //find where marginal key is within the subsection array and return the index number; this will point to the existing accordion index.
   idx = subsectionArray.findIndex(
     obj => obj.marginalNoteKey === marginalNoteKey,
   );
@@ -65,25 +66,25 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
   const [activeInfos, setActiveInfos] = useState([]);
 
   const setInfos = infos => {
-    console.log(infos);
-    infos === undefined ? (infos = -1) : infos;
+    //get rid of undefined as a state option
+    infos === undefined ? (infos = []) : infos;
     //setting up a active section state
-    setActiveInfos(infos.includes(undefined) ? [] : infos); //OLD VERSION
+    setActiveInfos(infos);
     setCollapsedState(prevState => !prevState);
   };
 
   useEffect(() => {
-    console.log(idx);
-    let localArray = activeInfos;
-    console.log('local array ' + localArray);
     if (
       prevScreen === 'BookmarkScreen' && //coming from bookmark screen
       idx !== null && //bookmark position is not null
       idx > -1 && //bookmark position is not less than 0
       activeInfos.indexOf(idx) < 0 //bookmark position does not already exist in actionInfos array
     ) {
-      setActiveInfos(activeInfos => [...activeInfos, idx]);
-      console.log('here');
+      setActiveInfos([idx]);
+      setCollapsedState(false);
+      changeRenderChildrenCollapsed(true);
+    } else {
+      changeRenderChildrenCollapsed(false);
     }
   }, [idx]);
 
@@ -106,6 +107,11 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
     );
   };
 
+  //allows the renderContent section to be uncollapsed when coming from the bookmark screen and opening the proper section in the accordion.
+  const changeRenderChildrenCollapsed = bool => {
+    return bool;
+  };
+
   const renderContent = (item, index, isActive, sections, marked) => {
     return (
       <View style={styles.accordionContainer}>
@@ -125,7 +131,6 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
   };
 
   if (loaded === true) {
-    console.log('activeInfos ' + activeInfos);
     return (
       <SafeAreaView>
         <PrintTitle
@@ -151,7 +156,8 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
           //Duration for Collapse and expand
           onChange={setInfos}
           //setting the state of active sections
-          renderChildrenCollapsed={false}
+          renderChildrenCollapsed={changeRenderChildrenCollapsed}
+          //renderChildrenCollapsed has to be true because it appears to activate the default active section state and opens from bookmark screen.
           renderAsFlatList={true}
         />
       </SafeAreaView>
