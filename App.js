@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 //USER Imports
 import AppNavigator from './src/navigation/TabNavigation';
+import {LaunchStack} from './src/navigation/StackNavigation';
 import store from './src/redux/store';
 
 import {colors} from './src/assets/styles';
@@ -32,7 +33,7 @@ const App = () => {
           barStyle="dark-content"
         />
         <NavigationContainer theme={navTheme}>
-          <AppNavigator />
+          <LaunchStack />
         </NavigationContainer>
       </SafeAreaProvider>
     </Provider>

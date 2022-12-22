@@ -2,14 +2,16 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
 
-let iconSize = 20;
+let ICONSIZE = 20; //general programming practice is that all CONSTANTS should be in uppercase*
+let DEVSIZE = 30;
+let LARGESIZE = 200;
 
 export const ArrowIcon = () => {
   return (
     <Icon
       style={styles.partsIcon}
       name={'arrow-forward-ios'}
-      size={iconSize}
+      size={ICONSIZE}
       color={colors.primaryText}
     />
   );
