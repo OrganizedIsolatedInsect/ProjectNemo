@@ -143,6 +143,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                               navAid.navigate('ContentCCScreen', {
                                 passingKey: item.heading2Key,
                                 searchResults: searchResults,
+                                subsectionKey: item.subsectionKey,
                               });
                             }}>
                             <View style={styles.heading_2}>
