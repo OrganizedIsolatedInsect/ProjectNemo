@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import Section from '../components/Section';
