@@ -13,7 +13,6 @@ function createSubSectionArray(dbData) {
     const paragraphKey = dbData[i].paragraphKey;
     const subparagraphKey = dbData[i].subparagraphKey;
     const subclauseKey = dbData[i].subclauseKey;
-    const heading2Key = dbData[i].heading2Key;  //used to pass into the bookmark
     let prevSectionLabel = '';
 
     if (i > 0) {
@@ -38,7 +37,6 @@ function createSubSectionArray(dbData) {
       paragraphKey,
       subparagraphKey,
       subclauseKey,
-      heading2Key,
     ) => {
       subsectionArray.push({
         field1: field1,
@@ -54,7 +52,6 @@ function createSubSectionArray(dbData) {
         paragraphKey: paragraphKey,
         subparagraphKey: subparagraphKey,
         subclauseKey: subclauseKey,
-        heading2Key: heading2Key,
       });
     };
     /* eslint-enable */
@@ -73,7 +70,6 @@ function createSubSectionArray(dbData) {
         paragraphKey,
         subparagraphKey,
         subclauseKey,
-        heading2Key,
       );
     } else {
       const prevSubsection = dbData[i - 1].subsectionLabel;
@@ -92,7 +88,6 @@ function createSubSectionArray(dbData) {
           paragraphKey,
           subparagraphKey,
           subclauseKey,
-          heading2Key,
         );
       }
     }

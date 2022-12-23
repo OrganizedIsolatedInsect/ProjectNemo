@@ -15,7 +15,6 @@ const CrimCodeGridList = props => {
   let componentKey;
   let componentLabel;
   let componentTitle;
-  let prevScreen;
 
   // let heading1Key;
   let heading1Label = props.heading1Label;
@@ -50,10 +49,9 @@ const CrimCodeGridList = props => {
     componentTitle = props.heading1TitleText;
   } else {
     //SectionCCScreen.js
-    componentKey = props.heading2Key; //this is coming from sectionCCSCreen heading2Key..
+    componentKey = props.headingKey; //this is coming from sectionCCSCreen heading2Key..
     componentLabel = props.sectionLabel;
     componentTitle = props.heading2TitleText;
-    prevScreen = 'SectionCCScreen';
   }
 
   return (
@@ -68,8 +66,7 @@ const CrimCodeGridList = props => {
             });
           } else {
             navAid.navigate('ContentCCScreen', {
-              heading2Key: componentKey,
-              prevScreen: prevScreen,
+              passingKey: componentKey,
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
               heading2TitleText: heading2TitleText,

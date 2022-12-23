@@ -311,7 +311,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: colors.primaryText,
-    marginBottom: 5,
   },
   headingItalics: {
     fontStyle: 'italic',

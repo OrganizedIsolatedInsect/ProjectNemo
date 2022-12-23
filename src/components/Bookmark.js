@@ -10,9 +10,8 @@ const Bookmark = props => {
   const [marked, setMarked] = useState(false);
   const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
   const localLawType = props.lawType;
-  const localPassKey = props.heading2Key; //can be marginNoteKey from CC or provision from MVA
+  const localPassKey = props.passingKey; //can be marginNoteKey from CC or provision from MVA
   const localData = props.data; //needs this data to pass through redux for rendering purposes.
-  const localMarginalNoteKey = props.marginalNoteKey;
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
@@ -26,9 +25,7 @@ const Bookmark = props => {
   const checkBookmarkArray = () => {
     const checkBool =
       bookmarkStateId.some(
-        e =>
-          e.lawType === localLawType &&
-          e.marginalNoteKey === localMarginalNoteKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
+        e => e.lawType === localLawType && e.passingKey === localPassKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
       ) && isFocused;
     return checkBool;
   };
@@ -49,15 +46,13 @@ const Bookmark = props => {
   };
 
   //calls the redux methods for adding/remove from the redux store.  "marked" is opposite of logic because of the way react-native handles the use effect state changes.
-  const dispatchAction = (bmData, bmKey, lawT, mNoteKey) => {
+  const dispatchAction = (bmData, bmKey, lawT) => {
     if (marked === false) {
       dispatch(
         addBookmark({
           legislationGroup: bmData, //adds all data for output purposes on BookmarkScreen.js,
-          heading2Key: bmKey, //for CC it's marginNoteKey, for MVA it's provision
+          passingKey: bmKey, //for CC it's marginNoteKey, for MVA it's provision
           lawType: lawT,
-          marginalNoteKey: mNoteKey,
-          passingKey: mNoteKey,
         }),
       );
     }
@@ -76,12 +71,7 @@ const Bookmark = props => {
     <Pressable
       onPress={() => {
         switchMarks();
-        dispatchAction(
-          fullSomeData,
-          localPassKey,
-          localLawType,
-          localMarginalNoteKey,
-        );
+        dispatchAction(fullSomeData, localPassKey, localLawType);
       }}>
       <View>
         {marked === true && isFocused ? (
