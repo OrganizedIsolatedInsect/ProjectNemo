@@ -205,6 +205,15 @@ export default StyleSheet.create({
     color: colors.primaryText,
   },
 
+  //BOOKMARK STYLING
+  bookmarkPosition: {
+    alignSelf: 'flex-end',
+  },
+  bookmarkRender: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   //SEARCHBAR Styling START
   searchView_Styling: {
     flexDirection: 'row',
@@ -312,6 +321,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: colors.primaryText,
+    marginBottom: 5,
   },
   headingItalics: {
     fontStyle: 'italic',

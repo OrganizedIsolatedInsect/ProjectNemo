@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import styles, {colors} from '../assets/styles';
+import React, {useState, useEffect, useRef} from 'react';
+import styles from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useDispatch, useSelector} from 'react-redux';
 import {db} from './Database';
-import {useIsFocused} from '@react-navigation/native';
 import Accordion from 'react-native-collapsible/Accordion';
-import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 
+import Bookmark from './Bookmark';
 import {AccordionDown, AccordionUp} from '../assets/icons';
-
+import {PrintTitle} from '../components/PrintTitle';
+import {CRIMCODETITLE} from '../assets/constants';
 import {
   CrimCodeRenderHeader,
   CrimCodeRenderBody,
@@ -21,36 +20,16 @@ component is used in content screens, section is sent as prop and then filtered 
 return data set for paragraphs
 */
 
-const Section = ({section, type}) => {
-  //section prop passed on from browse screen
+const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
+  //section prop passed on from browse screen = heading2Key
   const sectionId = section;
-  const typeId = type;
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
-  //set states for bookmark flag, database data, loading
-  const [marked, setMarked] = useState(false);
+  const localLawType = lawType;
+  //set states for database data, loading
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-
-  //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
-
-  //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
-
   //Create array to divide up subsections
   let subsectionArray = [];
-
-  useEffect(() => {
-    // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
-    if (bookmarkStateId.some(e => e.section == section)) {
-      setMarked(true);
-    } else {
-      setMarked(false);
-    }
-  }, [marked, isFocused]);
+  let idx;
 
   useEffect(() => {
     getDbData(sectionId);
@@ -62,7 +41,7 @@ const Section = ({section, type}) => {
       tx.executeSql(
         'Select * from CCDataV2 where heading2Key = ?',
         [sectionId],
-        (tx, results) => {
+        (_tx, results) => {
           const temp = [];
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
@@ -76,30 +55,10 @@ const Section = ({section, type}) => {
 
   //call function to create array containing subsection data to feed into accordion component
   subsectionArray = createSubSectionArray(dbData);
-
-  //dispatch add or remove bookmarks based bookmark icon
-  //lawtype line required to differentiate in case of duplicate Section values.
-  const dispatchAction = (section, sectionHeader) => {
-    // dispatch based on opposite of flag because marked does not change until the rerender
-    if (marked === false) {
-      dispatch(
-        addBookmark({
-          sectionLabel: sectionLabel,
-          sectionHeader: sectionHeader,
-          lawtype: 'CC',
-        }),
-      );
-    }
-    if (marked === true) {
-      dispatch(
-        removeBookmark({
-          sectionLabel: sectionLabel,
-          lawtype: 'CC',
-        }),
-      );
-    }
-  };
-
+  //find where marginal key is within the subsection array and return the index number; this will point to the existing accordion index.
+  idx = subsectionArray.findIndex(
+    obj => obj.marginalNoteKey === marginalNoteKey,
+  );
   const [collapsedState, setCollapsedState] = useState(true);
   // Active Infos is the section number (from react-native-collapsible, NOT our database section)
   // This is to index the section into an array which is used can be used for the isActive state
@@ -107,10 +66,27 @@ const Section = ({section, type}) => {
   const [activeInfos, setActiveInfos] = useState([]);
 
   const setInfos = infos => {
+    //get rid of undefined as a state option
+    infos === undefined ? (infos = []) : infos;
     //setting up a active section state
-    setActiveInfos(infos.includes(undefined) ? [] : infos);
+    setActiveInfos(infos);
     setCollapsedState(prevState => !prevState);
   };
+
+  useEffect(() => {
+    if (
+      prevScreen === 'BookmarkScreen' && //coming from bookmark screen
+      idx !== null && //bookmark position is not null
+      idx > -1 && //bookmark position is not less than 0
+      activeInfos.indexOf(idx) < 0 //bookmark position does not already exist in actionInfos array
+    ) {
+      setActiveInfos([idx]);
+      setCollapsedState(false);
+      changeRenderChildrenCollapsed(true);
+    } else {
+      changeRenderChildrenCollapsed(false);
+    }
+  }, [idx]);
 
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {
@@ -131,9 +107,24 @@ const Section = ({section, type}) => {
     );
   };
 
-  const renderContent = (item, index, isActive, sections) => {
+  //allows the renderContent section to be uncollapsed when coming from the bookmark screen and opening the proper section in the accordion.
+  const changeRenderChildrenCollapsed = bool => {
+    return bool;
+  };
+
+  const renderContent = (item, index, isActive, sections, marked) => {
     return (
       <View style={styles.accordionContainer}>
+        <View style={styles.bookmarkPosition}>
+          {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
+          <Bookmark
+            data={item}
+            marginalNoteKey={item.marginalNoteKey} //CC data only
+            heading2Key={item.heading2Key}
+            lawType={localLawType}
+            setMarked={marked}
+          />
+        </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
       </View>
     );
@@ -142,6 +133,12 @@ const Section = ({section, type}) => {
   if (loaded === true) {
     return (
       <SafeAreaView>
+        <PrintTitle
+          pageTitle={CRIMCODETITLE}
+          pagePartTitle={dbData[0].heading1TitleText}
+          pagePartLabel={dbData[0].heading1Label}
+          pagePartHeadingTitle={dbData[0].heading2TitleText}
+        />
         <Accordion
           activeSections={activeInfos}
           //for any default active section
@@ -159,7 +156,8 @@ const Section = ({section, type}) => {
           //Duration for Collapse and expand
           onChange={setInfos}
           //setting the state of active sections
-          renderChildrenCollapsed={false}
+          renderChildrenCollapsed={changeRenderChildrenCollapsed}
+          //renderChildrenCollapsed has to be true because it appears to activate the default active section state and opens from bookmark screen.
           renderAsFlatList={true}
         />
       </SafeAreaView>

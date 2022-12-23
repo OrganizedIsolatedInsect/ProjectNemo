@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 //redux store for boookmarks
 
 const initialState = {
-  sections: [],
+  bookmarkArray: [], //genericize variable as it holds items that are not just "sections"
 };
 
 const bookmarkSlice = createSlice({
@@ -11,11 +11,15 @@ const bookmarkSlice = createSlice({
   initialState,
   reducers: {
     addBookmark: (state, action) => {
-      state.sections.push(action.payload);
+      state.bookmarkArray.push(action.payload);
     },
     removeBookmark: (state, action) => {
-      state.sections = state.sections.filter(
-        sections => sections.section !== action.payload.section,
+      state.bookmarkArray = state.bookmarkArray.filter(
+        item =>
+          !(
+            item.passingKey === action.payload.passingKey &&
+            item.lawType === action.payload.lawType
+          ), //passingkey: for CC it's "marginNoteKey", for MVA it's "provision"
       );
     },
   },

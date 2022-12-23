@@ -4,6 +4,7 @@ function createSubSectionArray(dbData) {
     const field1 = dbData[i].field1; // index
     const sectionLabel = dbData[i].sectionLabel; // section
     const subsectionLabel = dbData[i].subsectionLabel; // subsection
+    const marginalNoteKey = dbData[i].marginalNoteKey; // subsection
     const marginalNote = dbData[i].marginalNote; // sebsectionHeader
     const subsectionText = dbData[i].subsectionText; // subsectionText
     const heading2Key = dbData[i].heading2Key;
@@ -13,6 +14,7 @@ function createSubSectionArray(dbData) {
     const paragraphKey = dbData[i].paragraphKey;
     const subparagraphKey = dbData[i].subparagraphKey;
     const subclauseKey = dbData[i].subclauseKey;
+    const heading2Key = dbData[i].heading2Key;  //used to pass into the bookmark
     let prevSectionLabel = '';
 
     if (i > 0) {
@@ -27,6 +29,7 @@ function createSubSectionArray(dbData) {
       field1,
       sectionLabel,
       subsectionLabel,
+      marginalNoteKey,
       marginalNote,
       subsectionText,
       heading2Key,
@@ -37,11 +40,13 @@ function createSubSectionArray(dbData) {
       paragraphKey,
       subparagraphKey,
       subclauseKey,
+      heading2Key,
     ) => {
       subsectionArray.push({
         field1: field1,
         sectionLabel: sectionLabel,
         subsectionLabel: subsectionLabel,
+        marginalNoteKey: marginalNoteKey,
         marginalNote: marginalNote,
         subsectionText: subsectionText,
         heading2Key: heading2Key,
@@ -52,6 +57,7 @@ function createSubSectionArray(dbData) {
         paragraphKey: paragraphKey,
         subparagraphKey: subparagraphKey,
         subclauseKey: subclauseKey,
+        heading2Key: heading2Key,
       });
     };
     /* eslint-enable */
@@ -60,6 +66,7 @@ function createSubSectionArray(dbData) {
         field1,
         sectionLabel,
         subsectionLabel,
+        marginalNoteKey,
         marginalNote,
         subsectionText,
         heading2Key,
@@ -70,6 +77,7 @@ function createSubSectionArray(dbData) {
         paragraphKey,
         subparagraphKey,
         subclauseKey,
+        heading2Key,
       );
     } else {
       const prevSubsection = dbData[i - 1].subsectionLabel;
@@ -78,6 +86,7 @@ function createSubSectionArray(dbData) {
           field1,
           sectionLabel,
           subsectionLabel,
+          marginalNoteKey,
           marginalNote,
           subsectionText,
           heading2Key,
@@ -88,6 +97,7 @@ function createSubSectionArray(dbData) {
           paragraphKey,
           subparagraphKey,
           subclauseKey,
+          heading2Key,
         );
       }
     }
