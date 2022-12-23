@@ -13,7 +13,7 @@ const BookmarkScreen = () => {
   const navAid = useNavigation();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const dispatch = useDispatch();
-  const prevScreen = 'BookmarkScreen';
+
   //get bookmarks from state redux store
   const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
 
@@ -73,14 +73,11 @@ const BookmarkScreen = () => {
             });
           }
           if (item.lawType === 'CC') {
-            navAid.navigate(
-              'ContentCCScreen',
-              {
-                heading2Key: item.heading2Key,
-                prevScreen: prevScreen, //used to determine how the accordion activates upon entry into Section.js
-                marginalNoteKey: item.marginalNoteKey,
-              }, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
-            );
+            navAid.navigate('ContentCCScreen', {
+              props: {
+                params: item.passingKey, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
+              },
+            });
           }
         }}>
         <Text>{renderText(item)}</Text>

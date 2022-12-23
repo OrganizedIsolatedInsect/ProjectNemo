@@ -17,27 +17,10 @@ export const PrintTitle = props => {
 
   return (
     <Text style={styles.printTitleFormatting}>
-      <Text style={styles.title}>
-        {pageTitle}
-        {pagePartLabel == null ? (
-          <Text>
-            {'\n'}
-            {pagePartTitle}
-          </Text>
-        ) : null}
-        {pagePartLabel != null ? (
-          <Text>
-            {'\n'}
-            {pagePartTitle} - {pagePartLabel}
-          </Text>
-        ) : null}
-      </Text>
-      {pagePartHeadingTitle != null ? (
-        <Text style={styles.headingItalics}>
-          {'\n'}
-          {pagePartHeadingTitle}
-        </Text>
-      ) : null}
+      <Text style={styles.title}>{pageTitle}
+      {pagePartLabel == null ? (<Text>{'\n'}{pagePartTitle}</Text>) : null}
+      {pagePartLabel != null ? (<Text>{'\n'}{pagePartTitle} - {pagePartLabel}</Text>) : null}</Text>
+      {pagePartHeadingTitle != null ? (<Text style={styles.headingItalics}>{'\n'}{pagePartHeadingTitle}</Text>) : null}
     </Text>
   );
 };
