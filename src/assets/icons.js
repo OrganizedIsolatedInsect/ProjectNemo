@@ -2,16 +2,16 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
 
-let ICONSIZE = 20; //general programming practice is that all CONSTANTS should be in uppercase*
-let DEVSIZE = 30;
-let LARGESIZE = 200;
+let iconSize = 20; //general programming practice is that all CONSTANTS should be in uppercase*
+let devSize = 30;
+let largeSize = 200;
 
 export const ArrowIcon = () => {
   return (
     <Icon
       style={styles.partsIcon}
       name={'arrow-forward-ios'}
-      size={ICONSIZE}
+      size={iconSize}
       color={colors.primaryText}
     />
   );
@@ -19,7 +19,7 @@ export const ArrowIcon = () => {
 
 export const AccordionUp = () => {
   return (
-    <Icon name="keyboard-arrow-up" size={ICONSIZE} color={colors.primaryText} />
+    <Icon name="keyboard-arrow-up" size={iconSize} color={colors.primaryText} />
   );
 };
 
@@ -27,7 +27,7 @@ export const AccordionDown = () => {
   return (
     <Icon
       name="keyboard-arrow-down"
-      size={ICONSIZE}
+      size={iconSize}
       color={colors.primaryText}
     />
   );
@@ -35,7 +35,7 @@ export const AccordionDown = () => {
 
 export const BookmarkMarked = () => {
   return (
-    <Icon name="bookmark" size={ICONSIZE} style={{color: colors.primary}} />
+    <Icon name="bookmark" size={iconSize} style={{color: colors.primary}} />
   );
 };
 
@@ -43,21 +43,21 @@ export const BookmarkUnmarked = () => {
   return (
     <Icon
       name="bookmark-outline"
-      size={ICONSIZE}
+      size={iconSize}
       style={{color: colors.primary}}
     />
   );
 };
 
 export const DeleteIcon = () => {
-  return <Icon name="delete" size={ICONSIZE} />;
+  return <Icon name="delete" size={iconSize} style={{color: colors.primary}} />;
 };
 
 export const LargeBookmarkIcon = () => {
   return (
     <Icon
       name="collections-bookmark"
-      size={LARGESIZE}
+      size={largeSize}
       style={{color: colors.primaryText}}
     />
   );

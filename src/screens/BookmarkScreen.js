@@ -52,7 +52,7 @@ const BookmarkScreen = () => {
       );
     } else if (item.lawType === 'CC') {
       return (
-        <Text>
+        <Text style={[styles.body, {color: colors.primaryText}]}>
           {item.legislationGroup.sectionLabel}{' '}
           {item.legislationGroup.subsectionLabel}{' '}
           {item.legislationGroup.marginalNote}
@@ -77,7 +77,6 @@ const BookmarkScreen = () => {
               'ContentCCScreen',
               {
                 heading2Key: item.heading2Key,
-                prevScreen: prevScreen, //used to determine how the accordion activates upon entry into Section.js
                 marginalNoteKey: item.marginalNoteKey,
               }, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
             );

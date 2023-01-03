@@ -20,7 +20,7 @@ component is used in content screens, section is sent as prop and then filtered 
 return data set for paragraphs
 */
 
-const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
+const Section = ({section, lawType, marginalNoteKey}) => {
   //section prop passed on from browse screen = heading2Key
   const sectionId = section;
   const localLawType = lawType;
@@ -75,7 +75,6 @@ const Section = ({section, lawType, prevScreen, marginalNoteKey}) => {
 
   useEffect(() => {
     if (
-      prevScreen === 'BookmarkScreen' && //coming from bookmark screen
       idx !== null && //bookmark position is not null
       idx > -1 && //bookmark position is not less than 0
       activeInfos.indexOf(idx) < 0 //bookmark position does not already exist in actionInfos array
