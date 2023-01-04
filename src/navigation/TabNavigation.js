@@ -35,6 +35,12 @@ export const AppNavigator = () => {
       screenOptions={({route}) => ({
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.primaryText,
+        // tabBarLabelPosition required to keep labels below icons otherwise they may shift to the
+        // side after a certain height limitation.
+        tabBarLabelPosition: 'below-icon',
+        // tabBarHideOnKeyboard is jank af on Android but putting here for discussion.
+        // https://github.com/react-navigation/react-navigation/issues/6700#issuecomment-547084964
+        tabBarHideOnKeyboard: 'true',
         tabBarLabelStyle: {
           fontFamily: 'NotoSans-Regular',
           fontSize: 12,
