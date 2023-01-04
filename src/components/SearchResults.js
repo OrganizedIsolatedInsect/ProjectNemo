@@ -170,8 +170,9 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                           <Pressable
                             onPress={() => {
                               navAid.navigate('ContentCCScreen', {
-                                passingKey: item.heading2Key,
+                                heading2Key: item.heading2Key,
                                 searchResults: searchResults,
+                                marginalNoteKey: item.marginalNoteKey,
                               });
                             }}>
                             <View style={styles.heading_2}>
