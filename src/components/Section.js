@@ -17,6 +17,8 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 /*
 component is used in content screens, section is sent as prop and then filtered against the data to
 return data set for paragraphs
+
+temp
 */
 
 const Section = ({section, lawType}) => {
