@@ -1,18 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {db} from '../components/Database';
-import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
-import {useIsFocused} from '@react-navigation/native';
-import HighlightText from '@sanar/react-native-highlight-text';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
+import Bookmark from './Bookmark';
 
-const ContentMVA = ({provisionId, searchResults}) => {
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
+const ContentMVA = ({provisionId}) => {
+  const provisionID = provisionId;
   const [marked, setMarked] = useState(false); //to change marked status of content
   const [dbData, setDbData] = useState([]); //local data array
   const [loading, setLoading] = useState(false); //for loading cursor purposes
@@ -26,31 +20,25 @@ const ContentMVA = ({provisionId, searchResults}) => {
   const [sectionSubsection, setSectionSubsection] = useState('');
   const [sectionParagraph, setSectionParagraph] = useState('');
   const [sectionSubparagraph, setSectionSubparagraph] = useState('');
+  const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
-  //pull state to see if current section exists in bookmarks
-  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
-
-  //used to switch the bookmark icon from outline to fill and vice versa
-  const switchMarks = () => {
-    setMarked(!marked);
-  };
+  const localLawType = 'MVA';
 
   useEffect(() => {
     setLoading(true);
-    getDbData(provisionId);
+    getDbData(provisionID);
     setLoading(false);
-  }, [marked, loading, provisionId]);
+  }, [marked, loading, provisionID]);
 
-  //lookup provisionId on the data table to find the proper row
+  //lookup provisionID on the data table to find the proper row
   // function to get data from NemoDB
-  //Issues:  setting setDBData does not appear to work properly in this component so variables set up via temp output
   const getDbData = provID => {
     const temp = [];
     db.transaction(tx => {
       tx.executeSql(
         'Select * from MVA where provision = ?',
         [provID],
-        (tx, results) => {
+        (_tx, results) => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
@@ -65,33 +53,15 @@ const ContentMVA = ({provisionId, searchResults}) => {
             setSectionSubsection(temp[0].sectionSubsection);
             setSectionParagraph(temp[0].sectionParagraph);
             setSectionSubparagraph(temp[0].sectionSubparagraph);
+            setDbData(temp); //to prepare for page rebuild render to remove hardcoded states
+            setArray({
+              provision: temp[0].provision,
+              contravention: temp[0].contravention,
+            });
           }
         },
       );
     });
-  };
-
-  //dispatch add or remove bookmarks based bookmark icon
-  //Requires Lawtype to differentiate the source of the bookmark
-  const dispatchAction = () => {
-    // dispatch based on opposite of flag because marked does not change until the rerender
-    if (marked === false) {
-      dispatch(
-        addBookmark({
-          lawtype: 'MVA',
-          section: provision,
-          sectionHeader: contravention,
-        }),
-      );
-    }
-    if (marked === true) {
-      dispatch(
-        removeBookmark({
-          lawtype: 'MVA',
-          section: provision,
-        }),
-      );
-    }
   };
 
   return (
@@ -104,42 +74,26 @@ const ContentMVA = ({provisionId, searchResults}) => {
               fontWeight: 'bold',
               color: colors.primaryText,
             }}>
-            <HighlightText
-              searchWords={[searchResults]}
-              textToHighlight={contravention}
-              highlightStyle={styles.searchResultsHighlight}
-            />
+            {contravention}
           </Text>
         </View>
         <View style={styles.MVAContentHeadingContainerRight}>
-          {/* Bookmark Icon and actions */}
-          <Icon
-            name={marked ? 'bookmark' : 'bookmark-outline'}
-            size={30}
-            onPress={() => {
-              switchMarks();
-              dispatchAction();
-            }}
-            style={{color: colors.primary}}
+          {/* Bookmark Icon */}
+          <Bookmark
+            data={array}
+            passingKey={provisionID}
+            lawType={localLawType}
+            setMarked={marked}
           />
         </View>
       </View>
       <View style={styles.MVAContentSection}>
         <Text style={{...styles.accent_1, color: colors.primaryText}}>
-          {source}, Section
-          <HighlightText
-            searchWords={[searchResults]}
-            textToHighlight={provision}
-            highlightStyle={styles.searchResultsHighlight}
-          />
+          {source}, Section {provision}
         </Text>
         <Text
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
-          <HighlightText
-            searchWords={[searchResults]}
-            textToHighlight={sectionText}
-            highlightStyle={styles.searchResultsHighlight}
-          />
+          {sectionText}
           {'\n'}
         </Text>
         <View style={styles.MVAContentSubsection}>
@@ -148,21 +102,9 @@ const ContentMVA = ({provisionId, searchResults}) => {
               ...styles.MVAContentSectionText,
               color: colors.primaryText,
             }}>
-            <HighlightText
-              searchWords={[searchResults]}
-              textToHighlight={sectionSubsection}
-              highlightStyle={styles.searchResultsHighlight}
-            />
-            <HighlightText
-              searchWords={[searchResults]}
-              textToHighlight={sectionParagraph}
-              highlightStyle={styles.searchResultsHighlight}
-            />
-            <HighlightText
-              searchWords={[searchResults]}
-              textToHighlight={sectionSubparagraph}
-              highlightStyle={styles.searchResultsHighlight}
-            />
+            {sectionSubsection}
+            {sectionParagraph}
+            {sectionSubparagraph}
             {'\n'}
           </Text>
         </View>
