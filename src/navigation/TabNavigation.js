@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //USER Imports
 import {BookMarkStack, ContentStack} from './StackNavigation';
-import {colors} from '../assets/styles';
+import styles, {colors} from '../assets/styles';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -26,6 +26,7 @@ export const AppNavigator = () => {
             ]
           : props.style
       }
+      android_ripple={{color: styles.AndroidRiplePressable}}
     />
   );
 

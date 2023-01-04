@@ -27,7 +27,9 @@ const CustomScreenHeader = () => {
   const navAid = useNavigation();
   return (
     <View style={styles.headerViewStyle}>
-      <Pressable onPress={() => navAid.navigate('LandingScreen')}>
+      <Pressable
+        onPress={() => navAid.navigate('LandingScreen')}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <Text style={styles.headerText}>
           <Text style={{color: colors.primaryText}}>
             FINDING <Text style={{color: colors.primary}}>NEMO</Text>

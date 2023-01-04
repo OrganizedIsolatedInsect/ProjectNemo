@@ -56,6 +56,7 @@ const CrimCodeGridList = props => {
     prevScreen = 'SectionCCScreen';
   }
 
+
   return (
     <View>
       <Pressable
@@ -75,7 +76,8 @@ const CrimCodeGridList = props => {
               heading2TitleText: heading2TitleText,
             });
           }
-        }}>
+        }}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <View>
           <View style={styles.gridListItem}>
             <View style={[styles.gridItemMargin, styles.body]}>
