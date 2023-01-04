@@ -26,13 +26,9 @@ export const AccordionUp = () => {
 
 export const AccordionDown = () => {
   return (
-    (
     <Icon
-     
       name="keyboard-arrow-down"
-     
       size={iconSize}
-     
       color={colors.primaryText}
     />
   );
@@ -47,9 +43,7 @@ export const MagnifyingGlass = props => {
       size={iconSize + 10}
       style={{...styles.searchIcon_styling}}
       {...props}
-   
     />
-  )
   );
 };
 

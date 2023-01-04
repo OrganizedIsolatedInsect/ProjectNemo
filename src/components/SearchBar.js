@@ -1,11 +1,8 @@
 import React from 'react';
-import {View, TextInput, Pressable} from 'react-native';
+import {TextInput, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {useNavigation} from '@react-navigation/native';
-
 import {MagnifyingGlass, CloseIcon} from '../assets/icons';
-
 import styles from '../assets/styles';
 
 // SearchBar receives the query value as the state from SearchScreen and the onChange prop

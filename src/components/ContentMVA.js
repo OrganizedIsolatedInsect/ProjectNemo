@@ -9,9 +9,6 @@ import HighlightText from '@sanar/react-native-highlight-text';
 import styles, {colors} from '../assets/styles';
 import Bookmark from './Bookmark';
 
-const ContentMVA = ({provisionId, searchResults}) => {
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
 const ContentMVA = ({provisionId}) => {
   const provisionID = provisionId;
   const [marked, setMarked] = useState(false); //to change marked status of content
