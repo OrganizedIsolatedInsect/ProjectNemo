@@ -17,6 +17,7 @@ export const ArrowIcon = () => {
   );
 };
 
+// Criminal Code Content Screen Icons
 export const AccordionUp = () => {
   return (
     <Icon name="keyboard-arrow-up" size={iconSize} color={colors.primaryText} />
@@ -25,11 +26,30 @@ export const AccordionUp = () => {
 
 export const AccordionDown = () => {
   return (
+    (
     <Icon
+     
       name="keyboard-arrow-down"
+     
       size={iconSize}
+     
       color={colors.primaryText}
     />
+  );
+};
+// Criminal Code Content Screen Icons
+
+// SearchBar Icons
+export const MagnifyingGlass = props => {
+  return (
+    <Icon
+      name="search"
+      size={iconSize + 10}
+      style={{...styles.searchIcon_styling}}
+      {...props}
+   
+    />
+  )
   );
 };
 

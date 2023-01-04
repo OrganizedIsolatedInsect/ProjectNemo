@@ -79,21 +79,22 @@ export default StyleSheet.create({
   buttonContainer: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 10,
-    marginHorizontal: 8,
-    marginBottom: 10,
+    padding: 2,
+    marginHorizontal: 0,
+    marginBottom: 8,
+    marginTop: 8,
     justifyContent: 'flex-start',
   },
   buttonAct: {
     borderRadius: 25,
     borderColor: colors.primary,
     borderWidth: 1,
-    width: 120,
+    width: 110,
     padding: 5,
   },
   buttonActText: {
     fontFamily: headingFont,
-    fontSize: 17,
+    fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
     textAlignVertical: 'center',
@@ -263,6 +264,15 @@ export default StyleSheet.create({
     color: colors.highlightColor,
     backgroundColor: colors.highlightBgColor,
   },
+  searchResultsContainer: {
+    // borderWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.accordionGray,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
   // Search Results Flatlist Styling END
 
   //Section List for Browse MVA screen
@@ -316,4 +326,5 @@ export default StyleSheet.create({
   headingItalics: {
     fontStyle: 'italic',
   },
+  spinnerContainer: {flex: 1, justifyContent: 'center', padding: 150},
 });
