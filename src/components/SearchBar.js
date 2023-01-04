@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Pressable} from 'react-native';
+import {View, TextInput, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {MagnifyingGlass, CloseIcon} from '../assets/icons';

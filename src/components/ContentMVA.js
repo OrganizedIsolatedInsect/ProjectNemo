@@ -1,16 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {db} from '../components/Database';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {useIsFocused} from '@react-navigation/native';
 import HighlightText from '@sanar/react-native-highlight-text';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles, {colors} from '../assets/styles';
-import Bookmark from './Bookmark';
 
-const ContentMVA = ({provisionId}) => {
-  const provisionID = provisionId;
+const ContentMVA = ({provisionId, searchResults}) => {
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const [marked, setMarked] = useState(false); //to change marked status of content
   const [dbData, setDbData] = useState([]); //local data array
   const [loading, setLoading] = useState(false); //for loading cursor purposes
@@ -24,25 +26,31 @@ const ContentMVA = ({provisionId}) => {
   const [sectionSubsection, setSectionSubsection] = useState('');
   const [sectionParagraph, setSectionParagraph] = useState('');
   const [sectionSubparagraph, setSectionSubparagraph] = useState('');
-  const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
-  const localLawType = 'MVA';
+  //pull state to see if current section exists in bookmarks
+  const bookmarkStateId = useSelector(state => state.bookmarks.sections);
+
+  //used to switch the bookmark icon from outline to fill and vice versa
+  const switchMarks = () => {
+    setMarked(!marked);
+  };
 
   useEffect(() => {
     setLoading(true);
     getDbData(provisionId);
     setLoading(false);
-  }, [marked, loading, provisionID]);
+  }, [marked, loading, provisionId]);
 
   //lookup provisionId on the data table to find the proper row
   // function to get data from NemoDB
+  //Issues:  setting setDBData does not appear to work properly in this component so variables set up via temp output
   const getDbData = provID => {
     const temp = [];
     db.transaction(tx => {
       tx.executeSql(
         'Select * from MVA where provision = ?',
         [provID],
-        (_tx, results) => {
+        (tx, results) => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
@@ -57,15 +65,33 @@ const ContentMVA = ({provisionId}) => {
             setSectionSubsection(temp[0].sectionSubsection);
             setSectionParagraph(temp[0].sectionParagraph);
             setSectionSubparagraph(temp[0].sectionSubparagraph);
-            setDbData(temp); //to prepare for page rebuild render to remove hardcoded states
-            setArray({
-              provision: temp[0].provision,
-              contravention: temp[0].contravention,
-            });
           }
         },
       );
     });
+  };
+
+  //dispatch add or remove bookmarks based bookmark icon
+  //Requires Lawtype to differentiate the source of the bookmark
+  const dispatchAction = () => {
+    // dispatch based on opposite of flag because marked does not change until the rerender
+    if (marked === false) {
+      dispatch(
+        addBookmark({
+          lawtype: 'MVA',
+          section: provision,
+          sectionHeader: contravention,
+        }),
+      );
+    }
+    if (marked === true) {
+      dispatch(
+        removeBookmark({
+          lawtype: 'MVA',
+          section: provision,
+        }),
+      );
+    }
   };
 
   return (
@@ -86,12 +112,15 @@ const ContentMVA = ({provisionId}) => {
           </Text>
         </View>
         <View style={styles.MVAContentHeadingContainerRight}>
-          {/* Bookmark Icon */}
-          <Bookmark
-            data={array}
-            passingKey={provisionID}
-            lawType={localLawType}
-            setMarked={marked}
+          {/* Bookmark Icon and actions */}
+          <Icon
+            name={marked ? 'bookmark' : 'bookmark-outline'}
+            size={30}
+            onPress={() => {
+              switchMarks();
+              dispatchAction();
+            }}
+            style={{color: colors.primary}}
           />
         </View>
       </View>

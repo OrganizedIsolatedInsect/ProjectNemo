@@ -77,5 +77,16 @@ export const LargeBookmarkIcon = () => {
   );
 };
 
+export const CloseIcon = props => {
+  return (
+    <Icon
+      name="close"
+      size={iconSize + 10}
+      style={styles.closeIcon_styling}
+      {...props}
+    />
+  );
+};
+
 // |References:
 //* https://en.wikipedia.org/wiki/Naming_convention_(programming)#:~:text=Constants%20should%20be%20written%20in,not%20as%20the%20first%20character.
