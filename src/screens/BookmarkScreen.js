@@ -81,7 +81,8 @@ const BookmarkScreen = () => {
               }, //marginalNoteKey to be passed back to the ContentCCScreen -> Section.js
             );
           }
-        }}>
+        }}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <Text>{renderText(item)}</Text>
       </Pressable>
       <Pressable
