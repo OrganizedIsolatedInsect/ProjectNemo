@@ -344,5 +344,15 @@ export default StyleSheet.create({
   AndroidRiplePressable: {
     color: '#e6e6e6e6',
   },
-  spinnerContainer: {flex: 1, justifyContent: 'center', padding: 150},
+
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 150,
+  },
+
+  splashImage: {
+    width: '100%',
+    height: '100%',
+  },
 });
