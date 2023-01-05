@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
+import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
 import styles from '../assets/styles';
 import {
   View,
@@ -21,126 +21,143 @@ import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm, filterArray}) => {
   //set states for search dbData
-  const [searchResults, setSearchResults] = useState(searchQueryTerm);
+  /* const [searchResults, setSearchResults] = useState(() => {
+    console.log('search');
+    return searchQueryTerm;
+  }); */
+
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
-  const [subsectionData, setSubsectionData] = useState([]);
-  const [mvaRegulationRenderData, setMvaRegulationRenderData] = useState([]);
-  const [mvaRenderData, setMvaRenderData] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
-
+  const [renderObject, setRenderObject] = useState([{}]);
+  //const [isloading, setIsLoading] = useState(true);
+  const renderCount = useRef(0);
   const navAid = useNavigation();
 
-  useEffect(() => {
-    setIsLoading(true);
-    setSearchResults(searchQueryTerm);
-    getDbData(searchResults);
+  renderCount.current = renderCount.current + 1;
+  console.log(renderCount.current);
+
+  const searchResults = useMemo(() => {
+    console.log('Search Query');
+    return searchQueryTerm;
   }, [searchQueryTerm]);
 
   useEffect(() => {
-    const transformData = async () => {
-      //create subsection for crime code renders
-      var subsectionData = await createSubSectionArray(crimCodeDbData);
+    //setIsLoading(true);
+    //setSearchResults(searchQueryTerm);
+    console.log('useEffect 1');
+    //fetchDB;
+  }, [setRenderData]);
 
-      //filter MVA database data into regulation and non regulation
-      var mvaRegulationRenderData = await mvaDbData.filter(
-        data => data.source === 'Motor Vehicle Act Regulations',
-      );
-      var mvaRenderData = await mvaDbData.filter(
-        data => data.source === 'Motor Vehicle Act',
-      );
-      setSubsectionData(subsectionData);
-      setMvaRegulationRenderData(mvaRegulationRenderData);
-      setMvaRenderData(mvaRenderData);
-    };
-
-    transformData();
-  }, [mvaDbData, crimCodeDbData]);
-
+  /* 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    /* setIsLoading(false); */
-  }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
+    console.log('useEffect 2');
+    transformData(crimCodeDbData, mvaDbData);
+  }, [mvaDbData, crimCodeDbData]); */
+
+  /*   useEffect(() => {
+    setIsLoading(false);
+  }, [mvaRegulationRenderData, subsectionData, mvaRenderData]); */
 
   // function to get data from NemoDB
-  const getDbData = searchResults => {
-    const sqlSearch = `%${searchResults}%`;
-    //each ? requires its only index in the array that passes to the executeSql command
-    //SQL Query for crim code data
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
-        [
-          sqlSearch,
-          sqlSearch,
-          sqlSearch,
-          sqlSearch,
-          sqlSearch,
-          sqlSearch,
-          sqlSearch,
-        ],
-        (tx, results) => {
-          const crimCodeTemp = [];
-          const searchCountTemp = [];
-          for (let i = 0; i < results.rows.length; ++i) {
-            crimCodeTemp.push(results.rows.item(i));
-            searchCountTemp.push(results.rows.item(i).sectionLabel);
-          }
-          setCrimCodeSearchCount(searchCountTemp);
-          setCrimCodeDbData(crimCodeTemp);
-        },
-      );
-    });
-    //SQL query for MVA fine data
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
-        (tx, results) => {
-          const mvaTemp = [];
-          for (let i = 0; i < results.rows.length; ++i) {
-            mvaTemp.push(results.rows.item(i));
-          }
-          setMvaDbData(mvaTemp);
-        },
-      );
-    });
-    //SQL for legislation index
-    db.transaction(tx => {
-      tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
-        const dbIndexTemp = [];
-        for (let i = 0; i < results.rows.length; ++i) {
-          dbIndexTemp.push(results.rows.item(i));
-        }
-        setDbIndex(dbIndexTemp);
+  const getDbData = useCallback(
+    searchResults => {
+      const sqlSearch = `%${searchResults}%`;
+      //each ? requires its only index in the array that passes to the executeSql command
+      //SQL Query for crim code data
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
+          [
+            sqlSearch,
+            sqlSearch,
+            sqlSearch,
+            sqlSearch,
+            sqlSearch,
+            sqlSearch,
+            sqlSearch,
+          ],
+          (tx, results) => {
+            const crimCodeTemp = [];
+            const searchCountTemp = [];
+            for (let i = 0; i < results.rows.length; ++i) {
+              crimCodeTemp.push(results.rows.item(i));
+              searchCountTemp.push(results.rows.item(i).sectionLabel);
+            }
+            //setCrimCodeSearchCount(searchCountTemp);
+            console.log('set crimDb');
+            setCrimCodeDbData(crimCodeTemp);
+          },
+        );
       });
+      //SQL query for MVA fine data
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+          [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+          (tx, results) => {
+            const mvaTemp = [];
+            for (let i = 0; i < results.rows.length; ++i) {
+              mvaTemp.push(results.rows.item(i));
+            }
+            console.log('set mvaDb');
+            setMvaDbData(mvaTemp);
+          },
+        );
+      });
+      //SQL for legislation index
+      db.transaction(tx => {
+        tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
+          const dbIndexTemp = [];
+          for (let i = 0; i < results.rows.length; ++i) {
+            dbIndexTemp.push(results.rows.item(i));
+          }
+          setDbIndex(dbIndexTemp);
+        });
+      });
+    },
+    [searchResults],
+  );
+
+  const fetchDB = useMemo(() => {
+    console.log('fetch Db');
+    return getDbData(searchResults);
+  }, [searchResults]);
+
+  const transformData = (crimCodeDbData, mvaDbData) => {
+    console.log('transform data');
+    //create subsection for crime code renders
+    var subsectionData = createSubSectionArray(crimCodeDbData);
+
+    //filter MVA database data into regulation and non regulation
+    var mvaRegulationRenderData = mvaDbData.filter(
+      data => data.source === 'Motor Vehicle Act Regulations',
+    );
+    var mvaRenderData = mvaDbData.filter(
+      data => data.source === 'Motor Vehicle Act',
+    );
+
+    setRenderObject({
+      subsectionData: subsectionData,
+      mvaRegulationRenderData: mvaRegulationRenderData,
+      mvaRenderData: mvaRenderData,
     });
   };
+  //console.log(renderObject);
 
-  const searchCountFilter = crimCodeSearchCount.reduce(function (
-    allSectionLabel,
-    sectionLabel,
-  ) {
-    if (sectionLabel in allSectionLabel) {
-      allSectionLabel[sectionLabel]++;
-    } else {
-      allSectionLabel[sectionLabel] = 1;
-    }
-    return allSectionLabel;
-  },
-  {});
+  const setRenderData = useMemo(() => {
+    console.log('render transform');
+    return transformData(crimCodeDbData, mvaDbData);
+  }, [crimCodeDbData, mvaDbData]);
 
-  if (isloading === true) {
+  /* if (isloading === true) {
     return (
       <View style={styles.spinnerContainer}>
         <ActivityIndicator size={'large'} />
       </View>
     );
-  }
+  } */
 
   return (
     <View>
@@ -162,7 +179,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                 <View>
                   <FlatList
                     style={styles.searchResultsContainer}
-                    data={subsectionData}
+                    data={renderObject.subsectionData}
                     keyExtractor={data => data.field1}
                     renderItem={({item, index}) => {
                       return (
@@ -209,7 +226,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
-                  data={mvaRegulationRenderData}
+                  data={renderObject.mvaRegulationRenderData}
                   keyExtractor={data => data.index}
                   renderItem={({item, index}) => {
                     return (
@@ -238,7 +255,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
-                  data={mvaRenderData}
+                  data={renderObject.mvaRenderData}
                   keyExtractor={data => data.index}
                   renderItem={({item, index}) => {
                     return (
