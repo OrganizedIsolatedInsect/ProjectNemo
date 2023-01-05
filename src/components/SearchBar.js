@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {MagnifyingGlass, CloseIcon} from '../assets/icons';
 import styles from '../assets/styles';
+import {colors} from '../assets/styles';
 
 // SearchBar receives the query value as the state from SearchScreen and the onChange prop
 //      for the onChangeText. Additionally, receives the clearButtonPressed function so that

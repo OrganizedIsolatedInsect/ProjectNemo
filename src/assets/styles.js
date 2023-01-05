@@ -229,16 +229,19 @@ export default StyleSheet.create({
     paddingLeft: 45,
     backgroundColor: colors.neutral,
     marginLeft: 15,
+    color: colors.primary,
   },
   searchIcon_styling: {
     position: 'absolute',
     zIndex: 1,
     left: 25,
     bottom: 10,
+    color: colors.primary,
   },
   closeIcon_styling: {
     marginLeft: 7,
     marginRight: 15,
+    color: colors.primary,
   },
   closeIcon_pressable_styling: {
     paddingLeft: 5,
