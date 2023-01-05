@@ -278,12 +278,13 @@ export default StyleSheet.create({
   },
   searchResultsContainer: {
     // borderWidth: 1,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.accordionGray,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderBottomWidth: 1,
+    // borderColor: colors.accordionGray,
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    margin: 10,
   },
   // Search Results Flatlist Styling END
 
