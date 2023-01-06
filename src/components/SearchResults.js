@@ -31,7 +31,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
   const [renderObject, setRenderObject] = useState([{}]);
-  //const [isloading, setIsLoading] = useState(true);
+  const [isloading, setIsLoading] = useState(true);
   const renderCount = useRef(0);
   const navAid = useNavigation();
 
@@ -151,13 +151,18 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
     return transformData(crimCodeDbData, mvaDbData);
   }, [crimCodeDbData, mvaDbData]);
 
-  /* if (isloading === true) {
+  if (renderCount.current === 7) {
+    setIsLoading(false);
+    console.log(isloading);
+  }
+
+  if (isloading === true) {
     return (
       <View style={styles.spinnerContainer}>
         <ActivityIndicator size={'large'} />
       </View>
     );
-  } */
+  }
 
   return (
     <View>
