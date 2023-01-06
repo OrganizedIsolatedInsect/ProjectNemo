@@ -21,6 +21,7 @@
     "react": "18.0.0",
     "react-highlight-words": "^0.18.0",
     "react-native": "0.69.3",
+    "react-native-bootsplash": "^4.4.0",
     "react-native-collapsible": "^1.6.0",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-gradle-plugin": "^0.70.1",
