@@ -174,6 +174,9 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                                 searchResults: searchResults,
                                 marginalNoteKey: item.marginalNoteKey,
                               });
+                            }}
+                            android_ripple={{
+                              color: styles.AndroidRiplePressable,
                             }}>
                             <View style={styles.heading_2}>
                               <CrimCodeRenderHeader

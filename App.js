@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import RNBootSplash from 'react-native-bootsplash';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
@@ -24,6 +25,19 @@ const navTheme = {
 };
 
 const App = () => {
+  // https://github.com/zoontek/react-native-bootsplash
+  // splash screen for async function
+  // useEffect(() => {
+  //   const init = async () => {
+  //     // …do multiple sync or async tasks
+  //   };
+
+  //   init().finally(async () => {
+  //     await RNBootSplash.hide({fade: true, duration: 500});
+  //     console.log('Bootsplash has been hidden successfully');
+  //   });
+  // }, []);
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>
@@ -31,7 +45,9 @@ const App = () => {
           backgroundColor={colors.backgroundColoring}
           barStyle="dark-content"
         />
-        <NavigationContainer theme={navTheme}>
+        <NavigationContainer
+          onReady={() => RNBootSplash.hide({fade: true, duration: 500})} // splashscreen
+          theme={navTheme}>
           <AppNavigator />
         </NavigationContainer>
       </SafeAreaProvider>
