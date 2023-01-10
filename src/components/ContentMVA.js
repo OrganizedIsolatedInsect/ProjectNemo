@@ -23,7 +23,6 @@ const ContentMVA = ({provisionId}) => {
   const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
   const localLawType = 'MVA';
-
   useEffect(() => {
     setLoading(true);
     getDbData(provisionID);
@@ -81,7 +80,7 @@ const ContentMVA = ({provisionId}) => {
           {/* Bookmark Icon */}
           <Bookmark
             data={array}
-            passingKey={provisionID}
+            marginalNoteKey={provisionID}
             lawType={localLawType}
             setMarked={marked}
           />
