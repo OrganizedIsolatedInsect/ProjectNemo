@@ -9,7 +9,7 @@ const ContentMVA = ({provisionId}) => {
   const provisionID = provisionId;
   const [marked, setMarked] = useState(false); //to change marked status of content
   const [dbData, setDbData] = useState([]); //local data array
-  const [loading, setLoading] = useState(false); //for loading cursor purposes 
+  const [loading, setLoading] = useState(false); //for loading cursor purposes
   //state management of object returned from database lookup
   const [provision, setProvision] = useState('');
   const [contravention, setContravention] = useState('');
