@@ -15,6 +15,8 @@ export const colors = {
   highlightColor: '#FFFFFF',
   primaryText: '#000000',
   accordionGray: '#A9A9A9',
+  white: 'FFFFFF',
+  splashBack: '800000',
 };
 
 export default StyleSheet.create({
@@ -203,6 +205,24 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: colors.primaryText,
+  },
+
+  //SPLASH BACKGROUND
+  splashBackground: {
+    backgroundColor: colors.splashBack,
+  },
+  splashContainer: {
+    paddingTop: 0,
+    paddingHorizontal: 18,
+    marginBottom: 2,
+    flexDirection: 'column',
+    alignContent: 'space-between',
+  },
+  splashText: {
+    marginTop: '50%',
+    paddingLeft: '40%',
+    fontSize: 40,
+    color: colors.white,
   },
 
   //BOOKMARK STYLING

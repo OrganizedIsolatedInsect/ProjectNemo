@@ -13,6 +13,7 @@ import ExceptionScreen from '../screens/ExceptionScreen';
 import PartsCCScreen from '../screens/PartsCCScreen';
 import SectionsCCScreen from '../screens/SectionsCCScreen';
 import SearchScreen from '../screens/SearchScreen';
+import SplashScreen from '../screens/SplashScreen';
 import CustomScreenHeader from '../components/CustomScreenHeader';
 import {SearchIconButton} from '../components/HeaderSearchIconButton';
 
@@ -23,6 +24,11 @@ const ContentStack = () => {
   // TODO BrowseCCScreen - Replaced by PartsCCScreen and SectionCCScreen
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
+      <ContentNavigator.Screen
+        name="SplashScreen"
+        component={SplashScreen}
+        options={{headerShown: false}}
+      />
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
       <ContentNavigator.Screen
