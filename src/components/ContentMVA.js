@@ -9,7 +9,7 @@ const ContentMVA = ({provisionId}) => {
   const provisionID = provisionId;
   const [marked, setMarked] = useState(false); //to change marked status of content
   const [dbData, setDbData] = useState([]); //local data array
-  const [loading, setLoading] = useState(false); //for loading cursor purposes
+  const [loading, setLoading] = useState(false); //for loading cursor purposes 
   //state management of object returned from database lookup
   const [provision, setProvision] = useState('');
   const [contravention, setContravention] = useState('');
@@ -23,7 +23,6 @@ const ContentMVA = ({provisionId}) => {
   const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
   const localLawType = 'MVA';
-
   useEffect(() => {
     setLoading(true);
     getDbData(provisionID);
@@ -81,7 +80,7 @@ const ContentMVA = ({provisionId}) => {
           {/* Bookmark Icon */}
           <Bookmark
             data={array}
-            passingKey={provisionID}
+            marginalNoteKey={provisionID}
             lawType={localLawType}
             setMarked={marked}
           />
