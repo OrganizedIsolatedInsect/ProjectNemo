@@ -20,7 +20,8 @@ const FilterButton = props => {
             ? colors.backgroundColoring
             : colors.primary,
         }}
-        onPress={buttonPressed}>
+        onPress={buttonPressed}
+        android_ripple={{color: styles.AndroidRiplePressable}}>
         <Text
           style={{
             ...styles.buttonActText,
