@@ -81,7 +81,7 @@ const ContentMVA = ({provisionId}) => {
           {/* Bookmark Icon */}
           <Bookmark
             data={array}
-            passingKey={provisionID}
+            marginalNoteKey={provisionID}
             lawType={localLawType}
             setMarked={marked}
           />

@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Suspense} from 'react';
+import {ActivityIndicator} from 'react-native';
 import styles, {colors} from '../assets/styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {View, Text} from 'react-native';
@@ -58,10 +59,7 @@ const SearchScreen = props => {
           />
         </View>
         <View>
-          <SearchResults
-            searchQueryTerm={searchTerm}
-            filterArray={filterArray}
-          />
+          <SearchResults searchTerm={searchTerm} filterArray={filterArray} />
         </View>
       </View>
     );
@@ -87,7 +85,11 @@ const SearchScreen = props => {
         setSearchBarFocused={setSearchBarFocused}
       />
       {/* If the query is blank, do not show filter buttons or empty search results section */}
-      {searchTerm !== undefined ? <SearchFeatures /> : null}
+      {searchTerm !== undefined ? (
+        <Suspense fallback={<ActivityIndicator size={'large'} />}>
+          <SearchFeatures />
+        </Suspense>
+      ) : null}
       {searchBarFocused === false && searchTerm === undefined ? (
         <SearchPlaceholder />
       ) : null}

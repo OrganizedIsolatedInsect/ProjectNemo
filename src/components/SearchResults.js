@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useTransition, Suspense} from 'react';
+import React, {useState, useEffect, Suspense, useCallback} from 'react';
 import styles from '../assets/styles';
 import {View, Text, FlatList, Pressable, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -11,9 +11,9 @@ import {db} from './Database';
 import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
-const SearchResults = ({searchQueryTerm, filterArray}) => {
+const SearchResults = ({searchTerm, filterArray}) => {
   //set states for search dbData
-  const [searchResults, setSearchResults] = useState(searchQueryTerm);
+  // const [searchResults, setSearchResults] = useState(searchQueryTerm);
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
   const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
@@ -23,99 +23,86 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   const [mvaRenderData, setMvaRenderData] = useState([]);
   const [isloading, setIsLoading] = useState(true);
 
-  const [isPending, startTransition] = useTransition();
-
   const navAid = useNavigation();
 
   useEffect(() => {
-    setIsLoading(true);
-    setSearchResults(searchQueryTerm);
-    getDbData(searchResults);
-  }, [searchQueryTerm, searchResults]);
+    getDbData(searchTerm);
+  }, [searchTerm]);
+
+  console.log('sub1: ', subsectionData);
+
+  const transformData = useCallback(() => {
+    //create subsection for crime code renders
+    setSubsectionData(createSubSectionArray(crimCodeDbData));
+    //filter MVA database data into regulation and non regulation
+    setMvaRegulationRenderData(
+      mvaDbData.filter(data => data.source === 'Motor Vehicle Act Regulations'),
+    );
+    setMvaRenderData(
+      mvaDbData.filter(data => data.source === 'Motor Vehicle Act'),
+    );
+  }, [crimCodeDbData, mvaDbData]);
 
   useEffect(() => {
-    const transformData = async () => {
-      //create subsection for crime code renders
-      var subsectionData = await createSubSectionArray(crimCodeDbData);
-
-      //filter MVA database data into regulation and non regulation
-      var mvaRegulationRenderData = await mvaDbData.filter(
-        data => data.source === 'Motor Vehicle Act Regulations',
-      );
-      var mvaRenderData = await mvaDbData.filter(
-        data => data.source === 'Motor Vehicle Act',
-      );
-      setSubsectionData(subsectionData);
-      setMvaRegulationRenderData(mvaRegulationRenderData);
-      setMvaRenderData(mvaRenderData);
-    };
-
     transformData();
-  }, [mvaDbData, crimCodeDbData]);
+  }, [transformData]);
 
-  console.log('isPending start: ', isPending);
+  console.log('sub', subsectionData);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    /* setIsLoading(false); */
-  }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   //   setIsLoading(false);
+  //   // }, 1500);
+  //   setIsLoading(false);
+  // }, [mvaRegulationRenderData, subsectionData, mvaRenderData]);
 
   // function to get data from NemoDB
-  const getDbData = searchResults => {
-    const sqlSearch = `%${searchResults}%`;
+  const getDbData = searchTerm => {
+    const sqlSearch = `%${searchTerm}%`;
     //each ? requires its only index in the array that passes to the executeSql command
     //SQL Query for crim code data
-
-    startTransition(() => {
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
-          [
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-          ],
-          (tx, results) => {
-            const crimCodeTemp = [];
-            const searchCountTemp = [];
-            for (let i = 0; i < results.rows.length; ++i) {
-              crimCodeTemp.push(results.rows.item(i));
-              searchCountTemp.push(results.rows.item(i).sectionLabel);
-            }
-            setCrimCodeSearchCount(searchCountTemp);
-            setCrimCodeDbData(crimCodeTemp);
-          },
-        );
-      });
-      //SQL query for MVA fine data
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-          [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
-          (tx, results) => {
-            const mvaTemp = [];
-            for (let i = 0; i < results.rows.length; ++i) {
-              mvaTemp.push(results.rows.item(i));
-            }
-            setMvaDbData(mvaTemp);
-          },
-        );
-      });
-      //SQL for legislation index
-      db.transaction(tx => {
-        tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
-          const dbIndexTemp = [];
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
+        [
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+        ],
+        (tx, results) => {
+          const crimCodeTemp = [];
+          const searchCountTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
-            dbIndexTemp.push(results.rows.item(i));
+            crimCodeTemp.push(results.rows.item(i));
+            searchCountTemp.push(results.rows.item(i).sectionLabel);
           }
-          setDbIndex(dbIndexTemp);
-        });
+          setCrimCodeSearchCount(searchCountTemp);
+          setCrimCodeDbData(crimCodeTemp);
+        },
+      );
+      //SQL query for MVA fine data
+      tx.executeSql(
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        (tx, results) => {
+          const mvaTemp = [];
+          for (let i = 0; i < results.rows.length; ++i) {
+            mvaTemp.push(results.rows.item(i));
+          }
+          setMvaDbData(mvaTemp);
+        },
+      );
+      //SQL for legislation index
+      tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
+        const dbIndexTemp = [];
+        for (let i = 0; i < results.rows.length; ++i) {
+          dbIndexTemp.push(results.rows.item(i));
+        }
+        setDbIndex(dbIndexTemp);
       });
     });
   };
@@ -133,6 +120,14 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   },
   {});
 
+  // if (isloading === true) {
+  //   return (
+  //     <View style={styles.spinnerContainer}>
+  //       <ActivityIndicator size={'large'} />
+  //     </View>
+  //   );
+  // }
+
   const LoadingSearchResults = () => {
     return (
       <View style={styles.spinnerContainer}>
@@ -142,13 +137,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   };
 
   const SearchResultsLoaded = () => {
-    //   return (
-    //     <View>
-    //       <Text>asdlflasdkfj;alskdf;lasdjf;laksdjf;lakdjf;lasf</Text>
-    //     </View>
-    //   );
-    // };
-
     return (
       <View>
         <FlatList
@@ -178,21 +166,21 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                               onPress={() => {
                                 navAid.navigate('ContentCCScreen', {
                                   heading2Key: item.heading2Key,
-                                  searchResults: searchResults,
+                                  searchTerm: searchTerm,
                                   marginalNoteKey: item.marginalNoteKey,
                                 });
                               }}>
                               <View style={styles.heading_2}>
                                 <CrimCodeRenderHeader
                                   subsectionData={item}
-                                  searchResults={searchResults}
+                                  searchTerm={searchTerm}
                                 />
                               </View>
                               <View>
                                 <CrimCodeRenderBody
                                   subsectionData={item}
                                   dbData={crimCodeDbData}
-                                  searchResults={searchResults}
+                                  searchTerm={searchTerm}
                                 />
                               </View>
                             </Pressable>
@@ -223,7 +211,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                         <View key={index} style={styles.searchResultsContainer}>
                           <ContentMVA
                             provisionId={item.provision}
-                            searchResults={searchResults}
+                            searchTerm={searchTerm}
                           />
                         </View>
                       );
@@ -252,7 +240,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                         <View key={index} style={styles.searchResultsContainer}>
                           <ContentMVA
                             provisionId={item.provision}
-                            searchResults={searchResults}
+                            searchTerm={searchTerm}
                           />
                         </View>
                       );
@@ -267,17 +255,10 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
     );
   };
 
-  console.log(isPending);
-
   return (
-    <View>
-      {/* {!isPending ? <LoadingSearchResults /> : <SearchResultsLoaded />} */}
-      {/* {isPending ? <SearchResultsLoaded /> : <LoadingSearchResults />} */}
-      {/* <LoadingSearchResults /> */}
-      <Suspense fallback={<LoadingSearchResults />}>
-        <SearchResultsLoaded />
-      </Suspense>
-    </View>
+    <Suspense fallback={<ActivityIndicator size={'large'} />}>
+      <SearchResultsLoaded />
+    </Suspense>
   );
 };
 

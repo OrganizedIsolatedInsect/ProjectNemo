@@ -30,7 +30,7 @@ const createFilter = (data, filter, dbFieldNameKeyString) => {
 // Accordion Header
 const CrimCodeRenderHeader = ({
   subsectionData,
-  searchResults,
+  searchTerm,
   isActive,
   style,
   props,
@@ -47,7 +47,7 @@ const CrimCodeRenderHeader = ({
           {subsectionData.subsectionLabel}
         </Text>{' '}
         <HighlightText
-          searchWords={[searchResults]}
+          searchWords={[searchTerm]}
           textToHighlight={subsectionData.marginalNote}
           highlightStyle={styles.searchResultsHighlight}
         />
@@ -57,7 +57,7 @@ const CrimCodeRenderHeader = ({
 };
 
 // Accordion Body
-const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
+const CrimCodeRenderBody = ({subsectionData, dbData, searchTerm}) => {
   //filter data that contains paragraphs based on subsectionKey
   let paraData = dbData.filter(
     (paragraph, i) => dbData[i].subsectionKey == subsectionData.subsectionKey,
@@ -82,7 +82,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
         <Text style={{color: colors.primaryText}}>
           {item.paragraphLabel}
           <HighlightText
-            searchWords={[searchResults]}
+            searchWords={[searchTerm]}
             textToHighlight={item.paragraphText}
             highlightStyle={styles.searchResultsHighlight}
           />
@@ -167,7 +167,7 @@ const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
       <View>
         <Text style={{color: colors.primaryText}}>
           <HighlightText
-            searchWords={[searchResults]}
+            searchWords={[searchTerm]}
             textToHighlight={subsectionData.sectionText}
             highlightStyle={styles.searchResultsHighlight}
           />
@@ -180,12 +180,12 @@ const CrimCodeRenderBody = ({subsectionData, dbData, searchResults}) => {
       <View>
         <Text style={{color: colors.primaryText}}>
           <HighlightText
-            searchWords={[searchResults]}
+            searchWords={[searchTerm]}
             textToHighlight={subsectionData.subsectionText}
             highlightStyle={styles.searchResultsHighlight}
           />
         </Text>
-        {paraFilter.length > 1 || searchResults != null ? (
+        {paraFilter.length > 1 || searchTerm != null ? (
           <FlatList
             data={paraFilter}
             keyExtractor={item => item.field1}
