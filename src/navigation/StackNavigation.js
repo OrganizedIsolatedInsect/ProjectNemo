@@ -27,7 +27,7 @@ const ContentStack = () => {
       <ContentNavigator.Screen
         name="SplashScreen"
         component={SplashScreen}
-        options={{headerShown: false}}
+        options={{headerShown: false, tabBarStyle: {display: 'none'}}}
       />
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />

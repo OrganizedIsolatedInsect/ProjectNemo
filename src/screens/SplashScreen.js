@@ -1,6 +1,6 @@
 //PACKAGE Imports
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 //USER IMPORTS
@@ -21,9 +21,9 @@ const SplashScreen = props => {
 
   /*OUTPUT*/
   return (
-    <View style={[styles.splashContainer]}>
+    <View style={styles.splashContainer}>
       <View style={styles.splashBackground}>
-        <Text style={styles.splashText}>Finding Nemo</Text>
+        <Text style={styles.splashText}>Finding NEMO</Text>
         {<GoToLandingScreen />}
       </View>
     </View>

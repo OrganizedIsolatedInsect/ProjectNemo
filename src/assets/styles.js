@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 const headingFont = 'Lato-Regular';
 const bodyFont = 'NotoSans-Regular';
@@ -15,8 +15,8 @@ export const colors = {
   highlightColor: '#FFFFFF',
   primaryText: '#000000',
   accordionGray: '#A9A9A9',
-  white: 'FFFFFF',
-  splashBack: '800000',
+  white: '#FFFFFF',
+  splashBack: '#800000',
 };
 
 export default StyleSheet.create({
@@ -212,15 +212,16 @@ export default StyleSheet.create({
     backgroundColor: colors.splashBack,
   },
   splashContainer: {
-    paddingTop: 0,
-    paddingHorizontal: 18,
-    marginBottom: 2,
-    flexDirection: 'column',
-    alignContent: 'space-between',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.splashBack,
+    // height: Dimensions.get('window').height,
+    // width: Dimensions.get('window').width,
   },
   splashText: {
-    marginTop: '50%',
-    paddingLeft: '40%',
+    // marginTop: '50%',
+    // paddingLeft: '40%',
     fontSize: 40,
     color: colors.white,
   },
