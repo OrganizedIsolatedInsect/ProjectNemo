@@ -1,4 +1,11 @@
-import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+  memo,
+} from 'react';
 import styles from '../assets/styles';
 import {
   View,
@@ -156,6 +163,46 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
     console.log(isloading);
   }
 
+  const renderCrimCodeList = ({item, index}) => {
+    return (
+      <View key={index}>
+        <Pressable
+          onPress={() => {
+            navAid.navigate('ContentCCScreen', {
+              heading2Key: item.heading2Key,
+              searchResults: searchResults,
+              marginalNoteKey: item.marginalNoteKey,
+            });
+          }}>
+          <View style={styles.heading_2}>
+            <CrimCodeRenderHeader
+              subsectionData={item}
+              searchResults={searchResults}
+            />
+          </View>
+          <View>
+            <CrimCodeRenderBody
+              subsectionData={item}
+              dbData={crimCodeDbData}
+              searchResults={searchResults}
+            />
+          </View>
+        </Pressable>
+      </View>
+    );
+  };
+
+  const renderMVAList = ({item, index}) => {
+    return (
+      <View key={index} style={styles.searchResultsContainer}>
+        <ContentMVA
+          provisionId={item.provision}
+          searchResults={searchResults}
+        />
+      </View>
+    );
+  };
+
   if (isloading === true) {
     return (
       <View style={styles.spinnerContainer}>
@@ -186,34 +233,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                     style={styles.searchResultsContainer}
                     data={renderObject.subsectionData}
                     keyExtractor={data => data.field1}
-                    renderItem={({item, index}) => {
-                      return (
-                        <View key={index}>
-                          <Pressable
-                            onPress={() => {
-                              navAid.navigate('ContentCCScreen', {
-                                heading2Key: item.heading2Key,
-                                searchResults: searchResults,
-                                marginalNoteKey: item.marginalNoteKey,
-                              });
-                            }}>
-                            <View style={styles.heading_2}>
-                              <CrimCodeRenderHeader
-                                subsectionData={item}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                            <View>
-                              <CrimCodeRenderBody
-                                subsectionData={item}
-                                dbData={crimCodeDbData}
-                                searchResults={searchResults}
-                              />
-                            </View>
-                          </Pressable>
-                        </View>
-                      );
-                    }}
+                    renderItem={renderCrimCodeList}
                   />
                 </View>
               </View>
@@ -233,16 +253,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                 <FlatList
                   data={renderObject.mvaRegulationRenderData}
                   keyExtractor={data => data.index}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View key={index} style={styles.searchResultsContainer}>
-                        <ContentMVA
-                          provisionId={item.provision}
-                          searchResults={searchResults}
-                        />
-                      </View>
-                    );
-                  }}
+                  renderItem={renderMVAList}
                 />
               </View>
             );
@@ -262,16 +273,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                 <FlatList
                   data={renderObject.mvaRenderData}
                   keyExtractor={data => data.index}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View key={index} style={styles.searchResultsContainer}>
-                        <ContentMVA
-                          provisionId={item.provision}
-                          searchResults={searchResults}
-                        />
-                      </View>
-                    );
-                  }}
+                  renderItem={renderMVAList}
                 />
               </View>
             );
