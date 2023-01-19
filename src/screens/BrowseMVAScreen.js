@@ -1,45 +1,84 @@
-/* BROWSE screen - re-usable screen for browses for all legislation
- */
-
 ///SectionList code sample:
 ///https://blog.logrocket.com/react-native-sectionlist-tutorial-examples/
 ///https://www.reactnative.express/core_components/lists/sectionlist
 ///https://reactnative.dev/docs/sectionlist
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, Pressable, SectionList} from 'react-native';
 
 //USER Imports
-import MVA from '../data/mvavt_records.json'; // for PRODUCTION Purposes
-import {MVAData} from '../data/dummy-data'; //for DEVELOPMENT Purposes
+import {db} from '../components/Database';
 import styles, {colors} from '../assets/styles';
 
 const BrowseMVAScreen = props => {
   const [isLoading, setIsLoading] = useState(false); //for loading spinner
-
+  const [dbData, setDbData] = useState([]); //local data array
   const navAid = useNavigation();
 
-  ///filter JSON data
-  const data_Act = MVA.filter(
-    element => element.source === 'Motor Vehicle Act',
-  );
-  const data_Reg = MVA.filter(
-    element => element.source === 'Motor Vehicle Act Regulations',
-  );
+  let data_Act = [];
+  let data_Reg = [];
 
-  ///Add title to the array
   const data_Act_Array = [];
-  data_Act_Array.push({title: 'Motor Vehicle Act', data: data_Act});
-
   const data_Reg_Array = [];
-  data_Reg_Array.push({title: 'Motor Vehicle Act Regulations', data: data_Reg});
-
   const [ShowAct, setShowAct] = useState(data_Act_Array);
   const [ShowReg, setShowReg] = useState(data_Reg_Array);
-
   const [ShowActButton, setShowActButton] = useState(true);
   const [ShowRegButton, setShowRegButton] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getDbData();
+    setIsLoading(false);
+  }, [isLoading]);
+
+  const getDbData = () => {
+    const temp = [];
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT [index], provision, contravention, source, fine FROM MVA',
+        [],
+        (_tx, results) => {
+          for (let i = 0; i < results.rows.length; ++i) {
+            temp.push(results.rows.item(i));
+          }
+          if (temp.length > 0) {
+            setDbData(temp);
+          }
+        },
+      );
+    });
+  };
+
+  //second use effect implemented after data grabbed from database.
+  //to initialize the next layer of set states
+  useEffect(() => {
+    filterData();
+  }, [dbData, ShowActButton, ShowRegButton]);
+
+  ///filter JSON data
+  const filterData = () => {
+    data_Act = dbData.filter(element => element.source === 'Motor Vehicle Act');
+    data_Reg = dbData.filter(
+      element => element.source === 'Motor Vehicle Act Regulations',
+    );
+    //Add title to the array
+    data_Act_Array.push({title: 'Motor Vehicle Act', data: data_Act});
+    data_Reg_Array.push({
+      title: 'Motor Vehicle Act Regulations',
+      data: data_Reg,
+    });
+    if (ShowActButton === true) {
+      setShowAct(data_Act_Array);
+    } else {
+      setShowAct([]);
+    }
+    if (ShowRegButton === true) {
+      setShowReg(data_Reg_Array);
+    } else {
+      setShowReg([]);
+    }
+  };
 
   const onPressActHandler = () => {
     ///UseState boolean example
@@ -90,7 +129,7 @@ const BrowseMVAScreen = props => {
           </Pressable>
         </View>
         <View>
-          <Text>   </Text>
+          <Text> </Text>
         </View>
         {/* REGULATIONS BUTTON */}
         <View style={styles.buttonContainer}>
