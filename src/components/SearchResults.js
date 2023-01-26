@@ -151,7 +151,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
       mvaRenderData: mvaRenderData,
     });
   };
-  //console.log(renderObject);
+  console.log(renderObject);
 
   const setRenderData = useMemo(() => {
     console.log('render transform');
