@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-  memo,
-} from 'react';
+import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
 import styles from '../assets/styles';
 import {
   View,
@@ -74,9 +67,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
             setCrimCodeDbData(crimCodeTemp);
           },
         );
-      });
-      //SQL query for MVA fine data
-      db.transaction(tx => {
+        //SQL query for MVA fine data
         tx.executeSql(
           'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
           [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
@@ -89,9 +80,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
             setMvaDbData(mvaTemp);
           },
         );
-      });
-      //SQL for legislation index
-      db.transaction(tx => {
+        //SQL for legislation index
         tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
           const dbIndexTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
@@ -101,6 +90,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
         });
       });
     },
+
     [searchResults],
   );
 
@@ -132,11 +122,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
 
   const setRenderData = useMemo(() => {
     console.log('render transform');
-    return transformData(crimCodeDbData, mvaDbData);
-  }, [crimCodeDbData, mvaDbData]);
-
-  const setRenderData = useMemo(() => {
-    //console.log('render transform');
     return transformData(crimCodeDbData, mvaDbData);
   }, [crimCodeDbData, mvaDbData]);
 
