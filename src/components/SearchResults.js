@@ -27,15 +27,9 @@ import {createSubSectionArray} from './CreateSubSectionArray';
 import ContentMVA from '../components/ContentMVA';
 
 const SearchResults = ({searchQueryTerm, filterArray}) => {
-  //set states for search dbData
-  /* const [searchResults, setSearchResults] = useState(() => {
-    console.log('search');
-    return searchQueryTerm;
-  }); */
-
   const [crimCodeDbData, setCrimCodeDbData] = useState([]);
   const [mvaDbData, setMvaDbData] = useState([]);
-  const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
+  //const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
   const [renderObject, setRenderObject] = useState([{}]);
   const [isloading, setIsLoading] = useState(true);
@@ -43,29 +37,12 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   const navAid = useNavigation();
 
   renderCount.current = renderCount.current + 1;
-  console.log(renderCount.current);
+  //console.log(renderCount.current);
 
   const searchResults = useMemo(() => {
-    console.log('Search Query');
+    //console.log('Search Query');
     return searchQueryTerm;
   }, [searchQueryTerm]);
-
-  useEffect(() => {
-    //setIsLoading(true);
-    //setSearchResults(searchQueryTerm);
-    console.log('useEffect 1');
-    //fetchDB;
-  }, [setRenderData]);
-
-  /* 
-  useEffect(() => {
-    console.log('useEffect 2');
-    transformData(crimCodeDbData, mvaDbData);
-  }, [mvaDbData, crimCodeDbData]); */
-
-  /*   useEffect(() => {
-    setIsLoading(false);
-  }, [mvaRegulationRenderData, subsectionData, mvaRenderData]); */
 
   // function to get data from NemoDB
   const getDbData = useCallback(
@@ -93,7 +70,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               searchCountTemp.push(results.rows.item(i).sectionLabel);
             }
             //setCrimCodeSearchCount(searchCountTemp);
-            console.log('set crimDb');
+            //console.log('set crimDb');
             setCrimCodeDbData(crimCodeTemp);
           },
         );
@@ -108,7 +85,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
             for (let i = 0; i < results.rows.length; ++i) {
               mvaTemp.push(results.rows.item(i));
             }
-            console.log('set mvaDb');
+            //console.log('set mvaDb');
             setMvaDbData(mvaTemp);
           },
         );
@@ -128,12 +105,12 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   );
 
   const fetchDB = useMemo(() => {
-    console.log('fetch Db');
+    //console.log('fetch Db');
     return getDbData(searchResults);
   }, [searchResults]);
 
   const transformData = (crimCodeDbData, mvaDbData) => {
-    console.log('transform data');
+    //console.log('transform data');
     //create subsection for crime code renders
     var subsectionData = createSubSectionArray(crimCodeDbData);
 
@@ -151,16 +128,15 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
       mvaRenderData: mvaRenderData,
     });
   };
-  console.log(renderObject);
 
   const setRenderData = useMemo(() => {
-    console.log('render transform');
+    //console.log('render transform');
     return transformData(crimCodeDbData, mvaDbData);
   }, [crimCodeDbData, mvaDbData]);
 
   if (renderCount.current === 7) {
     setIsLoading(false);
-    console.log(isloading);
+    //console.log(isloading);
   }
 
   const renderCrimCodeList = ({item, index}) => {
