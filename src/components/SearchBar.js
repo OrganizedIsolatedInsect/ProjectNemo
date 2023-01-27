@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, TextInput, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -29,6 +29,8 @@ const SearchBar = props => {
     props.setSearchBarFocused(false);
   };
 
+  const inputReference = useRef(null); //Focus on textinput and open keyboard
+
   return (
     <SafeAreaView style={styles.searchView_Styling}>
       <TextInput
@@ -42,6 +44,8 @@ const SearchBar = props => {
         autoCapitalize="none"
         onFocus={searchBarFocused}
         onBlur={searchBarBlurred}
+        ref={inputReference} //Focus on textinput and open keyboard
+        onLayout={() => inputReference.current.focus()} //Focus on textinput and open keyboard
       />
       {/* Search Icon with styling to position it on the left of the Searchbar */}
       <MagnifyingGlass />

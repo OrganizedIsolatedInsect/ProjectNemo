@@ -76,22 +76,34 @@ export default StyleSheet.create({
   innerContainerRight: {
     alignItems: 'flex-end',
   },
-  buttonContainer: {
+
+  buttonParentContainer: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 2,
-    marginHorizontal: 0,
-    marginBottom: 8,
-    marginTop: 8,
+    padding: 3,
+    marginHorizontal: 8,
+    marginBottom: 12,
+    marginTop: 5,
     justifyContent: 'flex-start',
   },
-  buttonAct: {
+
+  buttonContainer: {
     borderRadius: 25,
-    borderColor: colors.primary,
-    borderWidth: 1,
-    width: 110,
-    padding: 5,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    borderWidth: 0.5,
+    borderColor: colors.accordionGray,
   },
+
+  buttonAct: {
+    height: 40,
+    width: 120,
+    borderRadius: 25,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   buttonActText: {
     fontFamily: headingFont,
     fontSize: 12,
@@ -269,12 +281,13 @@ export default StyleSheet.create({
   },
   searchResultsContainer: {
     // borderWidth: 1,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.accordionGray,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
+    // borderBottomWidth: 1,
+    // borderColor: colors.accordionGray,
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    margin: 10,
   },
   // Search Results Flatlist Styling END
 
@@ -328,6 +341,11 @@ export default StyleSheet.create({
   },
   headingItalics: {
     fontStyle: 'italic',
+  },
+
+  //Android Ripple color
+  AndroidRiplePressable: {
+    color: '#e6e6e6e6',
   },
   spinnerContainer: {flex: 1, justifyContent: 'center', padding: 150},
 });

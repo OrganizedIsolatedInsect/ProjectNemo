@@ -128,6 +128,12 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
       mvaRenderData: mvaRenderData,
     });
   };
+  //console.log(renderObject);
+
+  const setRenderData = useMemo(() => {
+    console.log('render transform');
+    return transformData(crimCodeDbData, mvaDbData);
+  }, [crimCodeDbData, mvaDbData]);
 
   const setRenderData = useMemo(() => {
     //console.log('render transform');
@@ -208,6 +214,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                   <FlatList
                     style={styles.searchResultsContainer}
                     data={renderObject.subsectionData}
+                    data={renderObject.subsectionData}
                     keyExtractor={data => data.field1}
                     renderItem={renderCrimCodeList}
                   />
@@ -227,6 +234,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
+                  data={renderObject.mvaRegulationRenderData}
                   data={renderObject.mvaRegulationRenderData}
                   keyExtractor={data => data.index}
                   renderItem={renderMVAList}
