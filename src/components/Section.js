@@ -27,9 +27,13 @@ const Section = ({section, lawType, marginalNoteKey}) => {
   //set states for database data, loading
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const renderCount = useRef(0);
   //Create array to divide up subsections
   let subsectionArray = [];
   let idx;
+
+  renderCount.current = renderCount.current + 1;
+  //console.log(renderCount.current);
 
   useEffect(() => {
     getDbData(sectionId);
