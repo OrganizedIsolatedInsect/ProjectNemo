@@ -1,14 +1,6 @@
-import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
+import React, {useState, useRef, useMemo, useCallback} from 'react';
 import styles from '../assets/styles';
-import {
-  View,
-  Text,
-  FlatList,
-  VirtualizedList,
-  SectionList,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, FlatList, Pressable, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {
@@ -38,66 +30,63 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   }, [searchQueryTerm]);
 
   // function to get data from NemoDB
-  const getDbData = useCallback(
-    searchResults => {
-      const sqlSearch = `%${searchResults}%`;
-      //each ? requires its only index in the array that passes to the executeSql command
-      //SQL Query for crim code data
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
-          [
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-            sqlSearch,
-          ],
-          (tx, results) => {
-            const crimCodeTemp = [];
-            const searchCountTemp = [];
-            for (let i = 0; i < results.rows.length; ++i) {
-              crimCodeTemp.push(results.rows.item(i));
-              searchCountTemp.push(results.rows.item(i).sectionLabel);
-            }
-            //setCrimCodeSearchCount(searchCountTemp);
-            //console.log('set crimDb');
-            setCrimCodeDbData(crimCodeTemp);
-          },
-        );
-        //SQL query for MVA fine data
-        tx.executeSql(
-          'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
-          [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
-          (tx, results) => {
-            const mvaTemp = [];
-            for (let i = 0; i < results.rows.length; ++i) {
-              mvaTemp.push(results.rows.item(i));
-            }
-            //console.log('set mvaDb');
-            setMvaDbData(mvaTemp);
-          },
-        );
-        //SQL for legislation index
-        tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
-          const dbIndexTemp = [];
+  const getDbData = useCallback(() => {
+    const sqlSearch = `%${searchResults}%`;
+    //each ? requires its only index in the array that passes to the executeSql command
+    //SQL Query for crim code data
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * from CCDataV2 WHERE sectionText like ? or subsectionText like ? or marginalNote like ? or paragraphText like ? or subparagraphText like ? or clauseText like ? or subclauseText like ?',
+        [
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+          sqlSearch,
+        ],
+        (tx, results) => {
+          const crimCodeTemp = [];
+          const searchCountTemp = [];
           for (let i = 0; i < results.rows.length; ++i) {
-            dbIndexTemp.push(results.rows.item(i));
+            crimCodeTemp.push(results.rows.item(i));
+            searchCountTemp.push(results.rows.item(i).sectionLabel);
           }
-          setDbIndex(dbIndexTemp);
-        });
+          //setCrimCodeSearchCount(searchCountTemp);
+          //console.log('set crimDb');
+          setCrimCodeDbData(crimCodeTemp);
+        },
+      );
+      //SQL query for MVA fine data
+      tx.executeSql(
+        'SELECT * from MVA where contravention like ? or sectionText like ? or sectionSubsection like ? or sectionParagraph like ? or sectionSubparagraph like ? ',
+        [sqlSearch, sqlSearch, sqlSearch, sqlSearch, sqlSearch],
+        (tx, results) => {
+          const mvaTemp = [];
+          for (let i = 0; i < results.rows.length; ++i) {
+            mvaTemp.push(results.rows.item(i));
+          }
+          //console.log('set mvaDb');
+          setMvaDbData(mvaTemp);
+        },
+      );
+      //SQL for legislation index
+      // eslint-disable-next-line no-shadow
+      tx.executeSql('SELECT * from LegislationIndex', [], (tx, results) => {
+        const dbIndexTemp = [];
+        for (let i = 0; i < results.rows.length; ++i) {
+          dbIndexTemp.push(results.rows.item(i));
+        }
+        setDbIndex(dbIndexTemp);
       });
-    },
-
-    [searchResults],
-  );
+    });
+  }, [searchResults]);
 
   const fetchDB = useMemo(() => {
     //console.log('fetch Db');
     return getDbData(searchResults);
-  }, [searchResults]);
+  }, [getDbData, searchResults]);
 
   const transformData = (crimCodeDbData, mvaDbData) => {
     //console.log('transform data');
@@ -121,7 +110,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   //console.log(renderObject);
 
   const setRenderData = useMemo(() => {
-    console.log('render transform');
+    //console.log('render transform');
     return transformData(crimCodeDbData, mvaDbData);
   }, [crimCodeDbData, mvaDbData]);
 
@@ -199,7 +188,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
                   <FlatList
                     style={styles.searchResultsContainer}
                     data={renderObject.subsectionData}
-                    data={renderObject.subsectionData}
                     keyExtractor={data => data.field1}
                     renderItem={renderCrimCodeList}
                   />
@@ -219,7 +207,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               <View>
                 <Text style={styles.heading_2}>{item.legislationTitle}</Text>
                 <FlatList
-                  data={renderObject.mvaRegulationRenderData}
                   data={renderObject.mvaRegulationRenderData}
                   keyExtractor={data => data.index}
                   renderItem={renderMVAList}
