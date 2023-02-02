@@ -17,31 +17,10 @@ const CrimCodeGridList = props => {
   let componentTitle;
   let prevScreen;
 
-  // let heading1Key;
   let heading1Label = props.heading1Label;
   let heading1TitleText = props.heading1TitleText;
-  // let heading2Key;
   let heading2TitleText = props.heading2TitleText;
-  // let sectionKey;
-  // let sectionLabel;
-  // let sectionText;
-  // let subsectionKey;
-  // let subsectionLabel;
-  // let subsectionText;
   let marginalNoteKey;
-  // let marginalNote;
-  // let paragraphKey;
-  // let paragraphLabel;
-  // let paragraphText;
-  // let subparagraphLabel;
-  // let subparagraphText;
-  // let subparagraphKey;
-  // let clauseKey;
-  // let clauseLabel;
-  // let clauseText;
-  // let subclauseKey;
-  // let subclauseLabel;
-  // let subclauseText;
 
   //Determine which screen is calling the component and initialize the appropriate variables to be passed to the destination screen
   if (screenName === 'PartsCCScreen') {
@@ -55,7 +34,6 @@ const CrimCodeGridList = props => {
     componentTitle = props.heading2TitleText;
     prevScreen = 'SectionCCScreen';
   }
-
 
   return (
     <View>

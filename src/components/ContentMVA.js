@@ -22,6 +22,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
   const [sectionSubsection, setSectionSubsection] = useState('');
   const [sectionParagraph, setSectionParagraph] = useState('');
   const [sectionSubparagraph, setSectionSubparagraph] = useState('');
+  const [mvaRenderObject, setMvaRenderObject] = useState({});
   const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
   const localLawType = 'MVA';
@@ -42,6 +43,9 @@ const ContentMVA = ({provisionId, searchResults}) => {
         (_tx, results) => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
+            setMvaRenderObject(results.rows.item(i));
+            console.log(results.rows.item(i));
+            //console.log(temp);
           }
 
           if (temp.length > 0) {
@@ -64,9 +68,10 @@ const ContentMVA = ({provisionId, searchResults}) => {
       );
     });
   };
+  console.log(mvaRenderObject);
 
   return (
-   <ScrollView style={styles.background}>
+    <ScrollView style={styles.background}>
       <View style={styles.MVAContentHeadingContainer}>
         <View style={styles.MVAContentHeadingContainerLeft}>
           <Text
@@ -77,7 +82,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
             }}>
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={contravention}
+              textToHighlight={mvaRenderObject.contravention}
               highlightStyle={styles.searchResultsHighlight}
             />
           </Text>
