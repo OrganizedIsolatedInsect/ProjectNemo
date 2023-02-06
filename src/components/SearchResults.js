@@ -112,13 +112,13 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   const transformData = (crimCodeDbData, mvaDbData) => {
     //console.log('transform data');
     //create subsection for crime code renders
-    var subsectionData = createSubSectionArray(crimCodeDbData);
+    let subsectionData = createSubSectionArray(crimCodeDbData);
 
     //filter MVA database data into regulation and non regulation
-    var mvaRegulationRenderData = mvaDbData.filter(
+    let mvaRegulationRenderData = mvaDbData.filter(
       data => data.source === 'Motor Vehicle Act Regulations',
     );
-    var mvaRenderData = mvaDbData.filter(
+    let mvaRenderData = mvaDbData.filter(
       data => data.source === 'Motor Vehicle Act',
     );
 
