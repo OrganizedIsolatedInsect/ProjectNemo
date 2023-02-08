@@ -9,7 +9,6 @@ import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 const Bookmark = ({
   //declare prop names passed to this bookmark component
   lawType, // determines which legislative table data is from
-  isMarked,
   bookmarkDisplayData, //object containing text to be displayed on bookmarks screen
   provisionKey, // key for MVA data
   heading2Key, // key for CC data by heading, passed on to bookmark screen for navigation purposes

@@ -88,7 +88,6 @@ const ContentMVA = ({provisionId, searchResults}) => {
             bookmarkDisplayData={array}
             provisionKey={provisionID}
             lawType={lawType}
-            isMarked={marked}
           />
         </View>
       </View>

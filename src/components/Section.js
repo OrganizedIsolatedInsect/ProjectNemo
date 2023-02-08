@@ -126,7 +126,6 @@ const Section = ({section, lawType, marginalNoteKey}) => {
             marginalNoteKey={item.marginalNoteKey} //CC data only
             heading2Key={item.heading2Key}
             lawType={localLawType}
-            isMarked={marked}
           />
         </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
