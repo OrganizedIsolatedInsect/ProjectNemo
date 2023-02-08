@@ -113,7 +113,7 @@ const Section = ({section, lawType, marginalNoteKey}) => {
 
   const renderContent = (item, index, isActive, sections, marked) => {
     const bookmarkDisplayData = {
-      sectionlabel: item.sectionlabel,
+      sectionLabel: item.sectionLabel,
       subsectionLabel: item.subsectionLabel,
       marginalNote: item.marginalNote,
     };

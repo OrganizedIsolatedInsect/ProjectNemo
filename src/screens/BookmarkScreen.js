@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, View, FlatList, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -13,16 +13,20 @@ const BookmarkScreen = () => {
   const navAid = useNavigation();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
   const dispatch = useDispatch();
-  const prevScreen = 'BookmarkScreen';
-  //get bookmarks from state redux store
-  const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the  redux store
+  const bookmarks = useSelector(state => state.bookmarks); //retrieve all the bookmarks from the redux store
 
   //create array for each section, then loop though bookmarks to parse into arrays
   let MVAArray = [];
   let CCArray = [];
 
+  useEffect(() => {
+    if (bookmarks.bookmarkArray.length > 0) {
+      splitBookmarks();
+    }
+  }, [bookmarks, isFocused]);
+
   //created as function so it can be re-run during delete function - used to populate it's own flatlist.
-  const splitBookmarks = () => {
+  const splitBookmarks = useCallback(() => {
     MVAArray = [];
     CCArray = [];
     for (let i = 0; i < bookmarks.bookmarkArray.length; ++i) {
@@ -33,29 +37,26 @@ const BookmarkScreen = () => {
         CCArray.push(bookmarks.bookmarkArray[i]);
       }
     }
-  };
+  }, [isFocused, bookmarks]);
 
-  useEffect(() => {
-    if (bookmarks.bookmarkArray.length > 0) {
-      splitBookmarks();
-    }
-  }, [bookmarks, isFocused]);
+  //run function to split bookmarks
+  splitBookmarks();
 
   //actual render of the text part of the bookmark
   const renderText = item => {
     if (item.lawType === 'MVA') {
       return (
         <Text style={[styles.body, {color: colors.primaryText}]}>
-          {item.legislationGroup.provision}{' '}
-          {item.legislationGroup.contravention}
+          {item.bookmarkDisplayData.provision}{' '}
+          {item.bookmarkDisplayData.contravention}
         </Text>
       );
     } else if (item.lawType === 'CC') {
       return (
         <Text style={[styles.body, {color: colors.primaryText}]}>
-          {item.legislationGroup.sectionLabel}{' '}
-          {item.legislationGroup.subsectionLabel}{' '}
-          {item.legislationGroup.marginalNote}
+          {item.bookmarkDisplayData.sectionLabel}{' '}
+          {item.bookmarkDisplayData.subsectionLabel}{' '}
+          {item.bookmarkDisplayData.marginalNote}
         </Text>
       );
     }
@@ -67,7 +68,7 @@ const BookmarkScreen = () => {
       <Pressable
         onPress={() => {
           if (item.lawType === 'MVA') {
-            const provisionItem = item.legislationGroup.provision;
+            const provisionItem = item.bookmarkDisplayData.provision;
             navAid.navigate('ContentMVAScreen', {
               provisionId: provisionItem,
             });
@@ -89,7 +90,9 @@ const BookmarkScreen = () => {
         onPress={() => {
           dispatch(
             removeBookmark({
-              passingKey: item.passingKey,
+              //passingKey: item.passingKey,
+              marginalNoteKey: item.marginalNoteKey,
+              provisionKey: item.provisionKey,
               lawType: item.lawType,
             }),
           );
@@ -100,7 +103,7 @@ const BookmarkScreen = () => {
   );
 
   /*Output Section*/
-  splitBookmarks();
+
   if (bookmarks.bookmarkArray.length === 0) {
     return (
       <View style={styles.centerOnScreen}>

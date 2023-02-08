@@ -7,34 +7,19 @@ import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
 const Bookmark = ({
-  lawType,
+  //declare prop names passed to this bookmark component
+  lawType, // determines which legislative table data is from
   isMarked,
-  bookmarkDisplayData,
-  provisionKey,
-  heading2Key,
-  marginalNoteKey,
+  bookmarkDisplayData, //object containing text to be displayed on bookmarks screen
+  provisionKey, // key for MVA data
+  heading2Key, // key for CC data by heading, passed on to bookmark screen for navigation purposes
+  marginalNoteKey, // key for CC data, used for adding and removing bookmarks from state
 }) => {
-  console.log(bookmarkDisplayData);
-  const [marked, setMarked] = useState(marked);
+  const [marked, setMarked] = useState(false);
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
 
-  //const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
-  //const lawType = props.lawType;
-  //const localPassKey = props.heading2Key; //can be marginNoteKey from CC or provision from MVA
-  //const bookmarkDisplay = props.bookmarkDisplay; //needs this data to pass through redux for rendering purposes.
-  //const provisionKey = props.provisionKey;
-
-  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
-
-  //function to check to see if items exist in the bookmark redux
-  const checkBookmarkArray = () => {
-    const checkBool =
-      bookmarkStateId.some(
-        e => e.lawType === lawType && e.marginalNoteKey === provisionKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
-      ) && isFocused;
-    return checkBool;
-  };
+  const bookmarks = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
 
   // compares state array to see if section exists in bookmarks, if it does turn on bookmark icon
   //isFocused is used to force the bookmark to refresh when user tabs back to accordion screen.
@@ -44,31 +29,52 @@ const Bookmark = ({
     } else {
       setMarked(false);
     }
-  }, [isMarked, isFocused]);
+  }, [marked, isFocused]);
+
+  //function to check to see if items exist in the bookmark redux
+  const checkBookmarkArray = () => {
+    let doesBookmarkExist = false;
+    // checks if bookmark exists in Crim Code
+    if (lawType === 'CC') {
+      doesBookmarkExist = bookmarks.some(
+        item => item.marginalNoteKey === marginalNoteKey,
+      );
+    }
+    // checks if bookmark exists in MVA
+    if (lawType === 'MVA') {
+      doesBookmarkExist = bookmarks.some(
+        item => item.provisionKey === provisionKey,
+      );
+    }
+    return doesBookmarkExist;
+  };
 
   //switches state of bookmark
   const switchMarks = () => {
     setMarked(!marked);
   };
 
-  //calls the redux methods for adding/remove from the redux store.  "marked" is opposite of logic because of the way react-native handles the use effect state changes.
-  const dispatchAction = (bmData, bmKey, lawT, mNoteKey) => {
+  //calls the redux methods for adding/remove from the redux store.
+  const dispatchAction = () => {
     if (marked === false) {
+      //bookmark icon is empty
       dispatch(
         addBookmark({
-          legislationGroup: bmData, //adds all data for output purposes on BookmarkScreen.js,
-          heading2Key: bmKey, //for CC it's marginNoteKey, for MVA it's provision
-          lawType: lawT,
-          marginalNoteKey: mNoteKey,
-          passingKey: mNoteKey,
+          bookmarkDisplayData: bookmarkDisplayData,
+          heading2Key: heading2Key,
+          lawType: lawType,
+          marginalNoteKey: marginalNoteKey,
+          provisionKey: provisionKey,
         }),
       );
     }
     if (marked === true) {
+      //bookmark icon is filled
       dispatch(
         removeBookmark({
-          passingKey: bmKey, //for CC it's marginNoteKey, for MVA it's provision
-          lawType: lawT,
+          marginalNoteKey: marginalNoteKey,
+          provisionKey: provisionKey,
+          lawType: lawType,
         }),
       );
     }
@@ -79,11 +85,7 @@ const Bookmark = ({
     <Pressable
       onPress={() => {
         switchMarks();
-        dispatchAction(
-          /* bookmarkDisplayData, */ heading2Key,
-          lawType,
-          provisionKey,
-        );
+        dispatchAction();
       }}>
       <View>
         {marked === true && isFocused ? (
