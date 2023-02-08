@@ -112,16 +112,21 @@ const Section = ({section, lawType, marginalNoteKey}) => {
   };
 
   const renderContent = (item, index, isActive, sections, marked) => {
+    const bookmarkDisplayData = {
+      sectionlabel: item.sectionlabel,
+      subsectionLabel: item.subsectionLabel,
+      marginalNote: item.marginalNote,
+    };
     return (
       <View style={styles.accordionContainer}>
         <View style={styles.bookmarkPosition}>
           {/* Bookmark parameters include a callback to the previous parts/section key, labels for passing into the ContentCCSCreen */}
           <Bookmark
-            data={item}
+            bookmarkDisplayData={bookmarkDisplayData}
             marginalNoteKey={item.marginalNoteKey} //CC data only
             heading2Key={item.heading2Key}
             lawType={localLawType}
-            setMarked={marked}
+            isMarked={marked}
           />
         </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />

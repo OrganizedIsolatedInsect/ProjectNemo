@@ -7,6 +7,7 @@ import styles, {colors} from '../assets/styles';
 import Bookmark from './Bookmark';
 
 const ContentMVA = ({provisionId, searchResults}) => {
+  const lawType = 'MVA';
   const provisionID = provisionId;
   const [marked, setMarked] = useState(false); //to change marked status of content
   const [dbData, setDbData] = useState([]); //local data array
@@ -24,7 +25,6 @@ const ContentMVA = ({provisionId, searchResults}) => {
   const [sectionSubparagraph, setSectionSubparagraph] = useState('');
   const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
 
-  const localLawType = 'MVA';
   useEffect(() => {
     setLoading(true);
     getDbData(provisionID);
@@ -66,7 +66,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
   };
 
   return (
-   <ScrollView style={styles.background}>
+    <ScrollView style={styles.background}>
       <View style={styles.MVAContentHeadingContainer}>
         <View style={styles.MVAContentHeadingContainerLeft}>
           <Text
@@ -85,10 +85,10 @@ const ContentMVA = ({provisionId, searchResults}) => {
         <View style={styles.MVAContentHeadingContainerRight}>
           {/* Bookmark Icon */}
           <Bookmark
-            data={array}
-            marginalNoteKey={provisionID}
-            lawType={localLawType}
-            setMarked={marked}
+            bookmarkDisplayData={array}
+            provisionKey={provisionID}
+            lawType={lawType}
+            isMarked={marked}
           />
         </View>
       </View>

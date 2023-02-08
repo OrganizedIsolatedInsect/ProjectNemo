@@ -6,29 +6,32 @@ import {useIsFocused} from '@react-navigation/native';
 import {addBookmark, removeBookmark} from '../redux/bookmarkSlice';
 import {BookmarkMarked, BookmarkUnmarked} from '../assets/icons';
 
-const Bookmark = props => {
-  const [marked, setMarked] = useState(false);
-  const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
-  const localLawType = props.lawType;
-  const localPassKey = props.heading2Key; //can be marginNoteKey from CC or provision from MVA
-  const localData = props.data; //needs this data to pass through redux for rendering purposes.
-  const localMarginalNoteKey = props.marginalNoteKey;
+const Bookmark = ({
+  lawType,
+  isMarked,
+  bookmarkDisplayData,
+  provisionKey,
+  heading2Key,
+  marginalNoteKey,
+}) => {
+  console.log(bookmarkDisplayData);
+  const [marked, setMarked] = useState(marked);
   const dispatch = useDispatch();
   const isFocused = useIsFocused(); //checks for state change of mark when screen is focussed (required when switching tab navigation components)
-  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
 
-  //reloads the data state anytime new data is moved into the component.
-  useEffect(() => {
-    setFullSomeData(localData);
-  }, [localData]);
+  //const [fullSomeData, setFullSomeData] = useState(); //max amount of data to be passed through the redux
+  //const lawType = props.lawType;
+  //const localPassKey = props.heading2Key; //can be marginNoteKey from CC or provision from MVA
+  //const bookmarkDisplay = props.bookmarkDisplay; //needs this data to pass through redux for rendering purposes.
+  //const provisionKey = props.provisionKey;
+
+  const bookmarkStateId = useSelector(state => state.bookmarks.bookmarkArray); //retrieves list of current bookmarks
 
   //function to check to see if items exist in the bookmark redux
   const checkBookmarkArray = () => {
     const checkBool =
       bookmarkStateId.some(
-        e =>
-          e.lawType === localLawType &&
-          e.marginalNoteKey === localMarginalNoteKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
+        e => e.lawType === lawType && e.marginalNoteKey === provisionKey, //passingkey: for CC it's marginNoteKey, for MVA it's provision
       ) && isFocused;
     return checkBool;
   };
@@ -41,7 +44,7 @@ const Bookmark = props => {
     } else {
       setMarked(false);
     }
-  }, [fullSomeData, marked, isFocused]);
+  }, [isMarked, isFocused]);
 
   //switches state of bookmark
   const switchMarks = () => {
@@ -77,10 +80,9 @@ const Bookmark = props => {
       onPress={() => {
         switchMarks();
         dispatchAction(
-          fullSomeData,
-          localPassKey,
-          localLawType,
-          localMarginalNoteKey,
+          /* bookmarkDisplayData, */ heading2Key,
+          lawType,
+          provisionKey,
         );
       }}>
       <View>
