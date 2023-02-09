@@ -75,50 +75,6 @@ const BrowseMVAScreen = props => {
     {header: 'Motor Vehicle Act Regulations'},
   ];
 
-  ///filter JSON data
-  const data_Act = MVA.filter(
-    element => element.source === 'Motor Vehicle Act',
-  );
-  const data_Reg = MVA.filter(
-    element => element.source === 'Motor Vehicle Act Regulations',
-  );
-
-  ///Add title to the array
-  const data_Act_Array = [];
-  data_Act_Array.push({title: 'Motor Vehicle Act', data: data_Act});
-
-  const data_Reg_Array = [];
-  data_Reg_Array.push({title: 'Motor Vehicle Act Regulations', data: data_Reg});
-
-  const [ShowAct, setShowAct] = useState(data_Act_Array);
-  const [ShowReg, setShowReg] = useState(data_Reg_Array);
-
-  const [ShowActButton, setShowActButton] = useState(true);
-  const [ShowRegButton, setShowRegButton] = useState(true);
-
-  const onPressActHandler = () => {
-    ///UseState boolean example
-    ///https://codesandbox.io/s/usestate-boolean-basic-example-iepcl?file=/src/Test.tsx
-
-    if (ShowAct.length === 0) {
-      setShowAct(data_Act_Array);
-      setShowActButton(!ShowActButton);
-    } else {
-      setShowAct([]);
-    }
-    setShowActButton(!ShowActButton);
-  };
-
-  const onPressRegHandler = () => {
-    if (ShowReg.length === 0) {
-      setShowReg(data_Reg_Array);
-      setShowRegButton(!ShowRegButton);
-    } else {
-      setShowReg([]);
-    }
-    setShowRegButton(!ShowRegButton);
-  };
-
   const renderMVAText = ({item}) => {
     return (
       <View style={styles.container}>
@@ -184,6 +140,9 @@ const BrowseMVAScreen = props => {
                     </Text>
                     <Text style={{...styles.heading_2}}>Definitions</Text>
                   </View>
+                  <View>
+                    <FlatList data={actArray} renderItem={renderMVAText} />
+                  </View>
                 </View>
               );
             }
@@ -200,64 +159,14 @@ const BrowseMVAScreen = props => {
                     </Text>
                     <Text style={{...styles.heading_2}}>Definitions</Text>
                   </View>
+                  <View>
+                    <FlatList data={regArray} renderItem={renderMVAText} />
+                  </View>
                 </View>
               );
             }
           }}
         />
-        {/* Start of SectionList
-         * Upon pressing an item, the Provision and the screen name is passed to the Content MVA Screen
-         */}
-
-        <SectionList
-          sections={[]}
-          renderItem={({item}) => (
-            <View style={styles.container}>
-              <Pressable
-                key={item.index}
-                onPress={() =>
-                  navAid.navigate('ContentMVAScreen', {
-                    provisionId: item.provision,
-                  })
-                }
-                android_ripple={{color: styles.AndroidRiplePressable}}
-                style={styles.innerContainer}>
-                <View style={styles.innerContainerLeft}>
-                  <Text
-                    style={{
-                      ...styles.MVAContentSectionText,
-                      color: colors.primaryText,
-                    }}>
-                    {item.contravention}
-                    {'\n'}
-                    {item.provision}
-                  </Text>
-                </View>
-                <View style={styles.innerContainerRight}>
-                  <Text
-                    style={{
-                      ...styles.MVAContentSectionText,
-                      color: colors.primaryText,
-                    }}>
-                    {item.fine}
-                  </Text>
-                </View>
-              </Pressable>
-            </View>
-          )}
-          renderSectionHeader={({section}) => (
-            <View style={styles.sectionListTitle}>
-              <Text style={{...styles.heading_1, color: colors.primaryText}}>
-                {section.title}
-              </Text>
-              <Text style={{...styles.heading_2}}>Definitions</Text>
-            </View>
-          )}
-          keyExtractor={item => item.index}
-          stickySectionHeadersEnabled
-        />
-
-        {/* End of SectionList */}
       </View>
     </View>
   );
