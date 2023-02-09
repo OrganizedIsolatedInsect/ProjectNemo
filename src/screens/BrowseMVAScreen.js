@@ -8,26 +8,25 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Text, View, Pressable, SectionList, FlatList} from 'react-native';
+import {Text, View, Pressable, FlatList} from 'react-native';
 
 //USER Imports
-import MVA from '../data/mvavt_records.json'; // for PRODUCTION Purposes
 import styles, {colors} from '../assets/styles';
 import {db} from '../components/Database';
 import FilterButton from '../components/FilterButton';
 
 const BrowseMVAScreen = props => {
-  const [isLoading, setIsLoading] = useState(false); //for loading spinner
   const navAid = useNavigation();
-  const renderCount = useRef(0);
-  const [dbData, setDbData] = useState([]);
-
-  const [actFilter, setActFilter] = useState(false);
-  const [regFilter, setRegFilter] = useState(false);
+  const renderCount = useRef(0); // created to count render cycles
+  const [dbData, setDbData] = useState([]); //  array to house data from NemoDb
+  const [actFilter, setActFilter] = useState(false); // Boolean for Motor Vehicle Act filter
+  const [regFilter, setRegFilter] = useState(false); // Boolean for Motor Vehicle Act Regulation filter
+  let actArray = []; // array to house Motor Vehicle Act data
+  let regArray = []; // array to house Motor Vehicle Act Regulation Data
 
   renderCount.current = renderCount.current + 1;
-  //console.log(renderCount.current);
 
+  //pull db data after mount
   useEffect(() => {
     getDbData();
   }, []);
@@ -41,26 +40,11 @@ const BrowseMVAScreen = props => {
           temp.push(results.rows.item(i));
         }
         setDbData(temp);
-        /* const actArray = [];
-        const regArray = [];
-
-        temp.forEach(item => {
-          if (item.source === 'Motor Vehicle Act') {
-            actArray.push({title: 'Motor Vehicle Act', data: item});
-          }
-          if (item.source === 'Motor Vehicle Act Regulations') {
-            regArray.push({title: 'Motor Vehicle Act Regulations', data: item});
-          }
-        });
-        setRenderActArray(actArray);
-        setRenderRegArray(regArray); */
       });
     });
   };
 
-  //console.log(dbData);
-  let actArray = [];
-  let regArray = [];
+  //split data into different Arrays
   dbData.forEach(item => {
     if (item.source === 'Motor Vehicle Act') {
       actArray.push(item);
@@ -70,11 +54,13 @@ const BrowseMVAScreen = props => {
     }
   });
 
+  // used in flatlist to filter and split based on type of data
   const mvaRenderHeader = [
     {header: 'Motor Vehicle Act'},
     {header: 'Motor Vehicle Act Regulations'},
   ];
 
+  //render text from data
   const renderMVAText = ({item}) => {
     return (
       <View style={styles.container}>

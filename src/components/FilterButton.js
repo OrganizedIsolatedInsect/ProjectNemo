@@ -5,7 +5,6 @@ import styles, {colors} from '../assets/styles';
 const FilterButton = props => {
   const filtered = props.filterState;
   const buttonLabel = props.buttonLabel;
-  // searchFilters.map(item);
 
   const buttonPressed = () => {
     props.setFilter(!props.filterState);
