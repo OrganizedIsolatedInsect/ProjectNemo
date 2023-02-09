@@ -1,21 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-  memo,
-} from 'react';
+import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
 import styles from '../assets/styles';
-import {
-  View,
-  Text,
-  FlatList,
-  VirtualizedList,
-  SectionList,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, FlatList, Pressable, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {
