@@ -7,59 +7,38 @@ import styles, {colors} from '../assets/styles';
 import Bookmark from './Bookmark';
 
 const ContentMVA = ({provisionId, searchResults}) => {
-  const lawType = 'MVA';
-  const provisionID = provisionId;
-  const [marked, setMarked] = useState(false); //to change marked status of content
-  const [dbData, setDbData] = useState([]); //local data array
-  const [loading, setLoading] = useState(false); //for loading cursor purposes
-
-  //state management of object returned from database lookup
-  const [provision, setProvision] = useState('');
-  const [contravention, setContravention] = useState('');
-  const [fine, setFine] = useState('');
-  const [reducedFine, setReducedFine] = useState('');
-  const [source, setSource] = useState('');
-  const [sectionText, setSectionText] = useState('');
-  const [sectionSubsection, setSectionSubsection] = useState('');
-  const [sectionParagraph, setSectionParagraph] = useState('');
-  const [sectionSubparagraph, setSectionSubparagraph] = useState('');
-  const [array, setArray] = useState([]); //used for just passing 2 fields into the bookmark array
+  const lawType = 'MVA'; // send type to bookmarks
+  const [bookmarkArray, setBookmarkArray] = useState([]); //used for just passing 2 fields into the bookmark array
+  const [renderDisplayObject, setRenderDisplayObject] = useState([{}]); //used to house data from db, data is rendered in flatlist
 
   useEffect(() => {
-    setLoading(true);
-    getDbData(provisionID);
-    setLoading(false);
-  }, [marked, loading, provisionID]);
+    getDbData(provisionId);
+  }, [provisionId]);
 
-  //lookup provisionID on the data table to find the proper row
+  // lookup provisionID on the data table to find the proper row
   // function to get data from NemoDB
-  const getDbData = provID => {
-    const temp = [];
+  const getDbData = provisionId => {
     db.transaction(tx => {
       tx.executeSql(
         'Select * from MVA where provision = ?',
-        [provID],
+        [provisionId],
         (_tx, results) => {
-          for (let i = 0; i < results.rows.length; ++i) {
-            temp.push(results.rows.item(i));
-          }
-
-          if (temp.length > 0) {
-            setProvision(temp[0].provision);
-            setContravention(temp[0].contravention);
-            setFine(temp[0].fine);
-            setReducedFine(temp[0].reducedFine);
-            setSource(temp[0].source);
-            setSectionText(temp[0].sectionText);
-            setSectionSubsection(temp[0].sectionSubsection);
-            setSectionParagraph(temp[0].sectionParagraph);
-            setSectionSubparagraph(temp[0].sectionSubparagraph);
-            setDbData(temp); //to prepare for page rebuild render to remove hardcoded states
-            setArray({
-              provision: temp[0].provision,
-              contravention: temp[0].contravention,
-            });
-          }
+          const temp = results.rows.item(0);
+          setRenderDisplayObject({
+            contravention: temp.contravention,
+            fine: temp.fine,
+            provision: temp.provision,
+            reducedFine: temp.reducedFine,
+            source: temp.source,
+            sectionText: temp.sectionText,
+            sectionSubsection: temp.sectionSubsection,
+            sectionParagraph: temp.sectionParagraph,
+            sectionSubparagraph: temp.sectionSubparagraph,
+          });
+          setBookmarkArray({
+            provision: temp.provision,
+            contravention: temp.contravention,
+          });
         },
       );
     });
@@ -77,7 +56,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
             }}>
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={contravention}
+              textToHighlight={renderDisplayObject.contravention}
               highlightStyle={styles.searchResultsHighlight}
             />
           </Text>
@@ -85,18 +64,18 @@ const ContentMVA = ({provisionId, searchResults}) => {
         <View style={styles.MVAContentHeadingContainerRight}>
           {/* Bookmark Icon */}
           <Bookmark
-            bookmarkDisplayData={array}
-            provisionKey={provisionID}
+            bookmarkDisplayData={bookmarkArray}
+            provisionKey={provisionId}
             lawType={lawType}
           />
         </View>
       </View>
       <View style={styles.MVAContentSection}>
         <Text style={{...styles.accent_1, color: colors.primaryText}}>
-          {source}, Section
+          {renderDisplayObject.source}, Section {''}
           <HighlightText
             searchWords={[searchResults]}
-            textToHighlight={provision}
+            textToHighlight={renderDisplayObject.provision}
             highlightStyle={styles.searchResultsHighlight}
           />
         </Text>
@@ -104,7 +83,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
           <HighlightText
             searchWords={[searchResults]}
-            textToHighlight={sectionText}
+            textToHighlight={renderDisplayObject.sectionText}
             highlightStyle={styles.searchResultsHighlight}
           />
           {'\n'}
@@ -117,17 +96,17 @@ const ContentMVA = ({provisionId, searchResults}) => {
             }}>
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={sectionSubsection}
+              textToHighlight={renderDisplayObject.sectionSubsection}
               highlightStyle={styles.searchResultsHighlight}
             />
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={sectionParagraph}
+              textToHighlight={renderDisplayObject.sectionParagraph}
               highlightStyle={styles.searchResultsHighlight}
             />
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={sectionSubparagraph}
+              textToHighlight={renderDisplayObject.sectionSubparagraph}
               highlightStyle={styles.searchResultsHighlight}
             />
             {'\n'}
@@ -137,8 +116,9 @@ const ContentMVA = ({provisionId, searchResults}) => {
 
       <View>
         <Text style={{...styles.MVAContentTicket, color: colors.primaryText}}>
-          Ticketed Amount: {fine} {'\n'}
-          Reduced ticket amount ({'<'}30 days): {reducedFine}
+          Ticketed Amount: {renderDisplayObject.fine} {'\n'}
+          Reduced ticket amount ({'<'}30 days):{' '}
+          {renderDisplayObject.reducedFine}
         </Text>
       </View>
     </ScrollView>
