@@ -9,7 +9,7 @@ import Bookmark from './Bookmark';
 const ContentMVA = ({provisionKey, searchResults}) => {
   const lawType = 'MVA'; // send type to bookmarks
   const [bookmarkArray, setBookmarkArray] = useState([]); //used for just passing 2 fields into the bookmark array
-  const [renderDisplayObject, setRenderDisplayObject] = useState([{}]); //used to house data from db, data is rendered in flatlist
+  const [renderObject, setRenderObject] = useState([{}]); //used to house data from db, data is rendered in flatlist
 
   useEffect(() => {
     getDbData(provisionKey);
@@ -24,7 +24,7 @@ const ContentMVA = ({provisionKey, searchResults}) => {
         [provisionKey],
         (_tx, results) => {
           const temp = results.rows.item(0);
-          setRenderDisplayObject({
+          setRenderObject({
             contravention: temp.contravention,
             fine: temp.fine,
             provision: temp.provision,
@@ -56,7 +56,7 @@ const ContentMVA = ({provisionKey, searchResults}) => {
             }}>
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={renderDisplayObject.contravention}
+              textToHighlight={renderObject.contravention}
               highlightStyle={styles.searchResultsHighlight}
             />
           </Text>
@@ -72,10 +72,10 @@ const ContentMVA = ({provisionKey, searchResults}) => {
       </View>
       <View style={styles.MVAContentSection}>
         <Text style={{...styles.accent_1, color: colors.primaryText}}>
-          {renderDisplayObject.source}, Section {''}
+          {renderObject.source}, Section {''}
           <HighlightText
             searchWords={[searchResults]}
-            textToHighlight={renderDisplayObject.provision}
+            textToHighlight={renderObject.provision}
             highlightStyle={styles.searchResultsHighlight}
           />
         </Text>
@@ -83,7 +83,7 @@ const ContentMVA = ({provisionKey, searchResults}) => {
           style={{...styles.MVAContentSectionText, color: colors.primaryText}}>
           <HighlightText
             searchWords={[searchResults]}
-            textToHighlight={renderDisplayObject.sectionText}
+            textToHighlight={renderObject.sectionText}
             highlightStyle={styles.searchResultsHighlight}
           />
           {'\n'}
@@ -96,17 +96,17 @@ const ContentMVA = ({provisionKey, searchResults}) => {
             }}>
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={renderDisplayObject.sectionSubsection}
+              textToHighlight={renderObject.sectionSubsection}
               highlightStyle={styles.searchResultsHighlight}
             />
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={renderDisplayObject.sectionParagraph}
+              textToHighlight={renderObject.sectionParagraph}
               highlightStyle={styles.searchResultsHighlight}
             />
             <HighlightText
               searchWords={[searchResults]}
-              textToHighlight={renderDisplayObject.sectionSubparagraph}
+              textToHighlight={renderObject.sectionSubparagraph}
               highlightStyle={styles.searchResultsHighlight}
             />
             {'\n'}
@@ -116,9 +116,8 @@ const ContentMVA = ({provisionKey, searchResults}) => {
 
       <View>
         <Text style={{...styles.MVAContentTicket, color: colors.primaryText}}>
-          Ticketed Amount: {renderDisplayObject.fine} {'\n'}
-          Reduced ticket amount ({'<'}30 days):{' '}
-          {renderDisplayObject.reducedFine}
+          Ticketed Amount: {renderObject.fine} {'\n'}
+          Reduced ticket amount ({'<'}30 days): {renderObject.reducedFine}
         </Text>
       </View>
     </ScrollView>
