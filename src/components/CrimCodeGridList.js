@@ -2,37 +2,34 @@
  */
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
 
-const CrimCodeGridList = props => {
+const CrimCodeGridList = ({
+  heading2Key,
+  sectionLabel,
+  heading2TitleText,
+  heading1Label,
+  heading1TitleText,
+  heading1Key,
+}) => {
   const navAid = useNavigation();
-  const screenName = props.currentScreen;
+  const screenName = useRoute().name; //gets current screen name of component
 
   //used for display purposes; initialized dependent upon which screen component was called from.
-  let componentKey;
-  let componentLabel;
-  let componentTitle;
-  let prevScreen;
+  let componentLabel; //Part or Section Label
+  let componentTitle; //Part or Section Text
 
-  let heading1Label = props.heading1Label;
-  let heading1TitleText = props.heading1TitleText;
-  let heading2TitleText = props.heading2TitleText;
-  let marginalNoteKey;
-
-  //Determine which screen is calling the component and initialize the appropriate variables to be passed to the destination screen
+  //Determine what text to displace depending on what screen it is currently on
   if (screenName === 'PartsCCScreen') {
-    componentKey = props.heading1Key;
-    componentLabel = props.heading1Label;
-    componentTitle = props.heading1TitleText;
-  } else {
-    //SectionCCScreen.js
-    componentKey = props.heading2Key; //this is coming from sectionCCSCreen heading2Key..
-    componentLabel = props.sectionLabel;
-    componentTitle = props.heading2TitleText;
-    prevScreen = 'SectionCCScreen';
+    componentLabel = heading1Label;
+    componentTitle = heading1TitleText;
+  }
+  if (screenName === 'SectionsCCScreen') {
+    componentLabel = sectionLabel;
+    componentTitle = heading2TitleText;
   }
 
   return (
@@ -41,17 +38,14 @@ const CrimCodeGridList = props => {
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
             navAid.navigate('SectionsCCScreen', {
-              passingKey: componentKey,
+              heading1Key: heading1Key,
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
             });
-          } else {
+          }
+          if (screenName === 'SectionsCCScreen') {
             navAid.navigate('ContentCCScreen', {
-              heading2Key: componentKey,
-              prevScreen: prevScreen,
-              heading1Label: heading1Label,
-              heading1TitleText: heading1TitleText,
-              heading2TitleText: heading2TitleText,
+              heading2Key: heading2Key,
             });
           }
         }}

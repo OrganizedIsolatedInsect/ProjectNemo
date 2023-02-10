@@ -15,7 +15,7 @@ const LegislationGridList = props => {
   return (
     <View>
       <Pressable
-        onPress={() => navAid.navigate(props.destination, {paramkey: props})}
+        onPress={() => navAid.navigate(props.destination)}
         android_ripple={{color: styles.AndroidRiplePressable}}>
         <View style={styles.gridListItem}>
           <Text style={[styles.heading_1, {color: colors.primaryText}]}>
