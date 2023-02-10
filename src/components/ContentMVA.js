@@ -6,22 +6,22 @@ import HighlightText from '@sanar/react-native-highlight-text';
 import styles, {colors} from '../assets/styles';
 import Bookmark from './Bookmark';
 
-const ContentMVA = ({provisionId, searchResults}) => {
+const ContentMVA = ({provisionKey, searchResults}) => {
   const lawType = 'MVA'; // send type to bookmarks
   const [bookmarkArray, setBookmarkArray] = useState([]); //used for just passing 2 fields into the bookmark array
   const [renderDisplayObject, setRenderDisplayObject] = useState([{}]); //used to house data from db, data is rendered in flatlist
 
   useEffect(() => {
-    getDbData(provisionId);
-  }, [provisionId]);
+    getDbData(provisionKey);
+  }, [provisionKey]);
 
-  // lookup provisionID on the data table to find the proper row
+  // lookup provisionKey on the data table to find the proper row
   // function to get data from NemoDB
-  const getDbData = provisionId => {
+  const getDbData = provisionKey => {
     db.transaction(tx => {
       tx.executeSql(
         'Select * from MVA where provision = ?',
-        [provisionId],
+        [provisionKey],
         (_tx, results) => {
           const temp = results.rows.item(0);
           setRenderDisplayObject({
@@ -65,7 +65,7 @@ const ContentMVA = ({provisionId, searchResults}) => {
           {/* Bookmark Icon */}
           <Bookmark
             bookmarkDisplayData={bookmarkArray}
-            provisionKey={provisionId}
+            provisionKey={provisionKey}
             lawType={lawType}
           />
         </View>

@@ -68,7 +68,7 @@ const BrowseMVAScreen = props => {
           key={item.index}
           onPress={() =>
             navAid.navigate('ContentMVAScreen', {
-              provisionId: item.provision,
+              provisionKey: item.provision,
             })
           }
           android_ripple={{color: styles.AndroidRiplePressable}}
