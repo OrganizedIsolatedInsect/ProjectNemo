@@ -6,7 +6,7 @@ import CrimCodeGridList from '../components/CrimCodeGridList';
 import {db} from '../components/Database';
 
 const BrowseCCScreen = () => {
-  const [distinctSectionList, setDistinctSectionList] = useState();
+  const [distinctSectionList, setDistinctSectionList] = useState(); // used to house dbData to render
   const window = useWindowDimensions();
 
   useEffect(() => {

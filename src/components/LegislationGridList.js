@@ -11,6 +11,7 @@ import styles, {colors} from '../assets/styles';
 
 const LegislationGridList = props => {
   const navAid = useNavigation();
+  console.log(props.title);
 
   return (
     <View>
