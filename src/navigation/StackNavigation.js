@@ -5,7 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 //USER Imports
 import BookmarkScreen from '../screens/BookmarkScreen';
 import LandingScreen from '../screens/LandingScreen';
-import BrowseCCScreen from '../screens/BrowseCCScreen';
 import BrowseMVAScreen from '../screens/BrowseMVAScreen';
 import ContentCCScreen from '../screens/ContentCCScreen';
 import ContentMVAScreen from '../screens/ContentMVAScreen';
@@ -36,15 +35,10 @@ const LaunchStack = () => {
 };
 
 const ContentStack = () => {
-  // TODO BrowseCCScreen - Replaced by PartsCCScreen and SectionCCScreen
   return (
     <ContentNavigator.Navigator screenOptions={screenOptionStyle}>
       <ContentNavigator.Screen name="LandingScreen" component={LandingScreen} />
       <ContentNavigator.Screen name="SearchScreen" component={SearchScreen} />
-      <ContentNavigator.Screen
-        name="BrowseCCScreen"
-        component={BrowseCCScreen}
-      />
       <ContentNavigator.Screen name="PartsCCScreen" component={PartsCCScreen} />
       <ContentNavigator.Screen
         name="SectionsCCScreen"
