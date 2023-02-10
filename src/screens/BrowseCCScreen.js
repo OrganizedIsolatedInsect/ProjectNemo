@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, useWindowDimensions} from 'react-native';
+import {View, useWindowDimensions, FlatList} from 'react-native';
 
 import styles from '../assets/styles';
 import CrimCodeGridList from '../components/CrimCodeGridList';
-
 import {db} from '../components/Database';
-
-import {FlashList} from '@shopify/flash-list';
 
 const BrowseCCScreen = () => {
   const [distinctSectionList, setDistinctSectionList] = useState();
-
   const window = useWindowDimensions();
 
   useEffect(() => {
@@ -32,13 +28,13 @@ const BrowseCCScreen = () => {
     });
   };
 
-  const renderList = itemdata => {
+  const renderList = ({item}) => {
     return (
       <CrimCodeGridList
-        index={itemdata.item.index}
-        part={itemdata.item.part}
-        section={itemdata.item.section}
-        sectionHeader={itemdata.item.sectionHeader}
+        index={item.index}
+        part={item.part}
+        section={item.section}
+        sectionHeader={item.sectionHeader}
       />
     );
   };
@@ -46,10 +42,10 @@ const BrowseCCScreen = () => {
   return (
     <View
       style={[styles.background, styles.container, {height: window.height}]}>
-      <FlashList
+      <FlatList
         data={distinctSectionList}
         renderItem={renderList}
-        estimatedItemSize={100}
+        keyExtractor={item => item.index}
       />
     </View>
   );
