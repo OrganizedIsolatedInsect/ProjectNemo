@@ -12,8 +12,8 @@ const SectionsCCScreen = props => {
   const [renderObject, setRenderObject] = useState();
   const window = useWindowDimensions();
 
-  let pagePartTitle = props.route.params.heading1Label; // example: Part II
-  let pagePartLabel = props.route.params.heading1TitleText; // example: Offences Against Public Order
+  let pagePartLabel = props.route.params.heading1Label; // example: Part II
+  let pagePartTitle = props.route.params.heading1TitleText; // example: Offences Against Public Order
 
   useEffect(() => {
     getDbData();

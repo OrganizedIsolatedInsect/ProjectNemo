@@ -17,8 +17,6 @@ const CrimCodeGridList = ({
 }) => {
   const navAid = useNavigation();
   const screenName = useRoute().name; //gets name of current screen using the useRoute hook source:https://reactnavigation.org/docs/route-prop
-  console.log(screenName);
-  const screenName = useRoute().name; //gets current screen name of component
 
   //used for display purposes; initialized dependent upon which screen component was called from.
   let componentLabel; //Part or Section Label

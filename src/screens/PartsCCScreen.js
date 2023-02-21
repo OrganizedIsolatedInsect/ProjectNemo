@@ -9,7 +9,7 @@ import {db} from '../components/Database';
 import {PrintTitle} from '../components/PrintTitle';
 
 //This screen is created upon clicking the Crim Code option on the Landing Page.
-const PartsCCScreen = props => {
+const PartsCCScreen = () => {
   //const [isLoading, setIsLoading] = useState(false); //for loading spinner
   const [renderObject, setRenderObject] = useState(); // contains Parts data from Crim Code for render
   const window = useWindowDimensions();

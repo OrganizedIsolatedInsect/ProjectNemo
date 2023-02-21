@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../assets/styles';
 import {View, Pressable} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -29,7 +29,7 @@ const Section = ({section, lawType, marginalNoteKey}) => {
   const [loaded, setLoaded] = useState(false);
   //Create array to divide up subsections
   let subsectionArray = [];
-  let idx;
+  let indexArray;
 
   useEffect(() => {
     getDbData(sectionId);
@@ -56,9 +56,10 @@ const Section = ({section, lawType, marginalNoteKey}) => {
   //call function to create array containing subsection data to feed into accordion component
   subsectionArray = createSubSectionArray(dbData);
   //find where marginal key is within the subsection array and return the index number; this will point to the existing accordion index.
-  idx = subsectionArray.findIndex(
+  indexArray = subsectionArray.findIndex(
     obj => obj.marginalNoteKey === marginalNoteKey,
   );
+
   const [collapsedState, setCollapsedState] = useState(true);
   // Active Infos is the section number (from react-native-collapsible, NOT our database section)
   // This is to index the section into an array which is used can be used for the isActive state
@@ -75,17 +76,17 @@ const Section = ({section, lawType, marginalNoteKey}) => {
 
   useEffect(() => {
     if (
-      idx !== null && //bookmark position is not null
-      idx > -1 && //bookmark position is not less than 0
-      activeInfos.indexOf(idx) < 0 //bookmark position does not already exist in actionInfos array
+      indexArray !== null && //bookmark position is not null
+      indexArray > -1 && //bookmark position is not less than 0
+      activeInfos.indexOf(indexArray) < 0 //bookmark position does not already exist in actionInfos array
     ) {
-      setActiveInfos([idx]);
+      setActiveInfos([indexArray]);
       setCollapsedState(false);
       changeRenderChildrenCollapsed(true);
     } else {
       changeRenderChildrenCollapsed(false);
     }
-  }, [idx]);
+  }, [indexArray]);
 
   // Props for the render must be in specific order; isActive needs to be the 3rd prop.
   const renderHeader = (item, index, isActive, sections) => {

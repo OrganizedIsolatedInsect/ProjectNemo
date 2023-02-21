@@ -90,7 +90,6 @@ const BookmarkScreen = () => {
         onPress={() => {
           dispatch(
             removeBookmark({
-              //passingKey: item.passingKey,
               marginalNoteKey: item.marginalNoteKey,
               provisionKey: item.provisionKey,
               lawType: item.lawType,
