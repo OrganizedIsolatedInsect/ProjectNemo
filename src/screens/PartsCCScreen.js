@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, useWindowDimensions} from 'react-native';
+import {View, Text, useWindowDimensions, FlatList} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 
 import styles, {colors} from '../assets/styles';
@@ -10,7 +10,8 @@ import {PrintTitle} from '../components/PrintTitle';
 
 //This screen is created upon clicking the Crim Code option on the Landing Page.
 const PartsCCScreen = props => {
-  const [distinctPartsList, setDistinctPartsList] = useState();
+  //const [isLoading, setIsLoading] = useState(false); //for loading spinner
+  const [renderObject, setRenderObject] = useState(); // contains Parts data from Crim Code for render
   const window = useWindowDimensions();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const PartsCCScreen = props => {
           for (let i = 0; i < results.rows.length; ++i) {
             temp.push(results.rows.item(i));
           }
-          setDistinctPartsList(temp);
+          setRenderObject(temp);
         },
       );
     });
@@ -59,10 +60,9 @@ const PartsCCScreen = props => {
       <View>
         <PrintTitle pageTitle="Criminal Code of Canada" />
       </View>
-      <FlashList
-        data={distinctPartsList}
+      <FlatList
+        data={renderObject}
         renderItem={renderList}
-        estimatedItemSize={49}
         ItemSeparatorComponent={FlashListItemSeparator}
       />
     </View>

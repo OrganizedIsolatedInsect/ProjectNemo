@@ -157,7 +157,7 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
     return (
       <View key={index} style={styles.searchResultsContainer}>
         <ContentMVA
-          provisionId={item.provision}
+          provisionKey={item.provision}
           searchResults={searchResults}
         />
       </View>

@@ -21,8 +21,8 @@ const BrowseMVAScreen = props => {
   const [dbData, setDbData] = useState([]); //  array to house data from NemoDb
   const [actFilter, setActFilter] = useState(false); // Boolean for Motor Vehicle Act filter
   const [regFilter, setRegFilter] = useState(false); // Boolean for Motor Vehicle Act Regulation filter
-  let actArray = []; // array to house Motor Vehicle Act data
-  let regArray = []; // array to house Motor Vehicle Act Regulation Data
+  let actArrayRender = []; // array to house Motor Vehicle Act data
+  let regArrayRender = []; // array to house Motor Vehicle Act Regulation Data
 
   renderCount.current = renderCount.current + 1;
 
@@ -47,10 +47,10 @@ const BrowseMVAScreen = props => {
   //split data into different Arrays
   dbData.forEach(item => {
     if (item.source === 'Motor Vehicle Act') {
-      actArray.push(item);
+      actArrayRender.push(item);
     }
     if (item.source === 'Motor Vehicle Act Regulations') {
-      regArray.push(item);
+      regArrayRender.push(item);
     }
   });
 
@@ -68,7 +68,7 @@ const BrowseMVAScreen = props => {
           key={item.index}
           onPress={() =>
             navAid.navigate('ContentMVAScreen', {
-              provisionId: item.provision,
+              provisionKey: item.provision,
             })
           }
           android_ripple={{color: styles.AndroidRiplePressable}}
@@ -127,7 +127,10 @@ const BrowseMVAScreen = props => {
                     <Text style={{...styles.heading_2}}>Definitions</Text>
                   </View>
                   <View>
-                    <FlatList data={actArray} renderItem={renderMVAText} />
+                    <FlatList
+                      data={actArrayRender}
+                      renderItem={renderMVAText}
+                    />
                   </View>
                 </View>
               );
@@ -146,7 +149,10 @@ const BrowseMVAScreen = props => {
                     <Text style={{...styles.heading_2}}>Definitions</Text>
                   </View>
                   <View>
-                    <FlatList data={regArray} renderItem={renderMVAText} />
+                    <FlatList
+                      data={regArrayRender}
+                      renderItem={renderMVAText}
+                    />
                   </View>
                 </View>
               );

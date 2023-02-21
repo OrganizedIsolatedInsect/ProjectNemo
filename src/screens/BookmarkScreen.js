@@ -70,7 +70,7 @@ const BookmarkScreen = () => {
           if (item.lawType === 'MVA') {
             const provisionItem = item.bookmarkDisplayData.provision;
             navAid.navigate('ContentMVAScreen', {
-              provisionId: provisionItem,
+              provisionKey: provisionItem,
             });
           }
           if (item.lawType === 'CC') {

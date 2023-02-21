@@ -3,6 +3,7 @@
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
@@ -46,7 +47,8 @@ const CrimCodeGridList = ({
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
             });
-          } else {
+          }
+          if (screenName === 'SectionsCCScreen') {
             navAid.navigate('ContentCCScreen', {
               heading2Key: passingKey,
               heading1Label: heading1Label,

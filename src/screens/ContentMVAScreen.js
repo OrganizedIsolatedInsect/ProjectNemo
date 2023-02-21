@@ -6,9 +6,9 @@ import React from 'react';
 import ContentMVA from '../components/ContentMVA';
 
 const ContentMVAScreen = props => {
-  const provisionId = props.route.params.provisionId;
+  const provisionKey = props.route.params.provisionKey;
 
-  return <ContentMVA provisionId={provisionId} />;
+  return <ContentMVA provisionKey={provisionKey} />;
 };
 
 export default ContentMVAScreen;
