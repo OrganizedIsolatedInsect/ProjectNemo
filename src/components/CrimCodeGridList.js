@@ -2,60 +2,39 @@
  */
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
 
-const CrimCodeGridList = props => {
+const CrimCodeGridList = ({
+  heading1Key,
+  heading1Label,
+  heading1TitleText,
+  heading2Key,
+  heading2TitleText,
+  sectionLabel,
+}) => {
   const navAid = useNavigation();
-  const screenName = props.currentScreen;
+  const screenName = useRoute().name; //gets name of current screen using the useRoute hook source:https://reactnavigation.org/docs/route-prop
+  console.log(screenName);
 
-  //used for display purposes; initialized dependent upon which screen component was called from.
-  let componentKey;
+  let passingKey;
   let componentLabel;
   let componentTitle;
-  let prevScreen;
-
-  // let heading1Key;
-  let heading1Label = props.heading1Label;
-  let heading1TitleText = props.heading1TitleText;
-  // let heading2Key;
-  let heading2TitleText = props.heading2TitleText;
-  // let sectionKey;
-  // let sectionLabel;
-  // let sectionText;
-  // let subsectionKey;
-  // let subsectionLabel;
-  // let subsectionText;
-  let marginalNoteKey;
-  // let marginalNote;
-  // let paragraphKey;
-  // let paragraphLabel;
-  // let paragraphText;
-  // let subparagraphLabel;
-  // let subparagraphText;
-  // let subparagraphKey;
-  // let clauseKey;
-  // let clauseLabel;
-  // let clauseText;
-  // let subclauseKey;
-  // let subclauseLabel;
-  // let subclauseText;
 
   //Determine which screen is calling the component and initialize the appropriate variables to be passed to the destination screen
   if (screenName === 'PartsCCScreen') {
-    componentKey = props.heading1Key;
-    componentLabel = props.heading1Label;
-    componentTitle = props.heading1TitleText;
-  } else {
-    //SectionCCScreen.js
-    componentKey = props.heading2Key; //this is coming from sectionCCSCreen heading2Key..
-    componentLabel = props.sectionLabel;
-    componentTitle = props.heading2TitleText;
-    prevScreen = 'SectionCCScreen';
+    passingKey = heading1Key;
+    componentLabel = heading1Label;
+    componentTitle = heading1TitleText;
   }
-
+  if (screenName === 'SectionsCCScreen') {
+    //SectionCCScreen.js
+    passingKey = heading2Key; //this is coming from sectionCCSCreen heading2Key..
+    componentLabel = sectionLabel;
+    componentTitle = heading2TitleText;
+  }
 
   return (
     <View>
@@ -63,14 +42,13 @@ const CrimCodeGridList = props => {
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
             navAid.navigate('SectionsCCScreen', {
-              passingKey: componentKey,
+              passingKey: passingKey,
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
             });
           } else {
             navAid.navigate('ContentCCScreen', {
-              heading2Key: componentKey,
-              prevScreen: prevScreen,
+              heading2Key: passingKey,
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
               heading2TitleText: heading2TitleText,
