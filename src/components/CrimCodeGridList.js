@@ -3,36 +3,33 @@
 import React from 'react';
 import {View, Text, Pressable} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useNavigation, useRoute} from '@react-navigation/native';
 
 import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
 
 const CrimCodeGridList = ({
-  heading1Key,
+  heading2Key,
+  sectionLabel,
+  heading2TitleText,
   heading1Label,
   heading1TitleText,
-  heading2Key,
-  heading2TitleText,
-  sectionLabel,
+  heading1Key,
 }) => {
   const navAid = useNavigation();
   const screenName = useRoute().name; //gets name of current screen using the useRoute hook source:https://reactnavigation.org/docs/route-prop
   console.log(screenName);
+  const screenName = useRoute().name; //gets current screen name of component
 
-  let passingKey;
-  let componentLabel;
-  let componentTitle;
+  //used for display purposes; initialized dependent upon which screen component was called from.
+  let componentLabel; //Part or Section Label
+  let componentTitle; //Part or Section Text
 
-  //Determine which screen is calling the component and initialize the appropriate variables to be passed to the destination screen
+  //Determine what text to displace depending on what screen it is currently on
   if (screenName === 'PartsCCScreen') {
-    passingKey = heading1Key;
     componentLabel = heading1Label;
     componentTitle = heading1TitleText;
   }
   if (screenName === 'SectionsCCScreen') {
-    //SectionCCScreen.js
-    passingKey = heading2Key; //this is coming from sectionCCSCreen heading2Key..
     componentLabel = sectionLabel;
     componentTitle = heading2TitleText;
   }
@@ -43,17 +40,14 @@ const CrimCodeGridList = ({
         onPress={() => {
           if (screenName === 'PartsCCScreen') {
             navAid.navigate('SectionsCCScreen', {
-              passingKey: passingKey,
+              heading1Key: heading1Key,
               heading1Label: heading1Label,
               heading1TitleText: heading1TitleText,
             });
           }
           if (screenName === 'SectionsCCScreen') {
             navAid.navigate('ContentCCScreen', {
-              heading2Key: passingKey,
-              heading1Label: heading1Label,
-              heading1TitleText: heading1TitleText,
-              heading2TitleText: heading2TitleText,
+              heading2Key: heading2Key,
             });
           }
         }}

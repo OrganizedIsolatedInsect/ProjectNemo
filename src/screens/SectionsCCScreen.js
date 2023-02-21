@@ -12,7 +12,6 @@ const SectionsCCScreen = props => {
   const [renderObject, setRenderObject] = useState();
   const window = useWindowDimensions();
 
-  let heading1KeyParam = props.route.params.passingKey;
   let pagePartTitle = props.route.params.heading1Label; // example: Part II
   let pagePartLabel = props.route.params.heading1TitleText; // example: Offences Against Public Order
 
