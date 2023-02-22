@@ -16,16 +16,14 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   const [mvaDbData, setMvaDbData] = useState([]);
   //const [crimCodeSearchCount, setCrimCodeSearchCount] = useState([]);
   const [dbIndex, setDbIndex] = useState([]);
-  const [renderObject, setRenderObject] = useState([{}]);
+  const [renderObject, setRenderObject] = useState([]);
   const [isloading, setIsLoading] = useState(true);
   const renderCount = useRef(0);
   const navAid = useNavigation();
 
   renderCount.current = renderCount.current + 1;
-  //console.log(renderCount.current);
 
   const searchResults = useMemo(() => {
-    //console.log('Search Query');
     return searchQueryTerm;
   }, [searchQueryTerm]);
 
@@ -54,8 +52,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
               crimCodeTemp.push(results.rows.item(i));
               searchCountTemp.push(results.rows.item(i).sectionLabel);
             }
-            //setCrimCodeSearchCount(searchCountTemp);
-            //console.log('set crimDb');
             setCrimCodeDbData(crimCodeTemp);
           },
         );
@@ -70,7 +66,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
             for (let i = 0; i < results.rows.length; ++i) {
               mvaTemp.push(results.rows.item(i));
             }
-            //console.log('set mvaDb');
             setMvaDbData(mvaTemp);
           },
         );
@@ -90,7 +85,6 @@ const SearchResults = ({searchQueryTerm, filterArray}) => {
   );
 
   const fetchDB = useMemo(() => {
-    //console.log('fetch Db');
     return getDbData(searchResults);
   }, [searchResults]);
 

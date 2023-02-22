@@ -8,12 +8,12 @@ import styles from '../assets/styles';
 import {ArrowIcon} from '../assets/icons';
 
 const CrimCodeGridList = ({
-  heading2Key,
+  heading2Key, //key used to filter data for Crim Code Content
   sectionLabel,
   heading2TitleText,
   heading1Label,
   heading1TitleText,
-  heading1Key,
+  heading1Key, //key used to filter data for Crim Code Sections
 }) => {
   const navAid = useNavigation();
   const screenName = useRoute().name; //gets name of current screen using the useRoute hook source:https://reactnavigation.org/docs/route-prop

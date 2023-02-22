@@ -1,5 +1,5 @@
 //PACKAGE Imports
-import React, {useState} from 'react';
+import React from 'react';
 import {View, FlatList} from 'react-native';
 
 //USER IMPORTS
@@ -8,16 +8,14 @@ import {LEGISLATION} from '../data/LegislationMenuItems';
 import styles from '../assets/styles';
 
 const LandingScreen = props => {
-  const [useableData, setUsableData] = useState(LEGISLATION);
-
   //Function for setting up the Render list for the FlatList; Generic depending on what data is showing
-  const renderList = itemdata => {
+  const renderList = ({item}) => {
     return (
       <LegislationGridList
-        id={itemdata.item.id}
-        title={itemdata.item.title}
-        destination={itemdata.item.destination}
-        dataSource={itemdata.item.dataSource}
+        id={item.id}
+        title={item.title}
+        destination={item.destination}
+        dataSource={item.dataSource}
       />
     );
   };

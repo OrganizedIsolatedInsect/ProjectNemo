@@ -10,7 +10,7 @@ const LaunchScreen = props => {
   const navAid = useNavigation();
 
   setTimeout(() => {
-    navAid.push('AppNavigator', {screen: 'LandingScreen'});
+    navAid.replace('AppNavigator', {screen: 'LandingScreen'});
   }, 3000);
 
   return (

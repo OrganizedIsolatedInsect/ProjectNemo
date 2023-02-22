@@ -9,7 +9,7 @@ import Bookmark from './Bookmark';
 const ContentMVA = ({provisionKey, searchResults}) => {
   const lawType = 'MVA'; // send type to bookmarks
   const [bookmarkArray, setBookmarkArray] = useState([]); //used for just passing 2 fields into the bookmark array
-  const [renderObject, setRenderObject] = useState([{}]); //used to house data from db, data is rendered in flatlist
+  const [renderObject, setRenderObject] = useState([]); //used to house data from db, data is rendered in flatlist
 
   useEffect(() => {
     getDbData(provisionKey);
