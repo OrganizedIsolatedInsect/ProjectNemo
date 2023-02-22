@@ -8,7 +8,11 @@ const ContentCCScreen = props => {
 
   return (
     <SafeAreaView>
-      <Section section={props.route.params.heading2Key} lawType={lawType} />
+      <Section
+        sectionId={props.route.params.heading2Key}
+        marginalNoteKey={props.route.params.marginalNoteKey}
+        lawType={lawType}
+      />
     </SafeAreaView>
   );
 };

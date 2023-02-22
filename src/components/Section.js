@@ -20,10 +20,7 @@ component is used in content screens, section is sent as prop and then filtered 
 return data set for paragraphs
 */
 
-const Section = ({section, lawType, marginalNoteKey}) => {
-  //section prop passed on from browse screen = heading2Key
-  const sectionId = section;
-  const localLawType = lawType;
+const Section = ({sectionId, lawType, marginalNoteKey}) => {
   //set states for database data, loading
   const [dbData, setDbData] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -60,7 +57,6 @@ const Section = ({section, lawType, marginalNoteKey}) => {
     obj => obj.marginalNoteKey === marginalNoteKey,
   );
 
-  const [collapsedState, setCollapsedState] = useState(true);
   // Active Infos is the section number (from react-native-collapsible, NOT our database section)
   // This is to index the section into an array which is used can be used for the isActive state
   // so that we can target the individual accordion icons
@@ -71,7 +67,6 @@ const Section = ({section, lawType, marginalNoteKey}) => {
     infos === undefined ? (infos = []) : infos;
     //setting up a active section state
     setActiveInfos(infos);
-    setCollapsedState(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -81,7 +76,6 @@ const Section = ({section, lawType, marginalNoteKey}) => {
       activeInfos.indexOf(indexArray) < 0 //bookmark position does not already exist in actionInfos array
     ) {
       setActiveInfos([indexArray]);
-      setCollapsedState(false);
       changeRenderChildrenCollapsed(true);
     } else {
       changeRenderChildrenCollapsed(false);
@@ -126,7 +120,7 @@ const Section = ({section, lawType, marginalNoteKey}) => {
             bookmarkDisplayData={bookmarkDisplayData}
             marginalNoteKey={item.marginalNoteKey} //CC data only
             heading2Key={item.heading2Key}
-            lawType={localLawType}
+            lawType={lawType}
           />
         </View>
         <CrimCodeRenderBody dbData={dbData} subsectionData={item} />
