@@ -1,2 +1,0 @@
-# Solution
-A mobile application.
